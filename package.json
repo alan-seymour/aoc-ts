@@ -7,6 +7,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.14",
     "@types/node": "^10.17.6",
+    "@types/lodash": "^4.14.149",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
