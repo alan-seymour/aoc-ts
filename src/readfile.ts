@@ -1,13 +1,14 @@
-import * as fs from 'fs';
+import * as fs from "fs";
 
-const asyncReadFile = (fileName: string) => new Promise((resolve, reject) => {
-  fs.readFile(fileName, (error, result) => {
-    if (error) {
-      reject(error);
-    }
-    resolve(result);
+const asyncReadFile = (fileName: string): Promise<Buffer> =>
+  new Promise((resolve, reject) => {
+    fs.readFile(fileName, (error, result) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    });
   });
-});
 
 export const getData = async (filename: string) => {
   try {
@@ -15,6 +16,6 @@ export const getData = async (filename: string) => {
     return data.toString();
   } catch (e) {
     console.error(`Error reading file: ${e.message}`);
-    return '';
+    return "";
   }
 };
