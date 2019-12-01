@@ -1,6 +1,5 @@
-import { run, splitLines } from "./helpers";
-
-const inputFile = "./inputs/201803.txt";
+import { PuzzleDay } from "./puzzleDay";
+import { splitLines } from "./helpers";
 
 type Claim = {
   claimId: number;
@@ -83,21 +82,19 @@ export const findUniqueId = (grid: number[][][], maxId: number): number => {
   return index + 1;
 };
 
-export const part1 = (input: string) => {
-  const claims = parseClaims(input);
-  const grid = initGrid(1000);
-  fillGrid(grid, claims);
-  return "" + countOverlaps(grid);
-};
+export class Puzzle201803 extends PuzzleDay {
+  part1() {
+    const claims = parseClaims(this.input);
+    const grid = initGrid(1000);
+    fillGrid(grid, claims);
+    return "" + countOverlaps(grid);
+  }
 
-export const part2 = (input: string) => {
-  const claims = parseClaims(input);
-  const grid = initGrid(1000);
-  fillGrid(grid, claims);
-  const id = findUniqueId(grid, claims.length);
-  return `${id}`;
-};
-
-if (require.main === module) {
-  run(inputFile, [part1, part2]);
+  part2() {
+    const claims = parseClaims(this.input);
+    const grid = initGrid(1000);
+    fillGrid(grid, claims);
+    const id = findUniqueId(grid, claims.length);
+    return `${id}`;
+  }
 }

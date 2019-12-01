@@ -1,6 +1,5 @@
-import { run, splitLines } from "./helpers";
-
-const inputFile = "./inputs/201802.txt";
+import { splitLines } from "./helpers";
+import { PuzzleDay } from "./puzzleDay";
 
 const idToFrequencies = (id: string): Map<string, number> => {
   const frequencies = new Map<string, number>();
@@ -47,14 +46,6 @@ export const parseInput = (input: string): string[] => {
   return splitLines(input);
 };
 
-export const part1 = (input: string) => {
-  const ids = parseInput(input);
-  const potA = ids.map(id => hasPairOrTrio(idToFrequencies(id)));
-  const pairs = countField(potA, "pair");
-  const trios = countField(potA, "trio");
-  return (pairs * trios).toString();
-};
-
 const sameLetters = (s1: string, s2: string): string[] => {
   const output = [];
   const s1A = s1.split("");
@@ -67,20 +58,26 @@ const sameLetters = (s1: string, s2: string): string[] => {
   return output;
 };
 
-export const part2 = (input: string) => {
-  // double loop solution
-  const ids = parseInput(input);
-  for (let i = 0; i < ids.length - 1; i++) {
-    for (let j = i + 1; j < ids.length; j++) {
-      const intersection = sameLetters(ids[i], ids[j]);
-      if (intersection.length === ids[0].length - 1) {
-        return intersection.join("");
+export class Puzzle201802 extends PuzzleDay {
+  part1() {
+    const ids = parseInput(this.input);
+    const potA = ids.map(id => hasPairOrTrio(idToFrequencies(id)));
+    const pairs = countField(potA, "pair");
+    const trios = countField(potA, "trio");
+    return (pairs * trios).toString();
+  }
+
+  part2() {
+    // double loop solution
+    const ids = parseInput(this.input);
+    for (let i = 0; i < ids.length - 1; i++) {
+      for (let j = i + 1; j < ids.length; j++) {
+        const intersection = sameLetters(ids[i], ids[j]);
+        if (intersection.length === ids[0].length - 1) {
+          return intersection.join("");
+        }
       }
     }
+    return "";
   }
-  return "";
-};
-
-if (require.main === module) {
-  run(inputFile, [part1, part2]);
 }

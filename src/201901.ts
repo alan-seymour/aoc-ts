@@ -1,6 +1,5 @@
-import { run, splitLines } from "./helpers";
-
-const inputFile = "./inputs/201901.txt";
+import { splitLines } from "./helpers";
+import { PuzzleDay } from "./puzzleDay";
 
 export const parseInput = (input: string) => {
   const lines = splitLines(input);
@@ -20,16 +19,16 @@ const totalFuelMass = (mass: number): number => {
   return totalFuel;
 };
 
-export const part1 = (input: string) => {
-  const masses = parseInput(input);
-  return masses.reduce((sum, curr) => sum + massToFuel(curr), 0).toString();
-};
+export class Puzzle201901 extends PuzzleDay {
+  part1() {
+    const masses = parseInput(this.input);
+    return masses.reduce((sum, curr) => sum + massToFuel(curr), 0).toString();
+  }
 
-export const part2 = (input: string) => {
-  const masses = parseInput(input);
-  return masses.reduce((sum, curr) => sum + totalFuelMass(curr), 0).toString();
-};
-
-if (require.main === module) {
-  run(inputFile, [part1, part2]);
+  part2() {
+    const masses = parseInput(this.input);
+    return masses
+      .reduce((sum, curr) => sum + totalFuelMass(curr), 0)
+      .toString();
+  }
 }

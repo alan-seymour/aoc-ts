@@ -4,29 +4,53 @@
 
 Advent of Code Solutions in Typescript
 
-## Running
+## Usage
 
-### With `ts-node`
+```bash
+# run using ts-node
+$ npm run solve-ts
 
-execute `npx ts-node ./src/{day}.ts {part}`
-ie: `npx ts-node ./src/201901.ts 1`
+# run using node
+# build project before running
+$ npm run build-ts
+# run file
+$ npm run solve
+```
 
-### With `node`
+### Options
 
-build the project with `npm run build-ts`
-execute `node ./dist/{day}.js {part}`
-ie: `node ./dist/201901.js 2`
+```
+-d, --day   Run solution for specific day
+-p, --part  Run specific part of solution (defaults to 1)
+-t, --time  Measure the time it takes to solve
+--input     Provide a specific input file (defaults to ./inputs/{day}.txt)
+```
+
+#### Examples:
+
+```bash
+# Run 201801 part 1
+$ npm run solve-ts -- -d 201801
+
+# Run part 2 of 201901 with test.txt and output time taken
+$ npm run solve-ts -- -d 201901 -p 2 -t --input="./inputs/test.txt"
+```
 
 ## Running Tests
 
-build the project with `npm run build-ts`
-execute the tests `npm test`
+```bash
+# Build the project
+$ npm run build-ts
+
+# execute the tests
+$ npm test
+```
 
 ## Currently implemented solutions
 
-| Year | Day | Part 1             | Part 2             |
-| ---- | --- | ------------------ | ------------------ |
-| 2018 | 1   | :heavy_check_mark: | :heavy_check_mark: |
-| 2018 | 2   | :heavy_check_mark: | :heavy_check_mark: |
-| 2018 | 3   | :heavy_check_mark: | :heavy_check_mark: |
-| 2019 | 1   | :heavy_check_mark: | :heavy_check_mark: |
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
+| 2018 | 1   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 19ms     |
+| 2018 | 2   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 16ms     |
+| 2018 | 3   | :heavy_check_mark: | 200ms    | :heavy_check_mark: | 215ms    |
+| 2019 | 1   | :heavy_check_mark: | 200μs    | :heavy_check_mark: | 320μs    |
