@@ -1,25 +1,28 @@
-import * as yargs from "yargs";
-import { Puzzle201801 } from "./201801";
-import { Puzzle201802 } from "./201802";
-import { Puzzle201803 } from "./201803";
-import { Puzzle201901 } from "./201901";
-import { PuzzleDay } from "./puzzleDay";
-import { default as prettyTime } from "pretty-time";
+import * as yargs from 'yargs';
+import { Puzzle201801 } from './201801';
+import { Puzzle201802 } from './201802';
+import { Puzzle201803 } from './201803';
+import { Puzzle201901 } from './201901';
+import { Puzzle201902 } from './201902';
+import { PuzzleDay } from './puzzleDay';
+
+
+const prettyTime = require('pretty-time');
 
 const NS_PER_SEC = 1e9;
 
 const argv = yargs.options({
-  day: { type: "string", default: "" },
-  d: { type: "string", default: "" },
-  input: { type: "string", default: "" },
-  part: { type: "number", default: 0 },
-  p: { type: "number", default: 1 },
-  time: { type: "boolean", default: false },
-  t: { type: "boolean", default: false }
+  day: { type: 'string', default: '' },
+  d: { type: 'string', default: '' },
+  input: { type: 'string', default: '' },
+  part: { type: 'number', default: 0 },
+  p: { type: 'number', default: 1 },
+  time: { type: 'boolean', default: false },
+  t: { type: 'boolean', default: false }
 }).argv;
 
 async function run() {
-  const dayArg: string = argv.day || argv.d || "";
+  const dayArg: string = argv.day || argv.d || '';
   const inputFile = argv.input || `./inputs/${dayArg}.txt`;
   const part = argv.part || argv.p;
   const outputTime = argv.time || argv.t;
@@ -28,14 +31,14 @@ async function run() {
   try {
     day = dayToInstantiatedClass(dayArg, inputFile);
   } catch (e) {
-    console.log("Invalid day or input file");
+    console.log('Invalid day or input file');
     return;
   }
 
   await day.loadData();
   const time = process.hrtime();
 
-  let result: string = "";
+  let result: string = '';
 
   if (part === 1) {
     result = day.part1();
@@ -54,16 +57,18 @@ async function run() {
 
 const dayToInstantiatedClass = (day: string, inputFile: string): PuzzleDay => {
   switch (day) {
-    case "201801":
+    case '201801':
       return new Puzzle201801(inputFile);
-    case "201802":
+    case '201802':
       return new Puzzle201802(inputFile);
-    case "201803":
+    case '201803':
       return new Puzzle201803(inputFile);
-    case "201901":
+    case '201901':
       return new Puzzle201901(inputFile);
+    case '201902':
+      return new Puzzle201902(inputFile);
     default:
-      throw new Error("No Such Day");
+      throw new Error('No Such Day');
   }
 };
 
