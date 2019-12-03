@@ -1,4 +1,4 @@
-import { getData } from "./readfile";
+import { getData } from './readfile';
 
 export abstract class PuzzleDay {
   inputFile: string;
@@ -10,7 +10,7 @@ export abstract class PuzzleDay {
 
   constructor(inputFile: string) {
     this.inputFile = inputFile;
-    this.input = "";
+    this.input = '';
   }
 
   async loadData(input?: string): Promise<void> {

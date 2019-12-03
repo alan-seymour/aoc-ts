@@ -1,5 +1,5 @@
-import { splitLines } from "./helpers";
-import { PuzzleDay } from "./puzzleDay";
+import { splitLines } from './helpers';
+import { PuzzleDay } from './puzzleDay';
 
 export const parseInput = (input: string) => {
   const lines = splitLines(input);

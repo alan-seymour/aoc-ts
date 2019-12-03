@@ -1,9 +1,9 @@
-import { splitLines } from "./helpers";
-import { PuzzleDay } from "./puzzleDay";
+import { splitLines } from './helpers';
+import { PuzzleDay } from './puzzleDay';
 
 const idToFrequencies = (id: string): Map<string, number> => {
   const frequencies = new Map<string, number>();
-  id.split("").forEach(letter => {
+  id.split('').forEach(letter => {
     const existing = frequencies.get(letter);
     if (existing) {
       frequencies.set(letter, existing + 1);
@@ -48,8 +48,8 @@ export const parseInput = (input: string): string[] => {
 
 const sameLetters = (s1: string, s2: string): string[] => {
   const output = [];
-  const s1A = s1.split("");
-  const s2A = s2.split("");
+  const s1A = s1.split('');
+  const s2A = s2.split('');
   for (let i = 0; i < s1A.length; i++) {
     if (s1A[i] === s2A[i]) {
       output.push(s1A[i]);
@@ -62,8 +62,8 @@ export class Puzzle201802 extends PuzzleDay {
   part1() {
     const ids = parseInput(this.input);
     const potA = ids.map(id => hasPairOrTrio(idToFrequencies(id)));
-    const pairs = countField(potA, "pair");
-    const trios = countField(potA, "trio");
+    const pairs = countField(potA, 'pair');
+    const trios = countField(potA, 'trio');
     return (pairs * trios).toString();
   }
 
@@ -74,10 +74,10 @@ export class Puzzle201802 extends PuzzleDay {
       for (let j = i + 1; j < ids.length; j++) {
         const intersection = sameLetters(ids[i], ids[j]);
         if (intersection.length === ids[0].length - 1) {
-          return intersection.join("");
+          return intersection.join('');
         }
       }
     }
-    return "";
+    return '';
   }
 }

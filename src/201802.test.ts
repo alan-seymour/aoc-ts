@@ -1,33 +1,33 @@
-import { Puzzle201802, parseInput } from "./201802";
+import { Puzzle201802, parseInput } from './201802';
 
 let day: Puzzle201802;
 
-describe("201802", () => {
+describe('201802', () => {
   beforeEach(() => {
-    day = new Puzzle201802("");
+    day = new Puzzle201802('');
   });
 
-  test("parseInput", () => {
+  test('parseInput', () => {
     const input = `abc
     def
     asds`;
     const result = parseInput(input);
-    expect(result).toEqual(["abc", "def", "asds"]);
+    expect(result).toEqual(['abc', 'def', 'asds']);
   });
 
-  test("part 1 example 1", () => {
+  test('part 1 example 1', () => {
     day.loadData(`abcdef`);
     const result = day.part1();
-    expect(result).toBe("0");
+    expect(result).toBe('0');
   });
 
-  test("part 1 example 2", () => {
+  test('part 1 example 2', () => {
     day.loadData(`bababc`);
     const result = day.part1();
-    expect(result).toBe("1");
+    expect(result).toBe('1');
   });
 
-  test("part 1 example 3", () => {
+  test('part 1 example 3', () => {
     day.loadData(`abcdef
     bababc
     abbcde
@@ -36,10 +36,10 @@ describe("201802", () => {
     abcdee
     ababab`);
     const result = day.part1();
-    expect(result).toBe("12");
+    expect(result).toBe('12');
   });
 
-  test("part 2 example 1", () => {
+  test('part 2 example 1', () => {
     day.loadData(`abcde
     fghij
     klmno
@@ -48,6 +48,6 @@ describe("201802", () => {
     axcye
     wvxyz`);
     const result = day.part2();
-    expect(result).toBe("fgij");
+    expect(result).toBe('fgij');
   });
 });

@@ -1,5 +1,5 @@
-import { PuzzleDay } from "./puzzleDay";
-import { splitLines } from "./helpers";
+import { PuzzleDay } from './puzzleDay';
+import { splitLines } from './helpers';
 
 type Claim = {
   claimId: number;
@@ -87,7 +87,7 @@ export class Puzzle201803 extends PuzzleDay {
     const claims = parseClaims(this.input);
     const grid = initGrid(1000);
     fillGrid(grid, claims);
-    return "" + countOverlaps(grid);
+    return '' + countOverlaps(grid);
   }
 
   part2() {

@@ -7,15 +7,20 @@ export const parseInput = (input: string) => {
 };
 
 export type SystemState = {
-  state: number[]
-  index: number
-  halted: boolean
+  state: number[];
+  index: number;
+  halted: boolean;
 };
 
-export const runOpcode = ({state, index, halted}: SystemState): SystemState => {
+export const runOpcode = ({
+  state,
+  index,
+  halted
+}: SystemState): SystemState => {
   switch (state[index]) {
     case 1:
-      state[state[index + 3]] = state[state[index + 2]] + state[state[index + 1]];
+      state[state[index + 3]] =
+        state[state[index + 2]] + state[state[index + 1]];
       return {
         state: [...state],
         index: index + 4,
@@ -23,7 +28,8 @@ export const runOpcode = ({state, index, halted}: SystemState): SystemState => {
       };
       break;
     case 2:
-      state[state[index + 3]] = state[state[index + 2]] * state[state[index + 1]];
+      state[state[index + 3]] =
+        state[state[index + 2]] * state[state[index + 1]];
       return {
         state: [...state],
         index: index + 4,
@@ -46,7 +52,11 @@ export const runOpcode = ({state, index, halted}: SystemState): SystemState => {
   }
 };
 
-export const runToCompletetion = (noun: number, verb: number, initialState: number[]): number[] => {
+export const runToCompletetion = (
+  noun: number,
+  verb: number,
+  initialState: number[]
+): number[] => {
   let state: SystemState = {
     state: [...initialState],
     index: 0,
@@ -73,7 +83,7 @@ export class Puzzle201902 extends PuzzleDay {
       for (let verb = 0; verb < 100; verb++) {
         const result = runToCompletetion(noun, verb, initialState);
         if (result[0] === 19690720) {
-          return `${(100 * noun) + verb}`;
+          return `${100 * noun + verb}`;
         }
       }
     }

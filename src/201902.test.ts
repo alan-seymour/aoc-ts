@@ -1,7 +1,11 @@
-import { parseInput, SystemState, runToCompletetion, runOpcode } from './201902';
+import {
+  parseInput,
+  SystemState,
+  runToCompletetion,
+  runOpcode
+} from './201902';
 
 describe('201902', () => {
-
   test('parseInput', () => {
     const input = `3500,9,10,70,2,3,11,0,99,30,40,50`;
     const result = parseInput(input);
@@ -12,40 +16,44 @@ describe('201902', () => {
     const input: SystemState = {
       state: [1, 2, 3, 4],
       index: 0,
-      halted: false,
+      halted: false
     };
     const result = runOpcode(input);
-    expect(result).toEqual({state: [1, 2, 3, 4, 7], index: 4, halted: false});
+    expect(result).toEqual({ state: [1, 2, 3, 4, 7], index: 4, halted: false });
   });
 
   test('opcode 2', () => {
     const input: SystemState = {
       state: [2, 2, 3, 4],
       index: 0,
-      halted: false,
+      halted: false
     };
     const result = runOpcode(input);
-    expect(result).toEqual({state: [2, 2, 3, 4, 12], index: 4, halted: false});
+    expect(result).toEqual({
+      state: [2, 2, 3, 4, 12],
+      index: 4,
+      halted: false
+    });
   });
 
   test('opcode 99', () => {
     const input: SystemState = {
       state: [99, 2, 3, 4],
       index: 0,
-      halted: false,
+      halted: false
     };
     const result = runOpcode(input);
-    expect(result).toEqual({state: [99, 2, 3, 4], index: 1, halted: true});
+    expect(result).toEqual({ state: [99, 2, 3, 4], index: 1, halted: true });
   });
 
   test('opcode ?', () => {
     const input: SystemState = {
       state: [4, 2, 3, 4],
       index: 0,
-      halted: false,
+      halted: false
     };
     const result = runOpcode(input);
-    expect(result).toEqual({state: [4, 2, 3, 4], index: 0, halted: false});
+    expect(result).toEqual({ state: [4, 2, 3, 4], index: 0, halted: false });
   });
 
   test('runToCompletion example 1', () => {
@@ -77,5 +85,4 @@ describe('201902', () => {
     const result = runToCompletetion(1, 1, input);
     expect(result).toEqual([30, 1, 1, 4, 2, 5, 6, 0, 99]);
   });
-
 });
