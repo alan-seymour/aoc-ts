@@ -1,6 +1,5 @@
 import { splitLines } from './helpers';
 import { PuzzleDay } from './puzzleDay';
-const prettyTime = require('pretty-time');
 
 type Step = {
   direction: 'U' | 'D' | 'L' | 'R';
@@ -9,18 +8,13 @@ type Step = {
 
 type WirePath = Step[];
 
-type Point = {
+type WirePoint = {
   x: number;
   y: number;
-};
-
-type WirePoint = Point & {
   length: number;
 };
 
 type IntersectionPoint = {
-  x: number;
-  y: number;
   combinedDistance: number;
   originDistance: number;
 };
@@ -117,12 +111,12 @@ const overlapBetweenPointsPath = (
       while (distance > 0) {
         prevPoint = newPoints[newPoints.length - 1];
         newPoint = takeStep(step, prevPoint);
-        const testPoint: Point = { x: newPoint.x, y: newPoint.y };
-        const pointA = existingPoints.get(JSON.stringify(testPoint));
+
+        const pointA = existingPoints.get(
+          JSON.stringify({ x: newPoint.x, y: newPoint.y })
+        );
         if (pointA) {
           overlaps.push({
-            x: newPoint.x,
-            y: newPoint.y,
             originDistance: Math.abs(newPoint.x) + Math.abs(newPoint.y),
             combinedDistance: pointA + newPoint.length
           });
