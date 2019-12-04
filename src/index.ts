@@ -5,6 +5,7 @@ import { Puzzle201803 } from './201803';
 import { Puzzle201901 } from './201901';
 import { Puzzle201902 } from './201902';
 import { Puzzle201903 } from './201903';
+import { Puzzle201904 } from './201904';
 import { PuzzleDay } from './puzzleDay';
 
 const prettyTime = require('pretty-time');
@@ -18,7 +19,7 @@ const argv = yargs.options({
   part: { type: 'number', default: 0 },
   p: { type: 'number', default: 1 },
   time: { type: 'boolean', default: false },
-  t: { type: 'boolean', default: false }
+  t: { type: 'boolean', default: false },
 }).argv;
 
 async function run() {
@@ -69,6 +70,8 @@ const dayToInstantiatedClass = (day: string, inputFile: string): PuzzleDay => {
       return new Puzzle201902(inputFile);
     case '201903':
       return new Puzzle201903(inputFile);
+    case '201904':
+      return new Puzzle201904(inputFile);
     default:
       throw new Error('No Such Day');
   }
