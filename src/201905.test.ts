@@ -1,9 +1,9 @@
 import { parseInput } from './201905';
 
-describe('201905', () => {
+describe('201902', () => {
   test('parseInput', () => {
-    const input = `1234-5742`;
+    const input = `3500,9,10,70,2,3,11,0,99,30,40,50`;
     const result = parseInput(input);
-    expect(result).toEqual(['1234', '5742']);
+    expect(result).toEqual([3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]);
   });
 });
