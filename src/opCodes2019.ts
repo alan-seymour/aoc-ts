@@ -220,3 +220,23 @@ export const runToCompletetion = (
   }
   return state;
 };
+
+export const runUntilOutputOrHalt = ({
+  state,
+  index,
+  halted,
+  input,
+}: SystemState): SystemState => {
+  let runningState: SystemState = {
+    state: [...state],
+    index,
+    halted,
+    output: [],
+    input: [...input],
+  };
+
+  while (!runningState.halted && runningState.output.length === 0) {
+    runningState = runOpcode(runningState);
+  }
+  return runningState;
+};
