@@ -4,7 +4,7 @@ import {
   runAmplifierLoop,
 } from './201907';
 
-describe('201906', () => {
+describe('201907', () => {
   test('Part 1 amplifiers 1', () => {
     const result = runAplifiersWithPhases(
       [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0],

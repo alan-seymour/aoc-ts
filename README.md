@@ -39,9 +39,6 @@ $ npm run solve-ts -- -d 201901 -p 2 -t --input="./inputs/test.txt"
 ## Running Tests
 
 ```bash
-# Build the project
-$ npm run build-ts
-
 # execute the tests
 $ npm test
 ```
@@ -60,3 +57,4 @@ $ npm test
 | 2019 | 5   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 8ms      |
 | 2019 | 6   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 2ms      |
 | 2019 | 7   | :heavy_check_mark: | 60ms     | :heavy_check_mark: | 155ms    |
+| 2019 | 8   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 4ms      |
