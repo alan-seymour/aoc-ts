@@ -6,9 +6,20 @@ export type SystemState = {
   halted: boolean;
   input: number[];
   output: number[];
+  relativeBase: number;
 };
 
-const fieldToOpcode = (value: number): { opcode: number; modes: number[] } => {
+type ParameterMode = 'Position' | 'Immediate' | 'Relative';
+
+const intToMode: { [k: number]: ParameterMode } = {
+  0: 'Position',
+  1: 'Immediate',
+  2: 'Relative',
+};
+
+const fieldToOpcode = (
+  value: number,
+): { opcode: number; modes: ParameterMode[] } => {
   const split = value.toString().split('');
   if (split.length <= 1) {
     return {
@@ -18,31 +29,59 @@ const fieldToOpcode = (value: number): { opcode: number; modes: number[] } => {
   }
 
   const opcode = parseInt(split.splice(-2).join(''), 10);
-  const modes = split.reverse().map(v => parseInt(v, 10));
+  const modes = split.reverse().map(v => intToMode[parseInt(v, 10)]);
   return {
     opcode,
     modes,
   };
 };
 
-const getValue = (
+export const getValue = (
   state: number[],
   position: number,
-  mode: number | undefined,
+  mode: ParameterMode | undefined,
+  relativeBase: number,
 ): number => {
-  if (mode === 1) {
-    return state[position];
+  let value: number;
+  switch (mode) {
+    case 'Immediate':
+      value = state[position];
+      break;
+    case 'Relative':
+      value = state[state[position] + relativeBase];
+      break;
+    case 'Position':
+    default:
+      value = state[state[position]];
+      break;
   }
-  return state[state[position]];
+  return value ? value : 0;
+};
+
+export const getWriteLocation = (
+  state: number[],
+  position: number,
+  mode: ParameterMode | undefined,
+  relativeBase: number,
+): number => {
+  if (mode === 'Relative') {
+    return state[position] + relativeBase;
+  }
+  return state[position];
 };
 
 export const add = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift());
-  const param2 = getValue(state, index + 2, modes.shift());
-  const writeLocation = getValue(state, index + 3, 1);
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
+  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
+  const writeLocation = getWriteLocation(
+    state,
+    index + 3,
+    modes.shift(),
+    relativeBase,
+  );
   state[writeLocation] = param1 + param2;
   return {
     state: [...state],
@@ -50,16 +89,22 @@ export const add = (
     halted: false,
     input: [...input],
     output: [...output],
+    relativeBase,
   };
 };
 
 export const multiply = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift());
-  const param2 = getValue(state, index + 2, modes.shift());
-  const writeLocation = getValue(state, index + 3, 1);
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
+  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
+  const writeLocation = getWriteLocation(
+    state,
+    index + 3,
+    modes.shift(),
+    relativeBase,
+  );
   state[writeLocation] = param1 * param2;
   return {
     state: [...state],
@@ -67,14 +112,20 @@ export const multiply = (
     halted: false,
     input: [...input],
     output: [...output],
+    relativeBase,
   };
 };
 
 export const readInput = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const writeLocation = getValue(state, index + 1, 1);
+  const writeLocation = getWriteLocation(
+    state,
+    index + 1,
+    modes.shift(),
+    relativeBase,
+  );
   const inputValue = input.shift();
   state[writeLocation] = inputValue ? inputValue : 0;
   return {
@@ -83,60 +134,69 @@ export const readInput = (
     halted: false,
     input: [...input],
     output: [...output],
+    relativeBase,
   };
 };
 
 export const writeOutput = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift());
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
   return {
     state: [...state],
     index: index + 2,
     halted: false,
     input: [...input],
     output: [...output, param1],
+    relativeBase,
   };
 };
 
 export const jumpIfTrue = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift());
-  const param2 = getValue(state, index + 2, modes.shift());
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
+  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
   return {
     state: [...state],
     index: param1 !== 0 ? param2 : index + 3,
     halted: false,
     input: [...input],
     output: [...output],
+    relativeBase,
   };
 };
 
 export const jumpIfFalse = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift());
-  const param2 = getValue(state, index + 2, modes.shift());
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
+  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
   return {
     state: [...state],
     index: param1 === 0 ? param2 : index + 3,
     halted: false,
     input: [...input],
     output: [...output],
+    relativeBase,
   };
 };
 
 export const lessThan = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift());
-  const param2 = getValue(state, index + 2, modes.shift());
-  const writeLocation = getValue(state, index + 3, 1);
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
+  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
+  const writeLocation = getWriteLocation(
+    state,
+    index + 3,
+    modes.shift(),
+    relativeBase,
+  );
   state[writeLocation] = param1 < param2 ? 1 : 0;
   return {
     state: [...state],
@@ -144,16 +204,22 @@ export const lessThan = (
     halted: false,
     input: [...input],
     output: [...output],
+    relativeBase,
   };
 };
 
 export const equalTo = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift());
-  const param2 = getValue(state, index + 2, modes.shift());
-  const writeLocation = getValue(state, index + 3, 1);
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
+  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
+  const writeLocation = getWriteLocation(
+    state,
+    index + 3,
+    modes.shift(),
+    relativeBase,
+  );
   state[writeLocation] = param1 === param2 ? 1 : 0;
   return {
     state: [...state],
@@ -161,12 +227,28 @@ export const equalTo = (
     halted: false,
     input: [...input],
     output: [...output],
+    relativeBase,
+  };
+};
+
+export const adjustRelativeBase = (
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
+): SystemState => {
+  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
+  return {
+    state: [...state],
+    index: index + 2,
+    halted: false,
+    input: [...input],
+    output: [...output],
+    relativeBase: relativeBase + param1,
   };
 };
 
 export const halt = (
-  { state, index, input, output, halted }: SystemState,
-  modes: number[],
+  { state, index, input, output, halted, relativeBase }: SystemState,
+  modes: ParameterMode[],
 ): SystemState => {
   return {
     state: [...state],
@@ -174,10 +256,14 @@ export const halt = (
     halted: true,
     input: [...input],
     output: [...output],
+    relativeBase,
   };
 };
 
-type OpCodeFunction = (state: SystemState, modes: number[]) => SystemState;
+type OpCodeFunction = (
+  state: SystemState,
+  modes: ParameterMode[],
+) => SystemState;
 
 type OpCodes = {
   [key: number]: OpCodeFunction;
@@ -192,6 +278,7 @@ const codes: OpCodes = {
   6: jumpIfFalse,
   7: lessThan,
   8: equalTo,
+  9: adjustRelativeBase,
   99: halt,
 };
 
@@ -213,6 +300,7 @@ export const runToCompletetion = (
     halted: false,
     output: [],
     input,
+    relativeBase: 0,
   };
 
   while (!state.halted) {
@@ -233,6 +321,7 @@ export const runUntilOutputOrHalt = ({
     halted,
     output: [],
     input: [...input],
+    relativeBase: 0,
   };
 
   while (!runningState.halted && runningState.output.length === 0) {
