@@ -38,6 +38,7 @@ export const runAmplifierLoop = (
     halted: false,
     output: [],
     input: [phases[0], 0],
+    relativeBase: 0,
   };
   let amplifierBState: SystemState = {
     state: [...initialState],
@@ -45,6 +46,7 @@ export const runAmplifierLoop = (
     halted: false,
     output: [],
     input: [phases[1]],
+    relativeBase: 0,
   };
   let amplifierCState: SystemState = {
     state: [...initialState],
@@ -52,6 +54,7 @@ export const runAmplifierLoop = (
     halted: false,
     output: [],
     input: [phases[2]],
+    relativeBase: 0,
   };
   let amplifierDState: SystemState = {
     state: [...initialState],
@@ -59,6 +62,7 @@ export const runAmplifierLoop = (
     halted: false,
     output: [],
     input: [phases[3]],
+    relativeBase: 0,
   };
   let amplifierEState: SystemState = {
     state: [...initialState],
@@ -66,6 +70,7 @@ export const runAmplifierLoop = (
     halted: false,
     output: [],
     input: [phases[4]],
+    relativeBase: 0,
   };
 
   while (!amplifierEState.halted) {
