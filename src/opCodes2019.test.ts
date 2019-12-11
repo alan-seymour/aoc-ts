@@ -4,6 +4,7 @@ import {
   runOpcode,
   getValue,
   adjustRelativeBase,
+  runUntilOutputOrWaitingForInput,
 } from './opCodes2019';
 
 describe('Op codes', () => {
@@ -43,6 +44,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -52,6 +54,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
 
@@ -63,6 +66,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -72,6 +76,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
 
@@ -83,6 +88,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -92,10 +98,11 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
 
-    test('opcode 3', () => {
+    test('opcode 3 available input', () => {
       const input: SystemState = {
         state: [3, 2, 13],
         index: 0,
@@ -103,6 +110,7 @@ describe('Op codes', () => {
         input: [7],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -112,6 +120,29 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
+      });
+    });
+
+    test('opcode 3 no available input', () => {
+      const input: SystemState = {
+        state: [3, 2, 13],
+        index: 0,
+        halted: false,
+        input: [],
+        output: [],
+        relativeBase: 0,
+        waitingForInput: false,
+      };
+      const result = runOpcode(input);
+      expect(result).toEqual({
+        state: [3, 2, 13],
+        index: 0,
+        halted: false,
+        input: [],
+        output: [],
+        relativeBase: 0,
+        waitingForInput: true,
       });
     });
 
@@ -123,6 +154,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -132,6 +164,7 @@ describe('Op codes', () => {
         input: [],
         output: [13],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
 
@@ -143,6 +176,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 5,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -152,6 +186,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 18,
+        waitingForInput: false,
       });
     });
 
@@ -163,6 +198,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 2000,
+        waitingForInput: false,
       };
       const result = adjustRelativeBase(input, ['Immediate']);
       expect(result.relativeBase).toEqual(2019);
@@ -176,6 +212,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -185,6 +222,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
 
@@ -196,6 +234,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -205,6 +244,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
   });
@@ -218,6 +258,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       };
       const result = runOpcode(input);
       expect(result).toEqual({
@@ -227,6 +268,7 @@ describe('Op codes', () => {
         input: [],
         output: [],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
 
@@ -240,6 +282,7 @@ describe('Op codes', () => {
         output: [],
         state: [3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50],
         relativeBase: 0,
+        waitingForInput: false,
       });
     });
 
