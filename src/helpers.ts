@@ -1,4 +1,4 @@
-export const splitLines = (text: string) =>
+export const splitLines = (text: string): string[] =>
   text.split(/\r?\n/).map(line => line.trim());
 
 export const permutator = <T>(arr: T[]): T[][] => {
