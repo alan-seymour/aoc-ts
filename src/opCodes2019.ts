@@ -7,6 +7,7 @@ export type SystemState = {
   input: number[];
   output: number[];
   relativeBase: number;
+  waitingForInput: boolean;
 };
 
 type ParameterMode = 'Position' | 'Immediate' | 'Relative';
@@ -90,6 +91,7 @@ export const add = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -113,6 +115,7 @@ export const multiply = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -120,6 +123,17 @@ export const readInput = (
   { state, index, input, output, halted, relativeBase }: SystemState,
   modes: ParameterMode[],
 ): SystemState => {
+  if (input.length === 0) {
+    return {
+      state: [...state],
+      index,
+      halted: false,
+      input: [...input],
+      output: [...output],
+      relativeBase,
+      waitingForInput: true,
+    };
+  }
   const writeLocation = getWriteLocation(
     state,
     index + 1,
@@ -135,6 +149,7 @@ export const readInput = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -150,6 +165,7 @@ export const writeOutput = (
     input: [...input],
     output: [...output, param1],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -166,6 +182,7 @@ export const jumpIfTrue = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -182,6 +199,7 @@ export const jumpIfFalse = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -205,6 +223,7 @@ export const lessThan = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -228,6 +247,7 @@ export const equalTo = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -243,6 +263,7 @@ export const adjustRelativeBase = (
     input: [...input],
     output: [...output],
     relativeBase: relativeBase + param1,
+    waitingForInput: false,
   };
 };
 
@@ -257,6 +278,7 @@ export const halt = (
     input: [...input],
     output: [...output],
     relativeBase,
+    waitingForInput: false,
   };
 };
 
@@ -301,6 +323,7 @@ export const runToCompletetion = (
     output: [],
     input,
     relativeBase: 0,
+    waitingForInput: false,
   };
 
   while (!state.halted) {
@@ -322,9 +345,37 @@ export const runUntilOutputOrHalt = ({
     output: [],
     input: [...input],
     relativeBase: 0,
+    waitingForInput: false,
   };
 
   while (!runningState.halted && runningState.output.length === 0) {
+    runningState = runOpcode(runningState);
+  }
+  return runningState;
+};
+
+export const runUntilOutputOrWaitingForInput = ({
+  state,
+  index,
+  halted,
+  relativeBase,
+  input,
+}: SystemState): SystemState => {
+  let runningState: SystemState = {
+    state: [...state],
+    index,
+    halted,
+    output: [],
+    input: [...input],
+    relativeBase: relativeBase,
+    waitingForInput: false,
+  };
+
+  while (
+    !runningState.halted &&
+    runningState.output.length === 0 &&
+    !runningState.waitingForInput
+  ) {
     runningState = runOpcode(runningState);
   }
   return runningState;
