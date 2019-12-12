@@ -142,7 +142,6 @@ const runUntilLoop = (moons: MoonState[]): number => {
       if (yMap.has(yhash)) {
         const first = yMap.get(yhash)!;
         yLoop = count - first;
-        console.log(yhash);
       } else {
         yMap.set(yhash, count);
       }
