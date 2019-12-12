@@ -24,7 +24,7 @@ export const decomposeLine = (line: string): Claim => {
       leftOffset: parseInt(matches[2], 10),
       topOffset: parseInt(matches[3], 10),
       width: parseInt(matches[4], 10),
-      height: parseInt(matches[5], 10)
+      height: parseInt(matches[5], 10),
     };
   }
   throw Error(`invalid input ${line}`);

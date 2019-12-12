@@ -29,11 +29,11 @@ export const parseInput = (input: string): WirePath[] => {
         if (dir === 'U' || dir === 'D' || dir === 'L' || dir === 'R') {
           return {
             direction: dir,
-            distance: parseInt(stepA.join(''), 10)
+            distance: parseInt(stepA.join(''), 10),
           };
         }
         throw new Error('Bad Input');
-      }
+      },
     );
   });
   return wirePaths;
@@ -45,25 +45,25 @@ const takeStep = (step: Step, prevPoint: WirePoint): WirePoint => {
       return {
         x: prevPoint.x,
         y: prevPoint.y + 1,
-        length: prevPoint.length + 1
+        length: prevPoint.length + 1,
       };
     case 'D':
       return {
         x: prevPoint.x,
         y: prevPoint.y - 1,
-        length: prevPoint.length + 1
+        length: prevPoint.length + 1,
       };
     case 'L':
       return {
         x: prevPoint.x - 1,
         y: prevPoint.y,
-        length: prevPoint.length + 1
+        length: prevPoint.length + 1,
       };
     case 'R':
       return {
         x: prevPoint.x + 1,
         y: prevPoint.y,
-        length: prevPoint.length + 1
+        length: prevPoint.length + 1,
       };
   }
 };
@@ -84,7 +84,7 @@ const pathToUniquePoints = (path: WirePath) => {
         ) {
           uniquePoints.set(
             JSON.stringify({ x: newPoint.x, y: newPoint.y }),
-            newPoint.length
+            newPoint.length,
           );
         }
         newPoints.push(newPoint);
@@ -92,14 +92,14 @@ const pathToUniquePoints = (path: WirePath) => {
       }
       return newPoints;
     },
-    [{ x: 0, y: 0, length: 0 }]
+    [{ x: 0, y: 0, length: 0 }],
   );
   return uniquePoints;
 };
 
 const overlapBetweenPointsPath = (
   existingPoints: Map<string, number>,
-  path: WirePath
+  path: WirePath,
 ): IntersectionPoint[] => {
   const overlaps: IntersectionPoint[] = [];
   path.reduce(
@@ -113,12 +113,12 @@ const overlapBetweenPointsPath = (
         newPoint = takeStep(step, prevPoint);
 
         const pointA = existingPoints.get(
-          JSON.stringify({ x: newPoint.x, y: newPoint.y })
+          JSON.stringify({ x: newPoint.x, y: newPoint.y }),
         );
         if (pointA) {
           overlaps.push({
             originDistance: Math.abs(newPoint.x) + Math.abs(newPoint.y),
-            combinedDistance: pointA + newPoint.length
+            combinedDistance: pointA + newPoint.length,
           });
         }
         newPoints.push(newPoint);
@@ -126,7 +126,7 @@ const overlapBetweenPointsPath = (
       }
       return newPoints;
     },
-    [{ x: 0, y: 0, length: 0 }]
+    [{ x: 0, y: 0, length: 0 }],
   );
   return overlaps;
 };
