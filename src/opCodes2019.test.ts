@@ -4,7 +4,6 @@ import {
   runOpcode,
   getValue,
   adjustRelativeBase,
-  runUntilOutputOrWaitingForInput,
 } from './opCodes2019';
 
 describe('Op codes', () => {

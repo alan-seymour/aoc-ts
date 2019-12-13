@@ -354,7 +354,7 @@ export const runUntilOutputOrHalt = ({
   return runningState;
 };
 
-export const runUntilOutputOrWaitingForInput = ({
+export const runUntilWaitingForInput = ({
   state,
   index,
   halted,
@@ -371,11 +371,7 @@ export const runUntilOutputOrWaitingForInput = ({
     waitingForInput: false,
   };
 
-  while (
-    !runningState.halted &&
-    runningState.output.length === 0 &&
-    !runningState.waitingForInput
-  ) {
+  while (!runningState.halted && !runningState.waitingForInput) {
     runningState = runOpcode(runningState);
   }
   return runningState;
