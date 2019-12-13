@@ -1,6 +1,5 @@
-import { splitLines } from './helpers';
 import { PuzzleDay } from './puzzleDay';
-import { runToCompletetion, SystemState } from './opCodes2019';
+import { IntCodeComputer } from './opCodes2019';
 
 export const parseInput = (input: string) => {
   const numbers = input.split(',').map(num => parseInt(num, 10));
@@ -10,13 +9,15 @@ export const parseInput = (input: string) => {
 export class Puzzle201905 extends PuzzleDay {
   part1() {
     const input = parseInput(this.input);
-    const state = runToCompletetion(input, [1]);
-    return `${state.output.pop()}`;
+    const computer = new IntCodeComputer({ state: input, input: [1] });
+    computer.runUntilWaitingForInput();
+    return `${computer.output.pop()}`;
   }
 
   part2() {
     const input = parseInput(this.input);
-    const state = runToCompletetion(input, [5]);
-    return `${state.output.pop()}`;
+    const computer = new IntCodeComputer({ state: input, input: [5] });
+    computer.runUntilWaitingForInput();
+    return `${computer.output.pop()}`;
   }
 }

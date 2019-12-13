@@ -1,5 +1,5 @@
 import { PuzzleDay } from './puzzleDay';
-import { runToCompletetion, SystemState } from './opCodes2019';
+import { IntCodeComputer } from './opCodes2019';
 
 export const parseInput = (input: string) => {
   const numbers = input.split(',').map(num => parseInt(num, 10));
@@ -10,11 +10,13 @@ export const runWithNounVerb = (
   state: number[],
   noun: number,
   verb: number,
-) => {
+): IntCodeComputer => {
   const runState = [...state];
   runState[1] = noun;
   runState[2] = verb;
-  return runToCompletetion(runState, []);
+  const computer = new IntCodeComputer({ state: runState });
+  computer.runUntilWaitingForInput();
+  return computer;
 };
 
 export class Puzzle201902 extends PuzzleDay {

@@ -1,6 +1,6 @@
 import { permutator } from './helpers';
 import { PuzzleDay } from './puzzleDay';
-import { runUntilWaitingForInput, SystemState } from './opCodes2019';
+import { IntCodeComputer } from './opCodes2019';
 
 export const parseInput = (input: string) => {
   const numbers = input.split(',').map(num => parseInt(num, 10));
@@ -161,25 +161,16 @@ const handleOutput = (grid: Grid, output: number[]) => {
 };
 
 const runMachine = (input: number[], grid: Grid) => {
-  let state: SystemState = {
-    state: [...input],
-    index: 0,
-    halted: false,
-    output: [],
-    input: [],
-    relativeBase: 0,
-    waitingForInput: false,
-  };
+  const computer = new IntCodeComputer({ state: input });
 
-  while (!state.halted) {
-    state = runUntilWaitingForInput(state);
-    if (state.halted) {
+  while (!computer.halted) {
+    computer.runUntilWaitingForInput();
+    if (computer.halted) {
       break;
-    } else if (state.waitingForInput) {
-      handleOutput(grid, state.output);
-      state.output = [];
-      state.input.push(grid.getCurrentColor());
     }
+    handleOutput(grid, computer.output);
+    computer.output = [];
+    computer.input.push(grid.getCurrentColor());
   }
 };
 

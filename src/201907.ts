@@ -1,10 +1,6 @@
 import { permutator } from './helpers';
 import { PuzzleDay } from './puzzleDay';
-import {
-  runToCompletetion,
-  SystemState,
-  runUntilOutputOrHalt,
-} from './opCodes2019';
+import { IntCodeComputer } from './opCodes2019';
 
 export const parseInput = (input: string) => {
   const numbers = input.split(',').map(num => parseInt(num, 10));
@@ -15,96 +11,85 @@ export const runAplifiersWithPhases = (
   state: number[],
   phases: number[],
 ): number => {
-  const outputA = runToCompletetion(state, [phases.shift()!, 0]).output;
-  const outputB = runToCompletetion(state, [phases.shift()!, outputA[0]])
-    .output;
-  const outputC = runToCompletetion(state, [phases.shift()!, outputB[0]])
-    .output;
-  const outputD = runToCompletetion(state, [phases.shift()!, outputC[0]])
-    .output;
-  const outputE = runToCompletetion(state, [phases.shift()!, outputD[0]])
-    .output;
+  const amplifierA = new IntCodeComputer({
+    state: state,
+    input: [phases[0], 0],
+  });
+  amplifierA.runUntilWaitingForInput();
 
-  return outputE[0];
+  const amplifierB = new IntCodeComputer({
+    state: state,
+    input: [phases[1], amplifierA.output.pop()!],
+  });
+  amplifierB.runUntilWaitingForInput();
+
+  const amplifierC = new IntCodeComputer({
+    state: state,
+    input: [phases[2], amplifierB.output.pop()!],
+  });
+  amplifierC.runUntilWaitingForInput();
+
+  const amplifierD = new IntCodeComputer({
+    state: state,
+    input: [phases[3], amplifierC.output.pop()!],
+  });
+  amplifierD.runUntilWaitingForInput();
+
+  const amplifierE = new IntCodeComputer({
+    state: state,
+    input: [phases[4], amplifierD.output.pop()!],
+  });
+  amplifierE.runUntilWaitingForInput();
+
+  return amplifierE.output[0];
 };
 
 export const runAmplifierLoop = (
   initialState: number[],
   phases: number[],
 ): number => {
-  let amplifierAState: SystemState = {
-    state: [...initialState],
-    index: 0,
-    halted: false,
-    output: [],
+  const amplifierA = new IntCodeComputer({
+    state: initialState,
     input: [phases[0], 0],
-    relativeBase: 0,
-    waitingForInput: false,
-  };
-  let amplifierBState: SystemState = {
-    state: [...initialState],
-    index: 0,
-    halted: false,
-    output: [],
+  });
+  const amplifierB = new IntCodeComputer({
+    state: initialState,
     input: [phases[1]],
-    relativeBase: 0,
-    waitingForInput: false,
-  };
-  let amplifierCState: SystemState = {
-    state: [...initialState],
-    index: 0,
-    halted: false,
-    output: [],
+  });
+  const amplifierC = new IntCodeComputer({
+    state: initialState,
     input: [phases[2]],
-    relativeBase: 0,
-    waitingForInput: false,
-  };
-  let amplifierDState: SystemState = {
-    state: [...initialState],
-    index: 0,
-    halted: false,
-    output: [],
+  });
+  const amplifierD = new IntCodeComputer({
+    state: initialState,
     input: [phases[3]],
-    relativeBase: 0,
-    waitingForInput: false,
-  };
-  let amplifierEState: SystemState = {
-    state: [...initialState],
-    index: 0,
-    halted: false,
-    output: [],
+  });
+  const amplifierE = new IntCodeComputer({
+    state: initialState,
     input: [phases[4]],
-    relativeBase: 0,
-    waitingForInput: false,
-  };
+  });
+  let answer = 0;
 
-  while (!amplifierEState.halted) {
-    const possibleOutput = amplifierAState.input[0];
-    amplifierAState = runUntilOutputOrHalt(amplifierAState);
-    const aOutput = amplifierAState.output.pop();
-    if (amplifierAState.halted) {
-      return possibleOutput;
-    }
-    amplifierBState.input.push(aOutput!);
+  while (!amplifierA.halted) {
+    amplifierA.runUntilWaitingForInput();
 
-    amplifierBState = runUntilOutputOrHalt(amplifierBState);
-    const bOutput = amplifierBState.output.pop();
-    amplifierCState.input.push(bOutput!);
+    amplifierB.input.push(amplifierA.output.pop()!);
+    amplifierB.runUntilWaitingForInput();
 
-    amplifierCState = runUntilOutputOrHalt(amplifierCState);
-    const cOutput = amplifierCState.output.pop();
-    amplifierDState.input.push(cOutput!);
+    amplifierC.input.push(amplifierB.output.pop()!);
+    amplifierC.runUntilWaitingForInput();
 
-    amplifierDState = runUntilOutputOrHalt(amplifierDState);
-    const dOutput = amplifierDState.output.pop();
-    amplifierEState.input.push(dOutput!);
+    amplifierD.input.push(amplifierC.output.pop()!);
+    amplifierD.runUntilWaitingForInput();
 
-    amplifierEState = runUntilOutputOrHalt(amplifierEState);
-    const eOutput = amplifierEState.output.pop();
-    amplifierAState.input.push(eOutput!);
+    amplifierE.input.push(amplifierD.output.pop()!);
+    amplifierE.runUntilWaitingForInput();
+    const eOutput = amplifierE.output.pop();
+
+    amplifierA.input.push(eOutput!);
+    answer = eOutput!;
   }
-
-  throw new Error('whut?');
+  return answer;
 };
 
 export class Puzzle201907 extends PuzzleDay {

@@ -1,16 +1,16 @@
 import { equal } from 'assert';
 
-export type SystemState = {
-  state: number[];
-  index: number;
-  halted: boolean;
-  input: number[];
-  output: number[];
-  relativeBase: number;
-  waitingForInput: boolean;
+type IntCodeConstructor = {
+  state?: number[];
+  index?: number;
+  halted?: boolean;
+  input?: number[];
+  output?: number[];
+  relativeBase?: number;
+  waitingForInput?: boolean;
 };
 
-type ParameterMode = 'Position' | 'Immediate' | 'Relative';
+type ParameterMode = 'Position' | 'Immediate' | 'Relative' | undefined;
 
 const intToMode: { [k: number]: ParameterMode } = {
   0: 'Position',
@@ -37,342 +37,186 @@ const fieldToOpcode = (
   };
 };
 
-export const getValue = (
-  state: number[],
-  position: number,
-  mode: ParameterMode | undefined,
-  relativeBase: number,
-): number => {
-  let value: number;
-  switch (mode) {
-    case 'Immediate':
-      value = state[position];
-      break;
-    case 'Relative':
-      value = state[state[position] + relativeBase];
-      break;
-    case 'Position':
-    default:
-      value = state[state[position]];
-      break;
+export class IntCodeComputer {
+  state: number[];
+  index: number;
+  halted: boolean;
+  input: number[];
+  output: number[];
+  relativeBase: number;
+  waitingForInput: boolean;
+
+  constructor({
+    state = [],
+    index = 0,
+    halted = false,
+    input = [],
+    output = [],
+    relativeBase = 0,
+    waitingForInput = false,
+  }: IntCodeConstructor) {
+    this.state = [...state];
+    this.index = index;
+    this.halted = halted;
+    this.input = [...input];
+    this.output = [...output];
+    this.relativeBase = relativeBase;
+    this.waitingForInput = waitingForInput;
   }
-  return value ? value : 0;
-};
 
-export const getWriteLocation = (
-  state: number[],
-  position: number,
-  mode: ParameterMode | undefined,
-  relativeBase: number,
-): number => {
-  if (mode === 'Relative') {
-    return state[position] + relativeBase;
+  getValue(position: number, mode: ParameterMode): number {
+    let value: number;
+    switch (mode) {
+      case 'Immediate':
+        value = this.state[position];
+        break;
+      case 'Relative':
+        value = this.state[this.state[position] + this.relativeBase];
+        break;
+      case 'Position':
+      default:
+        value = this.state[this.state[position]];
+        break;
+    }
+    return value ? value : 0;
   }
-  return state[position];
-};
 
-export const add = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
-  const writeLocation = getWriteLocation(
-    state,
-    index + 3,
-    modes.shift(),
-    relativeBase,
-  );
-  state[writeLocation] = param1 + param2;
-  return {
-    state: [...state],
-    index: index === writeLocation ? index : index + 4,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-export const multiply = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
-  const writeLocation = getWriteLocation(
-    state,
-    index + 3,
-    modes.shift(),
-    relativeBase,
-  );
-  state[writeLocation] = param1 * param2;
-  return {
-    state: [...state],
-    index: index === writeLocation ? index : index + 4,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-export const readInput = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  if (input.length === 0) {
-    return {
-      state: [...state],
-      index,
-      halted: false,
-      input: [...input],
-      output: [...output],
-      relativeBase,
-      waitingForInput: true,
-    };
+  writeValue(position: number, mode: ParameterMode, value: number): number {
+    let location: number;
+    if (mode === 'Relative') {
+      location = this.state[position] + this.relativeBase;
+    } else {
+      location = this.state[position];
+    }
+    this.state[location] = value;
+    return location;
   }
-  const writeLocation = getWriteLocation(
-    state,
-    index + 1,
-    modes.shift(),
-    relativeBase,
-  );
-  const inputValue = input.shift();
-  state[writeLocation] = inputValue ? inputValue : 0;
-  return {
-    state: [...state],
-    index: index === writeLocation ? index : index + 2,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
 
-export const writeOutput = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  return {
-    state: [...state],
-    index: index + 2,
-    halted: false,
-    input: [...input],
-    output: [...output, param1],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-export const jumpIfTrue = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
-  return {
-    state: [...state],
-    index: param1 !== 0 ? param2 : index + 3,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-export const jumpIfFalse = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
-  return {
-    state: [...state],
-    index: param1 === 0 ? param2 : index + 3,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-export const lessThan = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
-  const writeLocation = getWriteLocation(
-    state,
-    index + 3,
-    modes.shift(),
-    relativeBase,
-  );
-  state[writeLocation] = param1 < param2 ? 1 : 0;
-  return {
-    state: [...state],
-    index: index === writeLocation ? index : index + 4,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-export const equalTo = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  const param2 = getValue(state, index + 2, modes.shift(), relativeBase);
-  const writeLocation = getWriteLocation(
-    state,
-    index + 3,
-    modes.shift(),
-    relativeBase,
-  );
-  state[writeLocation] = param1 === param2 ? 1 : 0;
-  return {
-    state: [...state],
-    index: index === writeLocation ? index : index + 4,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-export const adjustRelativeBase = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  const param1 = getValue(state, index + 1, modes.shift(), relativeBase);
-  return {
-    state: [...state],
-    index: index + 2,
-    halted: false,
-    input: [...input],
-    output: [...output],
-    relativeBase: relativeBase + param1,
-    waitingForInput: false,
-  };
-};
-
-export const halt = (
-  { state, index, input, output, halted, relativeBase }: SystemState,
-  modes: ParameterMode[],
-): SystemState => {
-  return {
-    state: [...state],
-    index: index + 1,
-    halted: true,
-    input: [...input],
-    output: [...output],
-    relativeBase,
-    waitingForInput: false,
-  };
-};
-
-type OpCodeFunction = (
-  state: SystemState,
-  modes: ParameterMode[],
-) => SystemState;
-
-type OpCodes = {
-  [key: number]: OpCodeFunction;
-};
-
-const codes: OpCodes = {
-  1: add,
-  2: multiply,
-  3: readInput,
-  4: writeOutput,
-  5: jumpIfTrue,
-  6: jumpIfFalse,
-  7: lessThan,
-  8: equalTo,
-  9: adjustRelativeBase,
-  99: halt,
-};
-
-export const runOpcode = (state: SystemState): SystemState => {
-  const opcode = fieldToOpcode(state.state[state.index]);
-  if (codes[opcode.opcode]) {
-    return codes[opcode.opcode](state, opcode.modes);
+  add(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    const param2 = this.getValue(this.index + 2, modes.shift());
+    const answer = param1 + param2;
+    const location = this.writeValue(this.index + 3, modes.shift(), answer);
+    this.index = this.index === location ? this.index : this.index + 4;
   }
-  return state;
-};
 
-export const runToCompletetion = (
-  initialState: number[],
-  input: number[],
-): SystemState => {
-  let state: SystemState = {
-    state: [...initialState],
-    index: 0,
-    halted: false,
-    output: [],
-    input,
-    relativeBase: 0,
-    waitingForInput: false,
-  };
-
-  while (!state.halted) {
-    state = runOpcode(state);
+  multiply(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    const param2 = this.getValue(this.index + 2, modes.shift());
+    const answer = param1 * param2;
+    const location = this.writeValue(this.index + 3, modes.shift(), answer);
+    this.index = this.index === location ? this.index : this.index + 4;
   }
-  return state;
-};
 
-export const runUntilOutputOrHalt = ({
-  state,
-  index,
-  halted,
-  input,
-}: SystemState): SystemState => {
-  let runningState: SystemState = {
-    state: [...state],
-    index,
-    halted,
-    output: [],
-    input: [...input],
-    relativeBase: 0,
-    waitingForInput: false,
-  };
-
-  while (!runningState.halted && runningState.output.length === 0) {
-    runningState = runOpcode(runningState);
+  readInput(modes: ParameterMode[]): void {
+    const input = this.input.shift();
+    if (input === undefined) {
+      this.waitingForInput = true;
+      return;
+    }
+    const location = this.writeValue(this.index + 1, modes.shift(), input);
+    this.index = this.index === location ? this.index : this.index + 2;
+    this.waitingForInput = false;
   }
-  return runningState;
-};
 
-export const runUntilWaitingForInput = ({
-  state,
-  index,
-  halted,
-  relativeBase,
-  input,
-}: SystemState): SystemState => {
-  let runningState: SystemState = {
-    state: [...state],
-    index,
-    halted,
-    output: [],
-    input: [...input],
-    relativeBase: relativeBase,
-    waitingForInput: false,
-  };
-
-  while (!runningState.halted && !runningState.waitingForInput) {
-    runningState = runOpcode(runningState);
+  writeOutput(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    this.index = this.index + 2;
+    this.output.push(param1);
   }
-  return runningState;
-};
+
+  jumpIfTrue(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    const param2 = this.getValue(this.index + 2, modes.shift());
+
+    this.index = param1 !== 0 ? param2 : this.index + 3;
+  }
+
+  jumpIfFalse(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    const param2 = this.getValue(this.index + 2, modes.shift());
+
+    this.index = param1 === 0 ? param2 : this.index + 3;
+  }
+
+  lessThan(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    const param2 = this.getValue(this.index + 2, modes.shift());
+    const value = param1 < param2 ? 1 : 0;
+    const location = this.writeValue(this.index + 3, modes.shift(), value);
+    this.index = this.index === location ? this.index : this.index + 4;
+  }
+
+  equalTo(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    const param2 = this.getValue(this.index + 2, modes.shift());
+    const value = param1 === param2 ? 1 : 0;
+    const location = this.writeValue(this.index + 3, modes.shift(), value);
+    this.index = this.index === location ? this.index : this.index + 4;
+  }
+
+  adjustRelativeBase(modes: ParameterMode[]): void {
+    const param1 = this.getValue(this.index + 1, modes.shift());
+    this.index = this.index + 2;
+    this.relativeBase = this.relativeBase + param1;
+  }
+
+  halt(modes: ParameterMode[]): void {
+    this.halted = true;
+  }
+
+  step(): void {
+    const { opcode, modes } = fieldToOpcode(this.state[this.index]);
+    switch (opcode) {
+      case 1:
+        this.add(modes);
+        break;
+      case 2:
+        this.multiply(modes);
+        break;
+      case 3:
+        this.readInput(modes);
+        break;
+      case 4:
+        this.writeOutput(modes);
+        break;
+      case 5:
+        this.jumpIfTrue(modes);
+        break;
+      case 6:
+        this.jumpIfFalse(modes);
+        break;
+      case 7:
+        this.lessThan(modes);
+        break;
+      case 8:
+        this.equalTo(modes);
+        break;
+      case 9:
+        this.adjustRelativeBase(modes);
+        break;
+      case 99:
+        this.halt(modes);
+        break;
+    }
+  }
+
+  runUntilWaitingForInput(): void {
+    this.waitingForInput = false;
+    while (!this.halted && !this.waitingForInput) {
+      this.step();
+    }
+  }
+
+  clone(): IntCodeComputer {
+    return new IntCodeComputer({
+      state: [...this.state],
+      index: this.index,
+      halted: this.halted,
+      input: [...this.input],
+      output: [...this.output],
+      relativeBase: this.relativeBase,
+      waitingForInput: this.waitingForInput,
+    });
+  }
+}

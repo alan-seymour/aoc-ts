@@ -1,10 +1,6 @@
 import { permutator } from './helpers';
 import { PuzzleDay } from './puzzleDay';
-import {
-  runToCompletetion,
-  SystemState,
-  runUntilWaitingForInput,
-} from './opCodes2019';
+import { IntCodeComputer } from './opCodes2019';
 import { chunk } from 'lodash';
 
 export type GameState = {
@@ -43,34 +39,28 @@ export const getNewGameState = (
 const playGame = (input: number[]): number => {
   const intCode = [...input];
   intCode[0] = 2;
-  let state: SystemState = {
-    state: intCode,
-    index: 0,
-    halted: false,
-    input: [],
-    output: [],
-    waitingForInput: false,
-    relativeBase: 0,
-  };
+  const computer = new IntCodeComputer({ state: intCode });
   let gameState: GameState = {
     ballX: 0,
     paddleX: 0,
     paddleMovement: 0,
   };
-  state = runUntilWaitingForInput(state);
-  while (!state.halted) {
-    gameState = getNewGameState(state.output, gameState);
-    state.input.push(gameState.paddleMovement);
-    state = runUntilWaitingForInput(state);
+  computer.runUntilWaitingForInput();
+  while (!computer.halted) {
+    gameState = getNewGameState(computer.output, gameState);
+    computer.input.push(gameState.paddleMovement);
+    computer.output = [];
+    computer.runUntilWaitingForInput();
   }
-  return findSingleInstance(state.output, -1, 0)?.[2] ?? 0;
+  return findSingleInstance(computer.output, -1, 0)?.[2] ?? 0;
 };
 
 export class Puzzle201913 extends PuzzleDay {
   part1() {
     const intcode = parseInput(this.input);
-    const systemOutput = runToCompletetion(intcode, []);
-    const blocks = countBlocks(systemOutput.output);
+    const computer = new IntCodeComputer({ state: intcode });
+    computer.runUntilWaitingForInput();
+    const blocks = countBlocks(computer.output);
     return `${blocks}`;
   }
 
