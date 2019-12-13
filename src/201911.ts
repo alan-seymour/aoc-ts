@@ -1,6 +1,6 @@
 import { permutator } from './helpers';
 import { PuzzleDay } from './puzzleDay';
-import { runUntilOutputOrWaitingForInput, SystemState } from './opCodes2019';
+import { runUntilWaitingForInput, SystemState } from './opCodes2019';
 
 export const parseInput = (input: string) => {
   const numbers = input.split(',').map(num => parseInt(num, 10));
@@ -150,6 +150,16 @@ export class Grid {
   }
 }
 
+const handleOutput = (grid: Grid, output: number[]) => {
+  output.forEach((v, i) => {
+    if (i % 2 == 0) {
+      grid.setCurrentColor(v);
+    } else {
+      grid.turnAndMoveRobot(numberToTurn(v));
+    }
+  });
+};
+
 const runMachine = (input: number[], grid: Grid) => {
   let state: SystemState = {
     state: [...input],
@@ -161,23 +171,14 @@ const runMachine = (input: number[], grid: Grid) => {
     waitingForInput: false,
   };
 
-  let outputCount = 0;
-
   while (!state.halted) {
-    state = runUntilOutputOrWaitingForInput(state);
+    state = runUntilWaitingForInput(state);
     if (state.halted) {
       break;
     } else if (state.waitingForInput) {
+      handleOutput(grid, state.output);
+      state.output = [];
       state.input.push(grid.getCurrentColor());
-    } else if (outputCount % 2 === 0) {
-      const outputColor = state.output.pop();
-      const color = outputColor ? outputColor : 0;
-      grid.setCurrentColor(color);
-      outputCount++;
-    } else {
-      const turn = numberToTurn(state.output.pop());
-      grid.turnAndMoveRobot(turn);
-      outputCount++;
     }
   }
 };
