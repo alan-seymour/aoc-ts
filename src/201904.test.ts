@@ -1,73 +1,54 @@
 import {
   parseInput,
-  numberToSequences,
   hasDouble,
   hasMinDouble,
-  sequencesIncrement,
+  numberIncrements,
 } from './201904';
 
 describe('201904', () => {
   test('parseInput', () => {
     const input = `1234-5742`;
     const result = parseInput(input);
-    expect(result).toEqual(['1234', '5742']);
+    expect(result).toEqual([1234, 5742]);
   });
 
-  test('number to sequences', () => {
-    const seq = numberToSequences(1223);
-    expect(seq).toEqual([
-      { digit: 0, length: 0 },
-      { digit: 1, length: 1 },
-      { digit: 2, length: 2 },
-      { digit: 3, length: 1 },
-    ]);
-  });
-
-  test('sequencesIncrement true', () => {
-    const seq = numberToSequences(1223);
-    const result = sequencesIncrement(seq);
+  test('numberIncrements true', () => {
+    const result = numberIncrements(1223);
     expect(result).toEqual(true);
   });
 
-  test('sequencesIncrement false', () => {
-    const seq = numberToSequences(12232);
-    const result = sequencesIncrement(seq);
+  test('numberIncrements false', () => {
+    const result = numberIncrements(12232);
     expect(result).toEqual(false);
   });
 
   test('hasDouble true', () => {
-    const seq = numberToSequences(12232);
-    const result = hasDouble(seq);
+    const result = hasDouble(12232);
     expect(result).toEqual(true);
   });
 
-  test('hasDouble false tripple', () => {
-    const seq = numberToSequences(122232);
-    const result = hasDouble(seq);
+  test('hasDouble false triple', () => {
+    const result = hasDouble(122232);
     expect(result).toEqual(false);
   });
 
   test('hasDouble false', () => {
-    const seq = numberToSequences(1234);
-    const result = hasDouble(seq);
+    const result = hasDouble(1234);
     expect(result).toEqual(false);
   });
 
   test('minDouble true', () => {
-    const seq = numberToSequences(12232);
-    const result = hasMinDouble(seq);
+    const result = hasMinDouble(12232);
     expect(result).toEqual(true);
   });
 
-  test('minDouble true tripple', () => {
-    const seq = numberToSequences(122232);
-    const result = hasMinDouble(seq);
+  test('minDouble true triple', () => {
+    const result = hasMinDouble(122232);
     expect(result).toEqual(true);
   });
 
   test('minDouble false', () => {
-    const seq = numberToSequences(1234);
-    const result = hasMinDouble(seq);
+    const result = hasMinDouble(1234);
     expect(result).toEqual(false);
   });
 });

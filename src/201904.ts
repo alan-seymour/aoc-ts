@@ -1,65 +1,31 @@
 import { PuzzleDay } from './puzzleDay';
 
-export const parseInput = (input: string): string[] => {
-  const [min, max] = input.split('-');
-  return [min, max];
+export const parseInput = (input: string): number[] => {
+  const values = input.split('-').map(v => parseInt(v, 10));
+  return values;
 };
 
-type NumberSequence = {
-  digit: number;
-  length: number;
-};
+const incrementRegex = new RegExp(/^1*2*3*4*5*6*7*8*9*$/);
+const minDoubleRegex = new RegExp(/.*(.)\1.*/);
+const findGroupsRegex = new RegExp(/(.)\1+/g);
 
-export const numberToSequences = (input: number): NumberSequence[] => {
-  const inputA = input
-    .toString()
-    .split('')
-    .map(c => parseInt(c, 10));
+export const numberIncrements = (i: number): boolean =>
+  incrementRegex.test(i.toString());
 
-  const output: NumberSequence[] = [];
+export const hasMinDouble = (i: number): boolean =>
+  minDoubleRegex.test(i.toString());
 
-  let counter = 0;
-  inputA.reduce((prev, curr, index) => {
-    if (prev === curr) {
-      counter++;
-    } else {
-      output.push({ digit: prev, length: counter });
-      counter = 1;
-    }
-    // catch last digit
-    if (index === inputA.length - 1) {
-      output.push({ digit: curr, length: counter });
-    }
-    return curr;
-  }, 0);
-
-  return output;
-};
-
-export const sequencesIncrement = (sequences: NumberSequence[]): boolean => {
-  for (let i = 1; i < sequences.length; i++) {
-    if (sequences[i].digit < sequences[i - 1].digit) {
-      return false;
-    }
-  }
-  return true;
-};
-
-export const hasDouble = (sequences: NumberSequence[]): boolean => {
-  return sequences.some(s => s.length === 2);
-};
-
-export const hasMinDouble = (sequences: NumberSequence[]): boolean => {
-  return sequences.some(s => s.length >= 2);
+export const hasDouble = (i: number): boolean => {
+  const groups = i.toString().match(findGroupsRegex);
+  return !!groups?.find(group => group.length === 2);
 };
 
 export class Puzzle201904 extends PuzzleDay {
   part1() {
     const [min, max] = parseInput(this.input);
     let count = 0;
-    for (let i = parseInt(min, 10); i <= parseInt(max, 10); i++) {
-      const sequences = numberToSequences(i);
-      if (sequencesIncrement(sequences) && hasMinDouble(sequences)) {
+    for (let i = min; i <= max; i++) {
+      if (numberIncrements(i) && hasMinDouble(i)) {
         count++;
       }
     }
@@ -69,9 +35,8 @@ export class Puzzle201904 extends PuzzleDay {
   part2() {
     const [min, max] = parseInput(this.input);
     let count = 0;
-    for (let i = parseInt(min, 10); i <= parseInt(max, 10); i++) {
-      const sequences = numberToSequences(i);
-      if (sequencesIncrement(sequences) && hasDouble(sequences)) {
+    for (let i = min; i <= max; i++) {
+      if (numberIncrements(i) && hasDouble(i)) {
         count++;
       }
     }
