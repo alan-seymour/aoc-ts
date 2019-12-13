@@ -1,8 +1,10 @@
 import { splitLines } from './helpers';
 import { PuzzleDay } from './puzzleDay';
 
+type Direction = 'U' | 'D' | 'L' | 'R';
+
 type Step = {
-  direction: 'U' | 'D' | 'L' | 'R';
+  direction: Direction;
   distance: number;
 };
 
@@ -39,60 +41,40 @@ export const parseInput = (input: string): WirePath[] => {
   return wirePaths;
 };
 
-const takeStep = (step: Step, prevPoint: WirePoint): WirePoint => {
-  switch (step.direction) {
-    case 'U':
-      return {
-        x: prevPoint.x,
-        y: prevPoint.y + 1,
-        length: prevPoint.length + 1,
-      };
-    case 'D':
-      return {
-        x: prevPoint.x,
-        y: prevPoint.y - 1,
-        length: prevPoint.length + 1,
-      };
-    case 'L':
-      return {
-        x: prevPoint.x - 1,
-        y: prevPoint.y,
-        length: prevPoint.length + 1,
-      };
-    case 'R':
-      return {
-        x: prevPoint.x + 1,
-        y: prevPoint.y,
-        length: prevPoint.length + 1,
-      };
-  }
+type StepFuncType = {
+  [K in Direction]: (prevPoint: WirePoint) => WirePoint;
+};
+
+const takeStep: StepFuncType = {
+  U: ({ x, y, length }: WirePoint) => ({ x, y: y + 1, length: length + 1 }),
+  D: ({ x, y, length }: WirePoint) => ({ x, y: y - 1, length: length + 1 }),
+  L: ({ x, y, length }: WirePoint) => ({ x: x - 1, y, length: length + 1 }),
+  R: ({ x, y, length }: WirePoint) => ({ x: x + 1, y, length: length + 1 }),
+};
+
+const hashPoint = (point: WirePoint): string => {
+  return `${point.x},${point.y}`;
 };
 
 const pathToUniquePoints = (path: WirePath) => {
   const uniquePoints = new Map<string, number>();
-  const visited = path.reduce(
-    (visitedPoints: WirePoint[], step: Step) => {
-      const newPoints = [...visitedPoints];
+  path.reduce(
+    (lastPoint: WirePoint, step: Step) => {
       let distance = step.distance;
-      let prevPoint: WirePoint;
-      let newPoint: WirePoint;
+      let newPoint: WirePoint = lastPoint;
+      let prevPoint: WirePoint = lastPoint;
       while (distance > 0) {
-        prevPoint = newPoints[newPoints.length - 1];
-        newPoint = takeStep(step, prevPoint);
-        if (
-          !uniquePoints.get(JSON.stringify({ x: newPoint.x, y: newPoint.y }))
-        ) {
-          uniquePoints.set(
-            JSON.stringify({ x: newPoint.x, y: newPoint.y }),
-            newPoint.length,
-          );
+        newPoint = takeStep[step.direction](prevPoint);
+        const pointHash = hashPoint(newPoint);
+        if (!uniquePoints.get(pointHash)) {
+          uniquePoints.set(pointHash, newPoint.length);
         }
-        newPoints.push(newPoint);
         distance--;
+        prevPoint = newPoint;
       }
-      return newPoints;
+      return newPoint;
     },
-    [{ x: 0, y: 0, length: 0 }],
+    { x: 0, y: 0, length: 0 },
   );
   return uniquePoints;
 };
@@ -103,30 +85,26 @@ const overlapBetweenPointsPath = (
 ): IntersectionPoint[] => {
   const overlaps: IntersectionPoint[] = [];
   path.reduce(
-    (visitedPoints: WirePoint[], step: Step) => {
-      const newPoints = [...visitedPoints];
+    (lastPoint: WirePoint, step: Step) => {
       let distance = step.distance;
-      let prevPoint: WirePoint;
-      let newPoint: WirePoint;
+      let prevPoint: WirePoint = lastPoint;
+      let newPoint: WirePoint = lastPoint;
       while (distance > 0) {
-        prevPoint = newPoints[newPoints.length - 1];
-        newPoint = takeStep(step, prevPoint);
-
-        const pointA = existingPoints.get(
-          JSON.stringify({ x: newPoint.x, y: newPoint.y }),
-        );
+        newPoint = takeStep[step.direction](prevPoint);
+        const pointHash = hashPoint(newPoint);
+        const pointA = existingPoints.get(pointHash);
         if (pointA) {
           overlaps.push({
             originDistance: Math.abs(newPoint.x) + Math.abs(newPoint.y),
             combinedDistance: pointA + newPoint.length,
           });
         }
-        newPoints.push(newPoint);
         distance--;
+        prevPoint = newPoint;
       }
-      return newPoints;
+      return newPoint;
     },
-    [{ x: 0, y: 0, length: 0 }],
+    { x: 0, y: 0, length: 0 },
   );
   return overlaps;
 };
