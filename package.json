@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "astar-typescript": "^1.0.96"
+  },
   "devDependencies": {
     "@types/jest": "^23.3.14",
     "@types/lodash": "^4.14.149",
