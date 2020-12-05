@@ -1,13 +1,13 @@
-import { Puzzle202003, parseInput } from "./202003";
+import { Puzzle202003, parseInput } from './202003';
 
 let day: Puzzle202003;
 
-describe("202003", () => {
+describe('202003', () => {
   beforeEach(() => {
-    day = new Puzzle202003("");
+    day = new Puzzle202003('');
   });
 
-  test("parseInput", () => {
+  test('parseInput', () => {
     const input = `.#.
     ###
     ..#`;
@@ -15,7 +15,7 @@ describe("202003", () => {
     expect(result).toEqual([['.', '#', '.'], ['#', '#', '#'], ['.', '.', '#']]);
   });
 
-  test("part1 example1", () => {
+  test('part1 example1', () => {
     day.loadData(`..##.......
     #...#...#..
     .#....#..#.
@@ -28,10 +28,10 @@ describe("202003", () => {
     #...##....#
     .#..#...#.#`);
     const result = day.part1();
-    expect(result).toBe("7");
+    expect(result).toBe('7');
   });
 
-  test("part2 example1", () => {
+  test('part2 example1', () => {
     day.loadData(`..##.......
     #...#...#..
     .#....#..#.
@@ -44,6 +44,6 @@ describe("202003", () => {
     #...##....#
     .#..#...#.#`);
     const result = day.part2();
-    expect(result).toBe("336");
+    expect(result).toBe('336');
   });
 });

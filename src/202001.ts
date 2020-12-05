@@ -1,5 +1,5 @@
-import { splitLines } from "./helpers";
-import { PuzzleDay } from "./puzzleDay";
+import { splitLines } from './helpers';
+import { PuzzleDay } from './puzzleDay';
 
 export const parseInput = (input: string) => {
   const lines = splitLines(input);
@@ -23,7 +23,7 @@ const findSum2val = (input: number[], target: number): number[] => {
     }
   }
   return [];
-}
+};
 
 const findSum3val = (input: number[], target: number): number[] => {
   input.sort((a, b) => a - b);
@@ -47,7 +47,7 @@ const findSum3val = (input: number[], target: number): number[] => {
   }
 
   return [];
-}
+};
 
 export class Puzzle202001 extends PuzzleDay {
   part1() {

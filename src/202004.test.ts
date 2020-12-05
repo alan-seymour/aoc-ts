@@ -1,13 +1,13 @@
-import { Puzzle202004, parseInput } from "./202004";
+import { Puzzle202004, parseInput } from './202004';
 
 let day: Puzzle202004;
 
-describe("202004", () => {
+describe('202004', () => {
   beforeEach(() => {
-    day = new Puzzle202004("");
+    day = new Puzzle202004('');
   });
 
-  test("parseInput", () => {
+  test('parseInput', () => {
     const input = `ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
     byr:1937 iyr:2017 cid:147 hgt:183cm
 
@@ -37,7 +37,7 @@ describe("202004", () => {
     ]);
   });
 
-  test("part1 example1", () => {
+  test('part1 example1', () => {
     day.loadData(`ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
     byr:1937 iyr:2017 cid:147 hgt:183cm
 
@@ -52,10 +52,10 @@ describe("202004", () => {
     hcl:#cfa07d eyr:2025 pid:166559648
     iyr:2011 ecl:brn hgt:59in`);
     const result = day.part1();
-    expect(result).toBe("2");
+    expect(result).toBe('2');
   });
 
-  test("part2 invalid examples", () => {
+  test('part2 invalid examples', () => {
     day.loadData(`eyr:1972 cid:100
     hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926
 
@@ -70,10 +70,10 @@ describe("202004", () => {
     eyr:2038 hcl:74454a iyr:2023
     pid:3556412378 byr:2007`);
     const result = day.part2();
-    expect(result).toBe("0");
+    expect(result).toBe('0');
   });
 
-  test("part2 valid examples", () => {
+  test('part2 valid examples', () => {
     day.loadData(`pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
     hcl:#623a2f
 
@@ -87,6 +87,6 @@ describe("202004", () => {
 
     iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719`);
     const result = day.part2();
-    expect(result).toBe("4");
+    expect(result).toBe('4');
   });
 });

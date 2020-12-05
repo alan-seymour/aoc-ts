@@ -1,9 +1,8 @@
-import { required } from "yargs";
-import { PuzzleDay } from "./puzzleDay";
+import { PuzzleDay } from './puzzleDay';
 
 type Passport = {
   [key: string]: string;
-}
+};
 
 export const parseInput = (input: string): Passport[] => {
   const passports = input.split(/\r?\n\r?\n/).map(p => p.replace(/\n/g, ' ').split(' ')).map(g =>
@@ -41,7 +40,7 @@ const keyValidation: { [key: string]: (val: string) => boolean } = {
     if (units === 'in') {
       return value >= 59 && value <= 76;
     }
-    return false
+    return false;
   },
   'hcl': (val) => {
     return /^#[0-9a-fA-F]{6}$/.test(val);

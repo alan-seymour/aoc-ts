@@ -1,5 +1,5 @@
-import { splitLines } from "./helpers";
-import { PuzzleDay } from "./puzzleDay";
+import { splitLines } from './helpers';
+import { PuzzleDay } from './puzzleDay';
 
 type Grid = string[][];
 
@@ -20,7 +20,7 @@ const countTrees = (grid: Grid, slopeDown: number, slopeRight: number): number =
     rightOffset += slopeRight;
   }
   return treeCount;
-}
+};
 
 
 export class Puzzle202003 extends PuzzleDay {

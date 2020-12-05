@@ -1,5 +1,5 @@
-import { splitLines } from "./helpers";
-import { PuzzleDay } from "./puzzleDay";
+import { splitLines } from './helpers';
+import { PuzzleDay } from './puzzleDay';
 
 const inputRegex = /(\d+)-(\d+) (\w): (.*)/;
 
