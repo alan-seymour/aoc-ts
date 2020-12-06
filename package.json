@@ -23,7 +23,7 @@
   "scripts": {
     "build": "npm run build-ts",
     "serve": "node dist/server.js",
-    "test": "npm run build-ts && jest --coverage --verbose",
+    "test": "jest --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
