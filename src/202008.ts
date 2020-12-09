@@ -74,7 +74,7 @@ const bruteForce2 = (state: SystemState): number => {
     }
   }
   return 0;
-}
+};
 
 export class Puzzle202008 extends PuzzleDay {
   part1() {

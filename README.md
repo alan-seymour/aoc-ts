@@ -71,3 +71,4 @@ $ npm test
 | 2020 | 6   | :heavy_check_mark: | 4ms      | :heavy_check_mark: | 4ms      |
 | 2020 | 6   | :heavy_check_mark: | 88ms     | :heavy_check_mark: | 87ms     |
 | 2020 | 7   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 5ms      |
+| 2020 | 8   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 13ms     |

@@ -27,6 +27,7 @@ import { Puzzle202005 } from './202005';
 import { Puzzle202006 } from './202006';
 import { Puzzle202007 } from './202007';
 import { Puzzle202008 } from './202008';
+import { Puzzle202009 } from './202009';
 import { PuzzleDay } from './puzzleDay';
 
 const prettyTime = require('pretty-time');
@@ -135,6 +136,8 @@ const dayToInstantiatedClass = (day: string, inputFile: string): PuzzleDay => {
       return new Puzzle202007(inputFile);
     case '202008':
       return new Puzzle202008(inputFile);
+    case '202009':
+      return new Puzzle202009(inputFile);
     default:
       throw new Error('No Such Day');
   }
