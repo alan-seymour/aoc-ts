@@ -1,4 +1,4 @@
-import { getData } from './readfile';
+import { getData } from './helpers';
 
 export abstract class PuzzleDay {
   inputFile: string;
