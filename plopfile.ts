@@ -33,7 +33,10 @@ export default (plop: NodePlopAPI) => {
           pattern: /(.*Maps Here.*)/gi,
           template: "  {{puzzleDate}}: (input) => new Puzzle{{puzzleDate}}(input),\n$1"
         }
-
+        {
+          type: 'add',
+          path: 'inputs/{{puzzleDate}}.txt'
+        }
       ],
     }
   )
