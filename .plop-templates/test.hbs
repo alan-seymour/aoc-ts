@@ -1,0 +1,29 @@
+import { Puzzle{{puzzleDate}}, parseInput } from './{{puzzleDate}}';
+
+let day: Puzzle{{puzzleDate}};
+
+describe('{{puzzleDate}}', () => {
+  beforeEach(() => {
+    day = new Puzzle{{puzzleDate}}('');
+  });
+
+  test('parseInput', () => {
+    const input = `1
+    123
+    14`;
+    const result = parseInput(input);
+    expect(result).toEqual(['1', '123', '14']);
+  });
+
+  test('part 1 example 1', () => {
+    day.loadData(``);
+    const result = day.part1();
+    expect(result).toBe('');
+  });
+
+  test('part 2 example 1', () => {
+    day.loadData(``);
+    const result = day.part2();
+    expect(result).toBe('');
+  });
+});
