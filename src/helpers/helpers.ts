@@ -18,14 +18,14 @@ export const permutator = <T>(arr: T[]): T[][] => {
 };
 
 export const modInverse = (a: bigint, m: bigint) => {
-  let g = gcd(a, m);
+  const g = gcd(a, m);
 
   if (g != 1n) {
-    throw new Error("No Inverse");
+    throw new Error('No Inverse');
   } else {
     return power(a, m - 2n, m);
   }
-}
+};
 
 export const power = (x: bigint, y: bigint, m: bigint): bigint => {
   if (y === 0n) return 1n;
@@ -35,9 +35,9 @@ export const power = (x: bigint, y: bigint, m: bigint): bigint => {
 
   if (y % 2n === 0n) return p;
   else return ((x * p) % m);
-}
+};
 
 export const gcd = (a: bigint, b: bigint): bigint => {
   if (a === 0n) return b;
   return gcd(b % a, a);
-}
+};

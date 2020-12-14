@@ -78,7 +78,7 @@ describe('202011', () => {
     L.LLLLLL.L
     L.LLLLL.LL`);
     const result = day.part1();
-    expect(result).toBe("37");
+    expect(result).toBe('37');
   });
 
   test('incrementState once countVisibleSurrounding', () => {

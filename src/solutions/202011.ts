@@ -7,8 +7,8 @@ type SeatGrid = Seat[][];
 
 export const parseInput = (input: string): SeatGrid => {
   const lines = splitLines(input).map(line => line.split('').map(s => {
-    if (s === '#' || s === '.' || s === 'L') return s
-    throw new Error('Invalid input')
+    if (s === '#' || s === '.' || s === 'L') return s;
+    throw new Error('Invalid input');
   }));
   return lines;
 };
@@ -24,7 +24,7 @@ export const surroundingSeats = (maxI: number, maxJ: number, i: number, j: numbe
     [i + 1, j],
     [i + 1, j + 1],
   ].filter(([ti, tj]) => (ti >= 0 && tj >= 0 && ti < maxI && tj < maxJ));
-}
+};
 
 type SurroundingAlgo = (grid: SeatGrid, i: number, j: number) => number;
 
@@ -53,17 +53,17 @@ export const nextIsTaken = (direction: Direction, grid: SeatGrid, i: number, j: 
     [ti, tj] = moveDirection[direction](ti, tj);
   }
   return false;
-}
+};
 
 export const countVisibleSurrounding: SurroundingAlgo = (grid, i, j) => {
   const sightLines = directions.map(s => nextIsTaken(s, grid, i, j));
   return sightLines.filter(Boolean).length;
-}
+};
 
 export const countImmediateSurroundingOccupied: SurroundingAlgo = (grid, i, j) => {
   const surrounding = surroundingSeats(grid.length, grid[0].length, i, j);
   return surrounding.filter(([ti, tj]) => grid[ti][tj] === '#').length;
-}
+};
 
 export const incrementState = (grid: SeatGrid, surr: SurroundingAlgo, allowedNearby: number): SeatGrid => {
   return grid.map((line, i) => line.map((seat, j) => {
@@ -72,7 +72,7 @@ export const incrementState = (grid: SeatGrid, surr: SurroundingAlgo, allowedNea
     if ((seat === '#' && surroundingCount < allowedNearby) || (seat === 'L' && surroundingCount === 0)) return '#';
     return 'L';
   }));
-}
+};
 
 export const gridToString = (grid: SeatGrid): string => grid.map(v => v.join('')).join('');
 
@@ -86,9 +86,9 @@ const waitForStable = (grid: SeatGrid, surr: SurroundingAlgo, allowedNearby: num
     nextGrid = gridToString(nextGridState);
   }
   return nextGridState;
-}
+};
 
-const countOccupied = (grid: SeatGrid): number => grid.reduce((sum, line) => line.filter(s => s === '#').length + sum, 0)
+const countOccupied = (grid: SeatGrid): number => grid.reduce((sum, line) => line.filter(s => s === '#').length + sum, 0);
 
 export class Puzzle202011 extends PuzzleDay {
   part1() {

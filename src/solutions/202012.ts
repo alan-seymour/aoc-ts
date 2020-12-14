@@ -151,7 +151,7 @@ export class Ship {
 const executeShipInstructions = (instructions: Step[]): Ship => {
   const ship = new Ship();
   instructions.forEach(i => {
-    ship.command(i.instruction, i.value)
+    ship.command(i.instruction, i.value);
   });
   return ship;
 };
@@ -159,7 +159,7 @@ const executeShipInstructions = (instructions: Step[]): Ship => {
 const executeWaypointInstructions = (instructions: Step[]): Ship => {
   const ship = new Ship();
   instructions.forEach(i => {
-    ship.waypointCommand(i.instruction, i.value)
+    ship.waypointCommand(i.instruction, i.value);
   });
   return ship;
 };
