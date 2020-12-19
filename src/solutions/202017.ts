@@ -273,7 +273,7 @@ const countActive3d = (grid: string[][][], d: Dimensions3D): number => {
     }
   }
   return total;
-}
+};
 
 const countActive4d = (grid: string[][][][], d: Dimensions4D): number => {
   let total = 0;
@@ -289,7 +289,7 @@ const countActive4d = (grid: string[][][][], d: Dimensions4D): number => {
     }
   }
   return total;
-}
+};
 
 export class Puzzle202017 extends PuzzleDay {
   part1() {
