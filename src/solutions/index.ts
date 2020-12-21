@@ -39,6 +39,7 @@ import { Puzzle202017 } from './202017';
 import { Puzzle202018 } from './202018';
 import { Puzzle202019 } from './202019';
 import { Puzzle202020 } from './202020';
+import { Puzzle202021 } from './202021';
 /** (Imports Here) */
 
 
@@ -83,5 +84,6 @@ export const dateToSolution: { [key: string]: (inputFile: string) => PuzzleDay }
   202018: (input) => new Puzzle202018(input),
   202019: (input) => new Puzzle202019(input),
   202020: (input) => new Puzzle202020(input),
+  202021: (input) => new Puzzle202021(input),
   /** (Maps Here) */
 };
