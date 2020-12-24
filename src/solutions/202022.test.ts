@@ -1,13 +1,13 @@
-import { Puzzle202022, parseInput } from "./202022";
+import { Puzzle202022, parseInput } from './202022';
 
 let day: Puzzle202022;
 
-describe("202022", () => {
+describe('202022', () => {
   beforeEach(() => {
-    day = new Puzzle202022("");
+    day = new Puzzle202022('');
   });
 
-  test("parseInput", () => {
+  test('parseInput', () => {
     const input = `Player 1:
     9
     2
@@ -28,7 +28,7 @@ describe("202022", () => {
     ]);
   });
 
-  test("part 1 example 1", () => {
+  test('part 1 example 1', () => {
     day.loadData(`Player 1:
     9
     2
@@ -43,10 +43,10 @@ describe("202022", () => {
     7
     10`);
     const result = day.part1();
-    expect(result).toBe("306");
+    expect(result).toBe('306');
   });
 
-  test("part 2 example 1", () => {
+  test('part 2 example 1', () => {
     day.loadData(`Player 1:
     9
     2
@@ -61,6 +61,6 @@ describe("202022", () => {
     7
     10`);
     const result = day.part2();
-    expect(result).toBe("291");
+    expect(result).toBe('291');
   });
 });

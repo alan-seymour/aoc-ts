@@ -1,6 +1,6 @@
-import { split } from "lodash";
-import { splitLines } from "../helpers";
-import { PuzzleDay } from "../puzzleDay";
+import { split } from 'lodash';
+import { splitLines } from '../helpers';
+import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string): [number[], number[]] => {
   const [player1, player2] = input.split(/\r?\n\r?\n/).map((v) =>
@@ -43,7 +43,7 @@ export const calcScore = (hand: number[]): number =>
     .reduce((sum, curr, i) => sum + curr * (i + 1), 0);
 
 const hashHands = (player1: number[], player2: number[]): string => {
-  return `${player1.join(",")}:${player2.join(",")}`;
+  return `${player1.join(',')}:${player2.join(',')}`;
 };
 
 export const playRecurisveCombatRound = (
