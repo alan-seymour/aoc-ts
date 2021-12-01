@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "astar-typescript": "^1.2.2"
+    "astar-typescript": "^1.2.5"
   },
   "devDependencies": {
     "@types/jest": "^23.3.14",
@@ -19,7 +19,7 @@
     "eslint-plugin-jsdoc": "^37.0.3",
     "eslint-plugin-no-null": "^1.0.2",
     "jest": "^26.6.3",
-    "plop": "^2.7.4",
+    "plop": "^3.0.1",
     "pretty-time": "^1.1.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^7.0.1",
