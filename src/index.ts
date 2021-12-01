@@ -53,6 +53,9 @@ async function run() {
   console.log(result);
 }
 
-const dayToInstantiatedClass = (day: string, inputFile: string): PuzzleDay | undefined => (dateToSolution[day])?.(inputFile) ?? undefined;
+const dayToInstantiatedClass = (
+  day: string,
+  inputFile: string
+): PuzzleDay | undefined => dateToSolution[day]?.(inputFile) ?? undefined;
 
 run();
