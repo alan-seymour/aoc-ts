@@ -36,7 +36,8 @@
     "watch-ts": "tsc -w",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "solve": "node dist",
-    "solve-ts": "ts-node src"
+    "solve-ts": "ts-node src",
+    "plop": "plop"
   },
   "author": "Alan Seymour <alan@alanseymour.net>",
   "license": "ISC"
