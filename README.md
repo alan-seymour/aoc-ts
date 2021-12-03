@@ -91,3 +91,4 @@ $ npm test
 | 2020 | 25  | :heavy_check_mark: | 141ms    | :santa:            | N/A      |
 | 2021 | 1   | :heavy_check_mark: | 900μs    | :heavy_check_mark: | 1ms      |
 | 2021 | 2   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 3ms      |
+| 2021 | 3   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 1ms      |
