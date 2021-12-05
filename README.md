@@ -93,3 +93,4 @@ $ npm test
 | 2021 | 2   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 3ms      |
 | 2021 | 3   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 1ms      |
 | 2021 | 4   | :heavy_check_mark: | 18ms     | :heavy_check_mark: | 36ms     |
+| 2021 | 5   | :heavy_check_mark: | 64ms     | :heavy_check_mark: | 90ms     |
