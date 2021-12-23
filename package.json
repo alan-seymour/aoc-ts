@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "astar-typescript": "^1.2.2"
+    "astar-typescript": "^1.2.2",
+    "ts-priority-queue": "^0.1.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.14",
