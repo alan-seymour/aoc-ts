@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-default-export
-export default plop => {
+module.exports = plop => {
   plop.setGenerator('day', {
     description: 'Create a new day file',
     prompts: [
