@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202007, parseInput, BagRules, invertRules } from './202007';
 
 let day: Puzzle202007;
@@ -10,11 +11,13 @@ describe('202007', () => {
   test('parseInput', () => {
     const input = `light red bags contain 1 bright white bag, 2 muted yellow bags.
     dark orange bags contain 3 bright white bags, 4 muted yellow bags.`;
+
     const result = parseInput(input);
+
     expect(result).toEqual({
       'light red': [
         { colour: 'bright white', quantity: 1 },
-        { colour: 'muted yellow', quantity: 2 }
+        { colour: 'muted yellow', quantity: 2 },
       ],
       'dark orange': [
         {
@@ -33,7 +36,7 @@ describe('202007', () => {
     const input: BagRules = {
       'light red': [
         { colour: 'bright white', quantity: 1 },
-        { colour: 'muted yellow', quantity: 2 }
+        { colour: 'muted yellow', quantity: 2 },
       ],
       'dark orange': [
         {
@@ -46,6 +49,7 @@ describe('202007', () => {
         },
       ],
     };
+
     const expected: BagRules = {
       'bright white': [
         {
@@ -55,7 +59,7 @@ describe('202007', () => {
         {
           colour: 'dark orange',
           quantity: 3,
-        }
+        },
       ],
       'muted yellow': [
         {
@@ -64,12 +68,12 @@ describe('202007', () => {
         },
         {
           colour: 'dark orange',
-          quantity: 4
-        }
-      ]
+          quantity: 4,
+        },
+      ],
     };
-    expect(invertRules(input)).toMatchObject(expected);
 
+    expect(invertRules(input)).toMatchObject(expected);
   });
 
   test('Part 1 example 1', () => {
@@ -82,6 +86,7 @@ describe('202007', () => {
     vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
     faded blue bags contain no other bags.
     dotted black bags contain no other bags.`);
+
     const result = day.part1();
     expect(result).toBe('4');
   });
@@ -94,8 +99,8 @@ describe('202007', () => {
     dark green bags contain 2 dark blue bags.
     dark blue bags contain 2 dark violet bags.
     dark violet bags contain no other bags.`);
+
     const result = day.part2();
     expect(result).toBe('126');
   });
-
 });

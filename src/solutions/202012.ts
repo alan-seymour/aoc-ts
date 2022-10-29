@@ -2,22 +2,21 @@ import { splitLines } from '../helpers';
 import { PuzzleDay } from '../puzzleDay';
 
 type Step = {
-  instruction: Instruction,
-  value: number,
+  instruction: Instruction;
+  value: number;
 };
 
-const isInstruction = (i: string): i is Instruction => {
-  return instructions.indexOf(i) !== -1;
-};
+const isInstruction = (i: string): i is Instruction => instructions.indexOf(i) !== -1;
 
 export const parseInput = (input: string): Step[] => {
   const inst = splitLines(input).map(line => {
     const firstChar = line.slice(0, 1);
-    return ({
+    return {
       instruction: isInstruction(firstChar) ? firstChar : 'F',
       value: parseInt(line.slice(1), 10),
-    });
+    };
   });
+
   return inst;
 };
 
@@ -81,6 +80,7 @@ export class Ship {
   turn(direction: 'R' | 'L', value: number) {
     const clicks = value / 90;
     const existingIndex = directions.indexOf(this.facing);
+
     switch (direction) {
       case 'R':
         this.facing = directions[(existingIndex + clicks) % 4];
@@ -112,8 +112,8 @@ export class Ship {
   }
 
   towardWaypoint(value: number) {
-    this.xPos += (this.waypointX * value);
-    this.yPos += (this.waypointY * value);
+    this.xPos += this.waypointX * value;
+    this.yPos += this.waypointY * value;
   }
 
   moveWaypoint(direction: Direction, value: number) {
@@ -134,6 +134,7 @@ export class Ship {
 
   rotateWaypoint(direction: 'L' | 'R', value: number) {
     const magnitude = value / 90;
+
     for (let i = 0; i < magnitude; i++) {
       if (direction === 'L') {
         [this.waypointX, this.waypointY] = [this.waypointY * -1, this.waypointX];
@@ -150,17 +151,21 @@ export class Ship {
 
 const executeShipInstructions = (instructions: Step[]): Ship => {
   const ship = new Ship();
+
   instructions.forEach(i => {
     ship.command(i.instruction, i.value);
   });
+
   return ship;
 };
 
 const executeWaypointInstructions = (instructions: Step[]): Ship => {
   const ship = new Ship();
+
   instructions.forEach(i => {
     ship.waypointCommand(i.instruction, i.value);
   });
+
   return ship;
 };
 

@@ -3,7 +3,7 @@ import { PuzzleDay } from '../puzzleDay';
 type CostFn = (crabLocation: number, desiredLocation: number) => number;
 
 export const parseInput = (input: string): number[] => {
-  const values = input.split(',').map((v) => parseInt(v, 10));
+  const values = input.split(',').map(v => parseInt(v, 10));
   return values;
 };
 
@@ -11,21 +11,12 @@ const part1Cost: CostFn = (crabLocation, desiredLocation) =>
   Math.abs(crabLocation - desiredLocation);
 
 const part2Cost: CostFn = (crabLocation, desiredLocation) =>
-  [...new Array(Math.abs(crabLocation - desiredLocation)).keys()].reduce(
-    (s, c) => s + (c + 1),
-    0
-  );
+  [...new Array(Math.abs(crabLocation - desiredLocation)).keys()].reduce((s, c) => s + (c + 1), 0);
 
-const totalCost = (
-  crabs: number[],
-  desiredLocation: number,
-  costFn: CostFn
-): number => crabs.reduce((s, c) => s + costFn(c, desiredLocation), 0);
+const totalCost = (crabs: number[], desiredLocation: number, costFn: CostFn): number =>
+  crabs.reduce((s, c) => s + costFn(c, desiredLocation), 0);
 
-const findOptimalDestinationCost = (
-  crabs: number[],
-  costFn: CostFn
-): number => {
+const findOptimalDestinationCost = (crabs: number[], costFn: CostFn): number => {
   const mean = Math.round(crabs.reduce((s, c) => s + c, 0) / crabs.length);
   const meanCost = totalCost(crabs, mean, costFn);
   const higherCost = totalCost(crabs, mean + 1, costFn);

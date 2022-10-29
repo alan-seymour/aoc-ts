@@ -8,7 +8,7 @@ export const parseInput = (input: string): [string[], Map<string, string>] => {
   lines.shift();
   const rules = new Map<string, string>();
 
-  lines.forEach((l) => {
+  lines.forEach(l => {
     const [, key, value] = l.match(/(.*) -> (.*)/) ?? [];
     rules.set(key, value);
   });
@@ -17,10 +17,7 @@ export const parseInput = (input: string): [string[], Map<string, string>] => {
 };
 
 const calcFrequencies = (chain: string[]): { [key: string]: number } =>
-  chain.reduce<{ [key: string]: number }>(
-    (f, c) => ({ ...f, [c]: (f[c] ?? 0) + 1 }),
-    {}
-  );
+  chain.reduce<{ [key: string]: number }>((f, c) => ({ ...f, [c]: (f[c] ?? 0) + 1 }), {});
 
 const cache = new Map<string, { [key: string]: number }>();
 
@@ -29,9 +26,10 @@ const getFreqs = (
   left: string,
   right: string,
   depth: number,
-  maxDepth: number
+  maxDepth: number,
 ): { [key: string]: number } => {
   const cacheKey = `${left}${right}${depth}`;
+
   if (cache.has(cacheKey)) {
     return cache.get(cacheKey) ?? {};
   }
@@ -39,6 +37,7 @@ const getFreqs = (
   if (depth === maxDepth) {
     return {};
   }
+
   const insert = rules.get(`${left}${right}`) ?? '';
   const leftFreqs = getFreqs(rules, left, insert, depth + 1, maxDepth);
   const rightFreqs = getFreqs(rules, insert, right, depth + 1, maxDepth);
@@ -49,7 +48,7 @@ const getFreqs = (
     currentFreqs,
     leftFreqs,
     rightFreqs,
-    (obj, src) => (obj ?? 0) + (src ?? 0)
+    (obj, src) => (obj ?? 0) + (src ?? 0),
   );
 
   cache.set(cacheKey, output);
@@ -60,19 +59,15 @@ const getFreqs = (
 const getTotalFreqs = (
   rules: Map<string, string>,
   maxDepth: number,
-  starting: string[]
+  starting: string[],
 ): { [key: string]: number } => {
   let output: { [key: string]: number } = {};
+
   for (let i = 0; i < starting.length - 1; i++) {
     const freqs = getFreqs(rules, starting[i], starting[i + 1], 0, maxDepth);
     const currentFreq = { [starting[i]]: 1 };
-    output = mergeWith(
-      {},
-      output,
-      freqs,
-      currentFreq,
-      (obj, src) => (obj ?? 0) + (src ?? 0)
-    );
+
+    output = mergeWith({}, output, freqs, currentFreq, (obj, src) => (obj ?? 0) + (src ?? 0));
   }
 
   const last = { [starting[starting.length - 1]]: 1 };

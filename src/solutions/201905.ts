@@ -1,5 +1,5 @@
-import { PuzzleDay } from '../puzzleDay';
 import { IntCodeComputer } from '../helpers';
+import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string) => {
   const numbers = input.split(',').map(num => parseInt(num, 10));

@@ -1,5 +1,5 @@
-import { PuzzleDay } from '../puzzleDay';
 import { IntCodeComputer } from '../helpers';
+import { PuzzleDay } from '../puzzleDay';
 
 type Coord = {
   x: number;
@@ -22,11 +22,11 @@ export const parseInput = (input: string) => {
 const outputToGrid = (output: number[]): string[][] => {
   const gridString = output.map(num => String.fromCharCode(num)).join('');
   return gridString.split('\n').map(line => line.split(''));
-  // return gridString;
 };
 
 const findIntersections = (grid: string[][]): Coord[] => {
   const intersections: Coord[] = [];
+
   for (let i = 1; i < grid.length - 1; i++) {
     for (let j = 1; j < grid[0].length - 1; j++) {
       if (grid[i][j] === '#') {
@@ -41,44 +41,41 @@ const findIntersections = (grid: string[][]): Coord[] => {
       }
     }
   }
+
   return intersections;
 };
 
-const calculateAlignmentParams = (intersections: Coord[]): number => {
-  return intersections.reduce(
-    (sum: number, curr: Coord) => sum + curr.x * curr.y,
-    0,
-  );
-};
+const calculateAlignmentParams = (intersections: Coord[]): number =>
+  intersections.reduce((sum: number, curr: Coord) => sum + curr.x * curr.y, 0);
+
+const isFacing = (str: string): str is Facing =>
+  str === '^' || str === '<' || str === '>' || str === 'v';
 
 const findRobot = (grid: string[][]): RobotCoord => {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
-      if (
-        grid[i][j] === '^' ||
-        grid[i][j] === '<' ||
-        grid[i][j] === '>' ||
-        grid[i][j] === 'v'
-      ) {
-        return { x: j, y: i, facing: grid[i][j] as Facing };
+      const test = grid[i][j];
+
+      if (isFacing(test)) {
+        return { x: j, y: i, facing: test };
       }
     }
   }
+
   return { x: 0, y: 0, facing: '^' };
 };
 
-const neighbours = (coord: Coord): { [K in Facing]: Coord } => {
-  return {
-    '^': { x: coord.x, y: coord.y - 1 },
-    '<': { x: coord.x - 1, y: coord.y },
-    '>': { x: coord.x + 1, y: coord.y },
-    v: { x: coord.x, y: coord.y + 1 },
-  };
-};
+const neighbours = (coord: Coord): { [K in Facing]: Coord } => ({
+  '^': { x: coord.x, y: coord.y - 1 },
+  '<': { x: coord.x - 1, y: coord.y },
+  '>': { x: coord.x + 1, y: coord.y },
+  v: { x: coord.x, y: coord.y + 1 },
+});
 
 const chooseMove = (grid: string[][], coord: RobotCoord) => {
   const possibleMoves = neighbours(coord);
-  const moveKeys: Facing[] = Object.keys(possibleMoves) as Facing[];
+  const moveKeys: Facing[] = ['<', '>', '^', 'v'];
+
   const validDirs: RobotCoord[] = moveKeys
     .map(moveDirection => {
       const moveCoord = possibleMoves[moveDirection];
@@ -89,14 +86,10 @@ const chooseMove = (grid: string[][], coord: RobotCoord) => {
       };
     })
     .filter(move => {
-      if (
-        move.x < 0 ||
-        move.y < 0 ||
-        move.x >= grid[0].length ||
-        move.y >= grid.length
-      ) {
+      if (move.x < 0 || move.y < 0 || move.x >= grid[0].length || move.y >= grid.length) {
         return false;
       }
+
       if (
         (move.facing === '^' && coord.facing === 'v') ||
         (move.facing === '<' && coord.facing === '>') ||
@@ -105,16 +98,20 @@ const chooseMove = (grid: string[][], coord: RobotCoord) => {
       ) {
         return false;
       }
+
       if (grid[move.y][move.x] !== '#') {
         return false;
       }
+
       return true;
     });
+
   const moveForward = validDirs.find(move => move.facing === coord.facing);
 
   if (moveForward) {
     return moveForward;
   }
+
   return validDirs.shift();
 };
 
@@ -136,6 +133,7 @@ const calculateRoute = (grid: string[][]): Move[] => {
   const moves: Move[] = [];
   let nextMove = chooseMove(grid, robotLocation);
   let run = 0;
+
   while (nextMove) {
     if (nextMove.facing === robotLocation.facing) {
       run++;
@@ -147,19 +145,20 @@ const calculateRoute = (grid: string[][]): Move[] => {
       run = 1;
       robotLocation = nextMove;
     }
+
     nextMove = chooseMove(grid, robotLocation);
   }
+
   moves.push(run);
 
   return moves.filter(move => move !== 0);
 };
 
-const movesToAscii = (moves: Move[]): string[] => {
-  return moves
+const movesToAscii = (moves: Move[]): string[] =>
+  moves
     .join(',')
     .split('')
     .map(char => char.charCodeAt(0).toString());
-};
 
 const compress = (str: string) => {
   for (let a = 1; a <= 20; a++) {
@@ -168,26 +167,24 @@ const compress = (str: string) => {
         const matches = new Map<string, string>();
         let remaining = str;
         matches.set('A', remaining.slice(0, a));
-        remaining = remaining.replace(
-          new RegExp(matches.get('A') + ',?', 'gu'),
-          '',
-        );
+
+        remaining = remaining.replace(new RegExp(matches.get('A') + ',?', 'gu'), '');
+
         matches.set('B', remaining.slice(0, b));
-        remaining = remaining.replace(
-          new RegExp(matches.get('B') + ',?', 'gu'),
-          '',
-        );
+
+        remaining = remaining.replace(new RegExp(matches.get('B') + ',?', 'gu'), '');
+
         matches.set('C', remaining.slice(0, c));
-        remaining = remaining.replace(
-          new RegExp(matches.get('C') + ',?', 'gu'),
-          '',
-        );
+
+        remaining = remaining.replace(new RegExp(matches.get('C') + ',?', 'gu'), '');
+
         if (!remaining) {
           let compressed = str;
+
           Array.from(matches.entries()).forEach(
-            ([key, value]) =>
-              (compressed = compressed.replace(new RegExp(value, 'gu'), key)),
+            ([key, value]) => (compressed = compressed.replace(new RegExp(value, 'gu'), key)),
           );
+
           return { compressed, matches };
         }
       }
@@ -212,6 +209,7 @@ export class Puzzle201917 extends PuzzleDay {
     const grid = outputToGrid(computer.output.slice(0, -2));
     const moves = calculateRoute(grid);
     const compressed = compress(moves.join(','));
+
     const input =
       [
         compressed?.compressed,
@@ -222,6 +220,7 @@ export class Puzzle201917 extends PuzzleDay {
       '\n' +
       'n' +
       '\n';
+
     const ascii = input.split('').map(c => c.charCodeAt(0));
 
     const newState = [...intCode];

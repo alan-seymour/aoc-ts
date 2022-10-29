@@ -16,17 +16,19 @@ type ReactionTree = Map<string, Reaction>;
 export const parseInput = (input: string): ReactionTree => {
   const reactionMap = new Map<string, Reaction>();
   const reactionStrings = splitLines(input).map(line => parseInputLine(line));
+
   reactionStrings.forEach(reaction => {
     reactionMap.set(reaction.output.chemical, reaction);
   });
+
   return reactionMap;
 };
 
 export const parseInputLine = (input: string): Reaction => {
   const [ingredientString, outputString] = input.split('=>');
-  const ingredients = ingredientString
-    .split(',')
-    .map(i => parseIngredient(i.trim()));
+
+  const ingredients = ingredientString.split(',').map(i => parseIngredient(i.trim()));
+
   const output = parseIngredient(outputString);
   return {
     ingredients,
@@ -49,28 +51,31 @@ const calculateOreForFuel = (reactions: ReactionTree): number => {
   let ore = 0;
   required.set('FUEL', { chemical: 'FUEL', quantity: 6326857 });
 
-  for (let { chemical, quantity } of requiredIterator) {
-    console.log(required);
+  for (const { chemical, quantity } of requiredIterator) {
+    let newQuantity = quantity;
     const spareItem = spare.get(chemical);
+
     if (spareItem) {
-      if (spareItem.quantity > quantity) {
+      if (spareItem.quantity > newQuantity) {
         spare.set(chemical, {
           chemical,
-          quantity: spareItem.quantity - quantity,
+          quantity: spareItem.quantity - newQuantity,
         });
+
         required.delete(chemical);
         continue;
-      } else if (spareItem.quantity === quantity) {
+      } else if (spareItem.quantity === newQuantity) {
         spare.delete(chemical);
         required.delete(chemical);
         continue;
       } else {
         spare.delete(chemical);
-        quantity = quantity - spareItem.quantity;
+        newQuantity = newQuantity - spareItem.quantity;
       }
     }
 
     const recipe = reactions.get(chemical);
+
     if (!recipe) {
       throw new Error(`no way to make ${chemical}`);
     }
@@ -82,10 +87,12 @@ const calculateOreForFuel = (reactions: ReactionTree): number => {
 
     recipe.ingredients.forEach(ingredient => {
       const requiredQuantity = ingredient.quantity * requirementCount;
+
       if (ingredient.chemical === 'ORE') {
         ore = ore + requiredQuantity;
       } else {
         const existingRequirement = required.get(ingredient.chemical);
+
         if (!existingRequirement) {
           required.set(ingredient.chemical, {
             chemical: ingredient.chemical,
@@ -114,6 +121,7 @@ const calculateRawOreForFuel = (reactions: ReactionTree): number => {
 
   for (const { chemical, quantity } of requiredIterator) {
     const recipe = reactions.get(chemical);
+
     if (!recipe) {
       throw new Error(`no way to make ${chemical}`);
     }
@@ -122,10 +130,12 @@ const calculateRawOreForFuel = (reactions: ReactionTree): number => {
 
     recipe.ingredients.forEach(ingredient => {
       const requiredQuantity = ingredient.quantity * requirementCount;
+
       if (ingredient.chemical === 'ORE') {
         ore = ore + requiredQuantity;
       } else {
         const existingRequirement = required.get(ingredient.chemical);
+
         if (!existingRequirement) {
           required.set(ingredient.chemical, {
             chemical: ingredient.chemical,

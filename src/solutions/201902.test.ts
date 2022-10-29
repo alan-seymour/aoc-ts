@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { parseInput, runWithNounVerb } from './201902';
 
 describe('201902', () => {
@@ -10,20 +11,8 @@ describe('201902', () => {
   test('runToCompletion example 1', () => {
     const input = [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50];
     const result = runWithNounVerb(input, 9, 10);
-    expect(result.state).toEqual([
-      3500,
-      9,
-      10,
-      70,
-      2,
-      3,
-      11,
-      0,
-      99,
-      30,
-      40,
-      50,
-    ]);
+
+    expect(result.state).toEqual([3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]);
   });
 
   test('runToCompletion example 2', () => {

@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { IntCodeComputer } from './opCodes2019';
 
 describe('Op codes', () => {
@@ -25,6 +26,7 @@ describe('Op codes', () => {
         state: [1, 2, 3],
         relativeBase: -2,
       });
+
       const result = computer.getValue(1, 'Relative');
       expect(result).toEqual(1);
     });
@@ -86,6 +88,7 @@ describe('Op codes', () => {
         state: [9, 2, 13],
         relativeBase: 5,
       });
+
       computer.step();
       expect(computer.index).toEqual(2);
       expect(computer.relativeBase).toEqual(18);
@@ -96,6 +99,7 @@ describe('Op codes', () => {
         state: [109, 19],
         relativeBase: 2000,
       });
+
       computer.step();
       expect(computer.relativeBase).toEqual(2019);
     });
@@ -119,23 +123,12 @@ describe('Op codes', () => {
       const computer = new IntCodeComputer({
         state: [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.halted).toEqual(true);
       expect(computer.index).toEqual(8);
-      expect(computer.state).toEqual([
-        3500,
-        9,
-        10,
-        70,
-        2,
-        3,
-        11,
-        0,
-        99,
-        30,
-        40,
-        50,
-      ]);
+
+      expect(computer.state).toEqual([3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]);
     });
 
     test('8 equal to 8 position', () => {
@@ -143,6 +136,7 @@ describe('Op codes', () => {
         state: [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8],
         input: [8],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(1);
     });
@@ -152,6 +146,7 @@ describe('Op codes', () => {
         state: [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8],
         input: [7],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(0);
     });
@@ -161,6 +156,7 @@ describe('Op codes', () => {
         state: [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8],
         input: [7],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(1);
     });
@@ -170,6 +166,7 @@ describe('Op codes', () => {
         state: [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8],
         input: [9],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(0);
     });
@@ -179,6 +176,7 @@ describe('Op codes', () => {
         state: [3, 3, 1108, -1, 8, 3, 4, 3, 99],
         input: [8],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(1);
     });
@@ -188,6 +186,7 @@ describe('Op codes', () => {
         state: [3, 3, 1108, -1, 8, 3, 4, 3, 99],
         input: [7],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(0);
     });
@@ -197,6 +196,7 @@ describe('Op codes', () => {
         state: [3, 3, 1107, -1, 8, 3, 4, 3, 99],
         input: [7],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(1);
     });
@@ -206,6 +206,7 @@ describe('Op codes', () => {
         state: [3, 3, 1107, -1, 8, 3, 4, 3, 99],
         input: [9],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(0);
     });
@@ -215,6 +216,7 @@ describe('Op codes', () => {
         state: [3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9],
         input: [9],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(1);
     });
@@ -224,6 +226,7 @@ describe('Op codes', () => {
         state: [3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9],
         input: [0],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(0);
     });
@@ -233,6 +236,7 @@ describe('Op codes', () => {
         state: [3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1],
         input: [9],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(1);
     });
@@ -242,6 +246,7 @@ describe('Op codes', () => {
         state: [3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1],
         input: [0],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(0);
     });
@@ -250,6 +255,7 @@ describe('Op codes', () => {
       const computer = new IntCodeComputer({
         state: [1102, 34915192, 34915192, 7, 4, 7, 99, 0],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0].toString().length).toEqual(16);
     });
@@ -258,49 +264,20 @@ describe('Op codes', () => {
       const computer = new IntCodeComputer({
         state: [104, 1125899906842624, 99],
       });
+
       computer.runUntilWaitingForInput();
       expect(computer.output[0]).toEqual(1125899906842624);
     });
 
     test('201909 part 1 output copy', () => {
       const computer = new IntCodeComputer({
-        state: [
-          109,
-          1,
-          204,
-          -1,
-          1001,
-          100,
-          1,
-          100,
-          1008,
-          100,
-          16,
-          101,
-          1006,
-          101,
-          0,
-          99,
-        ],
+        state: [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99],
       });
+
       computer.runUntilWaitingForInput();
+
       expect(computer.output).toEqual([
-        109,
-        1,
-        204,
-        -1,
-        1001,
-        100,
-        1,
-        100,
-        1008,
-        100,
-        16,
-        101,
-        1006,
-        101,
-        0,
-        99,
+        109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99,
       ]);
     });
   });

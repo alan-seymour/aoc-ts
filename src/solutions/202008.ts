@@ -16,6 +16,7 @@ export type SystemState = {
 
 export const parseInput = (input: string): Command[] => {
   const lines = splitLines(input);
+
   const commands = lines.map(line => {
     const [cmd, val] = line.split(' ');
     return {
@@ -23,6 +24,7 @@ export const parseInput = (input: string): Command[] => {
       value: parseInt(val, 10),
     };
   });
+
   return commands;
 };
 
@@ -35,6 +37,7 @@ const runUntilLoopOrExit = (state: SystemState): SystemState => {
   while (!state.pastCommandIndexes.has(state.pointer) && state.pointer < state.commands.length) {
     const nextCommand = state.commands[state.pointer];
     state.pastCommandIndexes.add(state.pointer);
+
     if (nextCommand.instruction === 'nop') {
       state.pointer++;
     } else if (nextCommand.instruction === 'acc') {
@@ -44,6 +47,7 @@ const runUntilLoopOrExit = (state: SystemState): SystemState => {
       state.pointer += nextCommand.value;
     }
   }
+
   return state;
 };
 
@@ -52,51 +56,61 @@ const bruteForce2 = (state: SystemState): number => {
     if (state.commands[i].instruction === 'acc') {
       continue;
     }
+
     const newState: SystemState = {
       acc: 0,
       pointer: 0,
       pastCommandIndexes: new Set<number>(),
-      commands: state.commands.slice()
+      commands: state.commands.slice(),
     };
+
     if (state.commands[i].instruction === 'jmp') {
       newState.commands[i].instruction = 'nop';
     } else {
       newState.commands[i].instruction = 'jmp';
     }
+
     const result = runUntilLoopOrExit(newState);
+
     if (result.pointer === state.commands.length) {
       return result.acc;
     }
+
     if (newState.commands[i].instruction === 'jmp') {
       newState.commands[i].instruction = 'nop';
     } else {
       newState.commands[i].instruction = 'jmp';
     }
   }
+
   return 0;
 };
 
 export class Puzzle202008 extends PuzzleDay {
   part1() {
     const commands = parseInput(this.input);
+
     const state: SystemState = {
       acc: 0,
       commands,
       pointer: 0,
       pastCommandIndexes: new Set<number>(),
     };
+
     const finalState: SystemState = runUntilLoopOrExit(state);
     return `${finalState.acc}`;
   }
 
   part2() {
     const commands = parseInput(this.input);
+
     const state: SystemState = {
       acc: 0,
       commands,
       pointer: 0,
       pastCommandIndexes: new Set<number>(),
     };
+
     const result = bruteForce2(state);
     return `${result}`;
   }

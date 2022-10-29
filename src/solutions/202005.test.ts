@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202005, parseInput, decodeRow, decodeSeats, findGap } from './202005';
 
 let day: Puzzle202005;
@@ -10,6 +11,7 @@ describe('202005', () => {
   test('parseInput', () => {
     const input = `BFFFBBFRRR
     BFFFBBFRRR`;
+
     const result = parseInput(input);
     expect(result).toEqual(['BFFFBBFRRR', 'BFFFBBFRRR']);
   });
@@ -33,6 +35,7 @@ describe('202005', () => {
     day.loadData(`BFFFBBFRRR
     FFFBBBFRRR
     BBFFBBFRLL`);
+
     const result = day.part1();
     expect(result).toBe('820');
   });

@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202016, parseInput } from './202016';
 
 let day: Puzzle202016;
@@ -20,36 +21,40 @@ describe('202016', () => {
     40,4,50
     55,2,20
     38,6,12`;
+
     const result = parseInput(input);
+
     expect(result).toEqual({
-      rules: [{
-        ruleName: 'class',
-        range1Min: 1,
-        range1Max: 3,
-        range2Min: 5,
-        range2Max: 7
-      },
-      {
-        ruleName: 'row',
-        range1Min: 6,
-        range1Max: 11,
-        range2Min: 33,
-        range2Max: 44
-      },
-      {
-        ruleName: 'seat',
-        range1Min: 13,
-        range1Max: 40,
-        range2Min: 45,
-        range2Max: 50
-      }],
+      rules: [
+        {
+          ruleName: 'class',
+          range1Min: 1,
+          range1Max: 3,
+          range2Min: 5,
+          range2Max: 7,
+        },
+        {
+          ruleName: 'row',
+          range1Min: 6,
+          range1Max: 11,
+          range2Min: 33,
+          range2Max: 44,
+        },
+        {
+          ruleName: 'seat',
+          range1Min: 13,
+          range1Max: 40,
+          range2Min: 45,
+          range2Max: 50,
+        },
+      ],
       yourTicket: [7, 1, 14],
       otherTickets: [
         [7, 3, 47],
         [40, 4, 50],
         [55, 2, 20],
-        [38, 6, 12]
-      ]
+        [38, 6, 12],
+      ],
     });
   });
 
@@ -66,6 +71,7 @@ describe('202016', () => {
     40,4,50
     55,2,20
     38,6,12`);
+
     const result = day.part1();
     expect(result).toBe('71');
   });
@@ -82,6 +88,7 @@ describe('202016', () => {
     3,9,18
     15,1,5
     5,14,9`);
+
     const result = day.part2();
     expect(result).toBe('132');
   });

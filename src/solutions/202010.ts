@@ -12,15 +12,16 @@ type Counts = {
 
 export const countIntervals = (input: number[]) => {
   input.sort((a, b) => a - b);
-  return input.reduce<{ counts: Counts, prev: number }>(({ counts, prev }, curr) => (
-    {
+  return input.reduce<{ counts: Counts; prev: number }>(
+    ({ counts, prev }, curr) => ({
       counts: {
         ...counts,
         [curr - prev]: (counts[curr - prev] ?? 0) + 1,
       },
-      prev: curr
-    }
-  ), { counts: {}, prev: 0 }).counts;
+      prev: curr,
+    }),
+    { counts: {}, prev: 0 },
+  ).counts;
 };
 
 let cache = new Map<number, number>();
@@ -32,10 +33,13 @@ export const countPaths = (input: number[], start: number): number => {
     return cache.get(start) ?? 0;
   }
 
-  const pathCount = Math.max(possibleNext(start)
-    .filter(v => input.indexOf(v) !== -1)
-    .map(v => countPaths(input, v))
-    .reduce((sum, curr) => sum + curr, 0), 1);
+  const pathCount = Math.max(
+    possibleNext(start)
+      .filter(v => input.indexOf(v) !== -1)
+      .map(v => countPaths(input, v))
+      .reduce((sum, curr) => sum + curr, 0),
+    1,
+  );
 
   cache.set(start, pathCount);
   return pathCount;

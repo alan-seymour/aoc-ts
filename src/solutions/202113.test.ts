@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202113, parseInput } from './202113';
 
 let day: Puzzle202113;
@@ -14,7 +15,9 @@ describe('202113', () => {
     
     fold along y=7
     fold along x=5`;
+
     const result = parseInput(input);
+
     expect(result).toEqual([
       [
         { x: 6, y: 10 },
@@ -50,6 +53,7 @@ describe('202113', () => {
     
     fold along y=7
     fold along x=5`);
+
     const result = day.part1();
     expect(result).toBe('17');
   });
@@ -76,13 +80,15 @@ describe('202113', () => {
     
     fold along y=7
     fold along x=5`);
+
     const result = day.part2();
+
     expect(result).toBe(
       `#####
 #...#
 #...#
 #...#
-#####`
+#####`,
     );
   });
 });

@@ -18,11 +18,13 @@ export class Puzzle201801 extends PuzzleDay {
     const seen: Set<number> = new Set([]);
     let runningTotal = 0;
     let index = 0;
+
     while (!seen.has(runningTotal)) {
       seen.add(runningTotal);
       runningTotal += numbers[index % numbers.length];
       index += 1;
     }
+
     return '' + runningTotal;
   }
 }

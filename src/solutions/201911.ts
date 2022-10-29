@@ -43,9 +43,7 @@ const moveMappings: { [K in Direction]: ({ x, y }: Location) => Location } = {
   R: ({ x, y }) => ({ x: x + 1, y }),
 };
 
-const numberToTurn = (number?: number): Turn => {
-  return number && number === 1 ? 'R' : 'L';
-};
+const numberToTurn = (number?: number): Turn => (number && number === 1 ? 'R' : 'L');
 
 export class Robot {
   location: Location;
@@ -56,6 +54,7 @@ export class Robot {
       x: 0,
       y: 0,
     };
+
     this.facing = 'U';
   }
 
@@ -88,6 +87,7 @@ export class Stats {
     this.maxX = Math.max(this.maxX, x);
     this.minY = Math.min(this.minY, y);
     this.maxY = Math.max(this.maxY, y);
+
     if (painted) {
       this.uniquePainted.add(`${x},${y}`);
     }
@@ -135,9 +135,11 @@ export class Grid {
     const height: number = this.stats.maxY - this.stats.minY + 1;
     const offsetX: number = 0 - this.stats.minX;
     const offsetY: number = 0 - this.stats.minY;
+
     const outputGrid: string[][] = new Array(height)
       .fill([])
       .map(row => [...new Array(width).fill(' ')]);
+
     this.colours.forEach((value, key) => {
       const [x, y] = key.split(',').map(n => parseInt(n, 10));
       const offX = x + offsetX;
@@ -151,7 +153,7 @@ export class Grid {
 
 const handleOutput = (grid: Grid, output: number[]) => {
   output.forEach((v, i) => {
-    if (i % 2 == 0) {
+    if (i % 2 === 0) {
       grid.setCurrentColor(v);
     } else {
       grid.turnAndMoveRobot(numberToTurn(v));
@@ -164,9 +166,11 @@ const runMachine = (input: number[], grid: Grid) => {
 
   while (!computer.halted) {
     computer.runUntilWaitingForInput();
+
     if (computer.halted) {
       break;
     }
+
     handleOutput(grid, computer.output);
     computer.output = [];
     computer.input.push(grid.getCurrentColor());

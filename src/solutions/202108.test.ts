@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202108, parseInput } from './202108';
 
 let day: Puzzle202108;
@@ -10,6 +11,7 @@ describe('202108', () => {
   test('parseInput', () => {
     const input = `acedgfb cdfbe | cdfeb fcadb`;
     const result = parseInput(input);
+
     expect(result).toEqual([
       {
         patterns: ['acedgfb', 'cdfbe'],
@@ -29,6 +31,7 @@ describe('202108', () => {
     bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
     egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
     gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`);
+
     const result = day.part1();
     expect(result).toBe('26');
   });
@@ -44,6 +47,7 @@ describe('202108', () => {
     bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
     egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
     gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`);
+
     const result = day.part2();
     expect(result).toBe('61229');
   });

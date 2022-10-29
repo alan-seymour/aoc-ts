@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202106, parseInput } from './202106';
 
 let day: Puzzle202106;
@@ -10,6 +11,7 @@ describe('202106', () => {
   test('parseInput', () => {
     const input = `1,2,3,2`;
     const result = parseInput(input);
+
     expect(result).toEqual({
       '1': 1,
       '2': 2,

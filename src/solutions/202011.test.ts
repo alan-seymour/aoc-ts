@@ -1,4 +1,12 @@
-import { Puzzle202011, parseInput, incrementState, countImmediateSurroundingOccupied, countVisibleSurrounding, gridToString } from './202011';
+import { describe, test, expect, beforeEach } from 'vitest';
+import {
+  Puzzle202011,
+  parseInput,
+  incrementState,
+  countImmediateSurroundingOccupied,
+  countVisibleSurrounding,
+  gridToString,
+} from './202011';
 
 let day: Puzzle202011;
 
@@ -10,10 +18,12 @@ describe('202011', () => {
   test('parseInput', () => {
     const input = `L.L
     ..L`;
+
     const result = parseInput(input);
+
     expect(result).toEqual([
       ['L', '.', 'L'],
-      ['.', '.', 'L']
+      ['.', '.', 'L'],
     ]);
   });
 
@@ -28,8 +38,11 @@ describe('202011', () => {
     LLLLLLLLLL
     L.LLLLLL.L
     L.LLLLL.LL`);
+
     const result = incrementState(state, countImmediateSurroundingOccupied, 4);
-    expect(result).toEqual(parseInput(`#.##.##.##
+
+    expect(result).toEqual(
+      parseInput(`#.##.##.##
     #######.##
     #.#.#..#..
     ####.##.##
@@ -38,7 +51,8 @@ describe('202011', () => {
     ..#.#.....
     ##########
     #.######.#
-    #.#####.##`));
+    #.#####.##`),
+    );
   });
 
   test('incrementState twice', () => {
@@ -52,9 +66,13 @@ describe('202011', () => {
     LLLLLLLLLL
     L.LLLLLL.L
     L.LLLLL.LL`);
+
     const result = incrementState(state, countImmediateSurroundingOccupied, 4);
+
     const result2 = incrementState(result, countImmediateSurroundingOccupied, 4);
-    expect(result2).toEqual(parseInput(`#.LL.L#.##
+
+    expect(result2).toEqual(
+      parseInput(`#.LL.L#.##
     #LLLLLL.L#
     L.L.L..L..
     #LLL.LL.L#
@@ -63,7 +81,8 @@ describe('202011', () => {
     ..L.L.....
     #LLLLLLLL#
     #.LLLLLL.L
-    #.#LLLL.##`));
+    #.#LLLL.##`),
+    );
   });
 
   test('part 1 example 1', () => {
@@ -77,6 +96,7 @@ describe('202011', () => {
     LLLLLLLLLL
     L.LLLLLL.L
     L.LLLLL.LL`);
+
     const result = day.part1();
     expect(result).toBe('37');
   });
@@ -92,8 +112,11 @@ describe('202011', () => {
     LLLLLLLLLL
     L.LLLLLL.L
     L.LLLLL.LL`);
+
     const result = incrementState(state, countVisibleSurrounding, 4);
-    expect(result).toEqual(parseInput(`#.##.##.##
+
+    expect(result).toEqual(
+      parseInput(`#.##.##.##
     #######.##
     #.#.#..#..
     ####.##.##
@@ -102,7 +125,8 @@ describe('202011', () => {
     ..#.#.....
     ##########
     #.######.#
-    #.#####.##`));
+    #.#####.##`),
+    );
   });
 
   test('incrementState twice countVisibleSurrounding', () => {
@@ -116,9 +140,12 @@ describe('202011', () => {
     LLLLLLLLLL
     L.LLLLLL.L
     L.LLLLL.LL`);
+
     const result = incrementState(state, countVisibleSurrounding, 5);
     const result2 = incrementState(result, countVisibleSurrounding, 5);
-    expect(result2).toEqual(parseInput(`#.LL.LL.L#
+
+    expect(result2).toEqual(
+      parseInput(`#.LL.LL.L#
     #LLLLLL.LL
     L.L.L..L..
     LLLL.LL.LL
@@ -127,7 +154,8 @@ describe('202011', () => {
     ..L.L.....
     LLLLLLLLL#
     #.LLLLLL.L
-    #.LLLLL.L#`));
+    #.LLLLL.L#`),
+    );
   });
 
   test('incrementState 3 times countVisibleSurrounding', () => {
@@ -141,10 +169,13 @@ describe('202011', () => {
     LLLLLLLLLL
     L.LLLLLL.L
     L.LLLLL.LL`);
+
     const result = incrementState(state, countVisibleSurrounding, 5);
     const result2 = incrementState(result, countVisibleSurrounding, 5);
     const result3 = incrementState(result2, countVisibleSurrounding, 5);
-    expect(result3).toEqual(parseInput(`#.L#.##.L#
+
+    expect(result3).toEqual(
+      parseInput(`#.L#.##.L#
     #L#####.LL
     L.#.#..#..
     ##L#.##.##
@@ -153,7 +184,8 @@ describe('202011', () => {
     ..#.#.....
     LLL####LL#
     #.L#####.L
-    #.L####.L#`));
+    #.L####.L#`),
+    );
   });
 
   test('part 2 example 1', () => {
@@ -167,6 +199,7 @@ describe('202011', () => {
     LLLLLLLLLL
     L.LLLLLL.L
     L.LLLLL.LL`);
+
     const result = day.part2();
     expect(result).toBe('26');
   });

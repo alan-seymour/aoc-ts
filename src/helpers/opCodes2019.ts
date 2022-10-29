@@ -16,10 +16,9 @@ const intToMode: { [k: number]: ParameterMode } = {
   2: 'Relative',
 };
 
-const fieldToOpcode = (
-  value: number,
-): { opcode: number; modes: ParameterMode[] } => {
+const fieldToOpcode = (value: number): { opcode: number; modes: ParameterMode[] } => {
   const split = value.toString().split('');
+
   if (split.length <= 1) {
     return {
       opcode: value,
@@ -64,6 +63,7 @@ export class IntCodeComputer {
 
   getValue(position: number, mode: ParameterMode): number {
     let value: number;
+
     switch (mode) {
       case 'Immediate':
         value = this.state[position];
@@ -76,16 +76,19 @@ export class IntCodeComputer {
         value = this.state[this.state[position]];
         break;
     }
+
     return value ? value : 0;
   }
 
   writeValue(position: number, mode: ParameterMode, value: number): number {
     let location: number;
+
     if (mode === 'Relative') {
       location = this.state[position] + this.relativeBase;
     } else {
       location = this.state[position];
     }
+
     this.state[location] = value;
     return location;
   }
@@ -108,10 +111,12 @@ export class IntCodeComputer {
 
   readInput(modes: ParameterMode[]): void {
     const input = this.input.shift();
+
     if (input === undefined) {
       this.waitingForInput = true;
       return;
     }
+
     const location = this.writeValue(this.index + 1, modes.shift(), input);
     this.index = this.index === location ? this.index : this.index + 2;
     this.waitingForInput = false;
@@ -165,6 +170,7 @@ export class IntCodeComputer {
 
   step(): void {
     const { opcode, modes } = fieldToOpcode(this.state[this.index]);
+
     switch (opcode) {
       case 1:
         this.add(modes);
@@ -201,6 +207,7 @@ export class IntCodeComputer {
 
   runUntilWaitingForInput(): void {
     this.waitingForInput = false;
+
     while (!this.halted && !this.waitingForInput) {
       this.step();
     }

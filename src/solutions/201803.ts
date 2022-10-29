@@ -1,5 +1,5 @@
-import { PuzzleDay } from '../puzzleDay';
 import { splitLines } from '../helpers';
+import { PuzzleDay } from '../puzzleDay';
 
 type Claim = {
   claimId: number;
@@ -18,7 +18,7 @@ export const parseClaims = (input: string) => {
 export const decomposeLine = (line: string): Claim => {
   const matches = line.match(/#(\d+) @ (\d+),(\d+): (\d+)x(\d+)/) || [];
 
-  if (matches.length == 6) {
+  if (matches.length === 6) {
     return {
       claimId: parseInt(matches[1], 10),
       leftOffset: parseInt(matches[2], 10),
@@ -27,17 +27,21 @@ export const decomposeLine = (line: string): Claim => {
       height: parseInt(matches[5], 10),
     };
   }
+
   throw Error(`invalid input ${line}`);
 };
 
 export const initGrid = (size: number) => {
   const grid: number[][][] = [];
+
   for (let i = 0; i < size; i++) {
     grid[i] = [];
+
     for (let j = 0; j < size; j++) {
       grid[i][j] = [];
     }
   }
+
   return grid;
 };
 
@@ -53,22 +57,23 @@ export const addClaimToGrid = (grid: number[][][], claim: Claim) => {
   }
 };
 
-export const countOverlaps = (grid: number[][][]): number => {
-  return grid.reduce((count: number, row: number[][]): number => {
-    return (
+export const countOverlaps = (grid: number[][][]): number =>
+  grid.reduce(
+    (count: number, row: number[][]): number =>
       count +
       row.reduce((rowCount: number, cell: number[]) => {
         if (cell.length > 1) {
           return rowCount + 1;
         }
+
         return rowCount;
-      }, 0)
-    );
-  }, 0);
-};
+      }, 0),
+    0,
+  );
 
 export const findUniqueId = (grid: number[][][], maxId: number): number => {
   const overlapped: boolean[] = new Array(maxId).fill(false);
+
   grid.forEach(row => {
     row.forEach(cell => {
       if (cell.length > 1) {
@@ -78,6 +83,7 @@ export const findUniqueId = (grid: number[][][], maxId: number): number => {
       }
     });
   });
+
   const index = overlapped.findIndex((v: boolean) => v === false);
   return index + 1;
 };

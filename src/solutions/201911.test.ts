@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach, it } from 'vitest';
 import { parseInput, Robot, Stats, Grid } from './201911';
 
 describe('201911', () => {

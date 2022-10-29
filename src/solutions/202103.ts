@@ -2,9 +2,8 @@ import { splitLines } from '../helpers';
 import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string): number[][] => {
-  const lines = splitLines(input).map((l) =>
-    l.split('').map((d) => parseInt(d, 10))
-  );
+  const lines = splitLines(input).map(l => l.split('').map(d => parseInt(d, 10)));
+
   return lines;
 };
 
@@ -13,13 +12,14 @@ const sumColumns = (bins: number[][]): number[] =>
     c.forEach((d, i) => {
       s[i] += d;
     });
+
     return s;
   }, new Array(bins[0].length).fill(0));
 
 const mostCommonBits = (bins: number[][]): number[] => {
   const total = bins.length / 2;
   const sums = sumColumns(bins);
-  return sums.map((c) => (c >= total ? 1 : 0));
+  return sums.map(c => (c >= total ? 1 : 0));
 };
 
 const mostCommonBit = (bins: number[][], index: number): number => {
@@ -30,7 +30,7 @@ const mostCommonBit = (bins: number[][], index: number): number => {
 
 const findRating = (
   bins: number[][],
-  filter: (input: number[][], index: number) => number[][]
+  filter: (input: number[][], index: number) => number[][],
 ): number[] => {
   let index = 0;
   let possible = bins.slice();
@@ -45,12 +45,12 @@ const findRating = (
 
 const co2Filter = (input: number[][], index: number): number[][] => {
   const mostCommon = mostCommonBit(input, index);
-  return input.filter((p) => p[index] !== mostCommon);
+  return input.filter(p => p[index] !== mostCommon);
 };
 
 const o2Filter = (input: number[][], index: number): number[][] => {
   const mostCommon = mostCommonBit(input, index);
-  return input.filter((p) => p[index] === mostCommon);
+  return input.filter(p => p[index] === mostCommon);
 };
 
 export class Puzzle202103 extends PuzzleDay {

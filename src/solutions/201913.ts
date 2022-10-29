@@ -1,6 +1,6 @@
-import { PuzzleDay } from '../puzzleDay';
-import { IntCodeComputer } from '../helpers';
 import { chunk } from 'lodash';
+import { IntCodeComputer } from '../helpers';
+import { PuzzleDay } from '../puzzleDay';
 
 export type GameState = {
   ballX: number;
@@ -16,16 +16,10 @@ export const parseInput = (input: string) => {
 export const countBlocks = (outputs: number[]): number =>
   outputs.filter((v: number, i: number) => i % 3 === 2 && v === 2).length;
 
-export const findSingleInstance = (
-  grid: number[],
-  type: number,
-  index: number = 2,
-): number[] | undefined => chunk(grid, 3).find(chunk => chunk[index] === type);
+export const findSingleInstance = (grid: number[], type: number, index = 2): number[] | undefined =>
+  chunk(grid, 3).find(chunk => chunk[index] === type);
 
-export const getNewGameState = (
-  grid: number[],
-  gameState: GameState,
-): GameState => {
+export const getNewGameState = (grid: number[], gameState: GameState): GameState => {
   const ball = findSingleInstance(grid, 4)?.[0] ?? gameState.ballX;
   const paddle = findSingleInstance(grid, 3)?.[0] ?? gameState.paddleX;
   return {
@@ -45,12 +39,14 @@ const playGame = (input: number[]): number => {
     paddleMovement: 0,
   };
   computer.runUntilWaitingForInput();
+
   while (!computer.halted) {
     gameState = getNewGameState(computer.output, gameState);
     computer.input.push(gameState.paddleMovement);
     computer.output = [];
     computer.runUntilWaitingForInput();
   }
+
   return findSingleInstance(computer.output, -1, 0)?.[2] ?? 0;
 };
 

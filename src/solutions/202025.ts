@@ -2,42 +2,41 @@ import { splitLines } from '../helpers';
 import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string): [number, number] => {
-  const [card, door] = splitLines(input).map((v) => parseInt(v, 10));
+  const [card, door] = splitLines(input).map(v => parseInt(v, 10));
   return [card, door];
 };
 
-const doIteration = (value: number, subject: number): number => {
-  value = value * subject;
-  value = value % 20201227;
-  return value;
-};
+const doIteration = (value: number, subject: number): number => (value * subject) % 20201227;
 
-const findLoopSizes = (
-  subject: number,
-  [card, door]: [number, number]
-): [number, number] => {
+const findLoopSizes = (subject: number, [card, door]: [number, number]): [number, number] => {
   let i = 0;
   let value = 1;
   let doorLoopSize: number | undefined = undefined;
   let cardLoopSize: number | undefined = undefined;
+
   while (!doorLoopSize || !cardLoopSize) {
     i++;
     value = doIteration(value, subject);
+
     if (value === card && !cardLoopSize) {
       cardLoopSize = i;
     }
+
     if (value === door && !doorLoopSize) {
       doorLoopSize = i;
     }
   }
+
   return [cardLoopSize, doorLoopSize];
 };
 
 const doLoops = (subject: number, loopCount: number): number => {
   let value = 1;
+
   for (let i = 0; i < loopCount; i++) {
     value = doIteration(value, subject);
   }
+
   return value;
 };
 

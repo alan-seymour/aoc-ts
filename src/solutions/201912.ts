@@ -73,12 +73,8 @@ export const calculateEnergies = (moons: MoonState[]) => {
   });
 };
 
-export const calculateTotalEnergy = (moons: MoonState[]): number => {
-  return moons.reduce(
-    (sum: number, moon: MoonState) => sum + moon.totalEnergy,
-    0,
-  );
-};
+export const calculateTotalEnergy = (moons: MoonState[]): number =>
+  moons.reduce((sum: number, moon: MoonState) => sum + moon.totalEnergy, 0);
 
 const doTimeStep = (moons: MoonState[]) => {
   applyGravity(moons);
@@ -95,12 +91,14 @@ const hashSystemState = (moons: MoonState[]) => {
   let xs = '';
   let ys = '';
   let zs = '';
+
   moons.forEach(moon => {
     const [x, y, z] = hashMoonState(moon);
     xs = `${xs},${x}`;
     ys = `${ys},${y}`;
     zs = `${zs},${z}`;
   });
+
   return [xs, ys, zs];
 };
 
@@ -109,9 +107,7 @@ const gcd2 = (a: number, b: number): number => {
   return gcd2(b, a % b);
 };
 
-const lcm2 = (a: number, b: number): number => {
-  return (a * b) / gcd2(a, b);
-};
+const lcm2 = (a: number, b: number): number => (a * b) / gcd2(a, b);
 
 const lcm = (numbers: number[]): number => {
   let n = 1;
@@ -127,11 +123,13 @@ const runUntilLoop = (moons: MoonState[]): number => {
   let xLoop = 0;
   let yLoop = 0;
   let zLoop = 0;
+
   while (!(xLoop && yLoop && zLoop)) {
     const [xhash, yhash, zhash] = hashSystemState(moons);
+
     if (zLoop === 0) {
       if (zMap.has(zhash)) {
-        const first = zMap.get(zhash)!;
+        const first = zMap.get(zhash) ?? 0;
         zLoop = count - first;
       } else {
         zMap.set(zhash, count);
@@ -140,7 +138,7 @@ const runUntilLoop = (moons: MoonState[]): number => {
 
     if (yLoop === 0) {
       if (yMap.has(yhash)) {
-        const first = yMap.get(yhash)!;
+        const first = yMap.get(yhash) ?? 0;
         yLoop = count - first;
       } else {
         yMap.set(yhash, count);
@@ -149,15 +147,17 @@ const runUntilLoop = (moons: MoonState[]): number => {
 
     if (xLoop === 0) {
       if (xMap.has(xhash)) {
-        const first = xMap.get(xhash)!;
+        const first = xMap.get(xhash) ?? 0;
         xLoop = count - first;
       } else {
         xMap.set(xhash, count);
       }
     }
+
     doTimeStep(moons);
     count++;
   }
+
   return lcm([xLoop, yLoop, zLoop]);
 };
 
@@ -180,6 +180,7 @@ export const parseInput = (input: string): MoonState[] => {
       totalEnergy: 0,
     };
   });
+
   return coords;
 };
 

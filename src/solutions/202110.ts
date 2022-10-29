@@ -2,12 +2,13 @@ import { splitLines } from '../helpers';
 import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string): string[][] => {
-  const lines = splitLines(input).map((l) => l.split(''));
+  const lines = splitLines(input).map(l => l.split(''));
   return lines;
 };
 
 const isOpening = (char: string): boolean =>
   char === '[' || char === '(' || char === '{' || char === '<';
+
 const isCorrectClosing = (opening: string, closing: string) =>
   (opening === '[' && closing === ']') ||
   (opening === '(' && closing === ')') ||
@@ -23,11 +24,13 @@ const corruptClosingToScore: { [key: string]: number } = {
 
 const corruptedScore = (line: string[]): number => {
   const stack: string[] = [];
+
   for (let i = 0; i < line.length; i++) {
     if (isOpening(line[i])) {
       stack.push(line[i]);
     } else {
       const opening = stack.pop() ?? '?';
+
       if (!isCorrectClosing(opening, line[i])) {
         return corruptClosingToScore[line[i]];
       }
@@ -46,6 +49,7 @@ const incompleteClosingToScore: { [key: string]: number } = {
 
 const incompleteScore = (line: string[]): number => {
   const stack: string[] = [];
+
   for (let i = 0; i < line.length; i++) {
     if (isOpening(line[i])) {
       stack.push(line[i]);
@@ -55,6 +59,7 @@ const incompleteScore = (line: string[]): number => {
   }
 
   let score = 0;
+
   for (let i = stack.length - 1; i >= 0; i--) {
     score = score * 5;
     score += incompleteClosingToScore[stack[i]];
@@ -73,7 +78,7 @@ export class Puzzle202110 extends PuzzleDay {
 
   part2() {
     const lines = parseInput(this.input);
-    const incompleteLines = lines.filter((l) => corruptedScore(l) === 0);
+    const incompleteLines = lines.filter(l => corruptedScore(l) === 0);
     const scores = incompleteLines.map(incompleteScore).sort((a, b) => a - b);
     return `${scores[Math.floor(scores.length / 2)]}`;
   }

@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202004, parseInput } from './202004';
 
 let day: Puzzle202004;
@@ -13,7 +14,9 @@ describe('202004', () => {
 
     iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
     hcl:#cfa07d byr:1929`;
+
     const result = parseInput(input);
+
     expect(result).toEqual([
       {
         ecl: 'gry',
@@ -23,7 +26,7 @@ describe('202004', () => {
         byr: '1937',
         iyr: '2017',
         cid: '147',
-        hgt: '183cm'
+        hgt: '183cm',
       },
       {
         iyr: '2013',
@@ -32,8 +35,8 @@ describe('202004', () => {
         eyr: '2023',
         pid: '028048884',
         hcl: '#cfa07d',
-        byr: '1929'
-      }
+        byr: '1929',
+      },
     ]);
   });
 
@@ -51,6 +54,7 @@ describe('202004', () => {
 
     hcl:#cfa07d eyr:2025 pid:166559648
     iyr:2011 ecl:brn hgt:59in`);
+
     const result = day.part1();
     expect(result).toBe('2');
   });
@@ -69,6 +73,7 @@ describe('202004', () => {
     hgt:59cm ecl:zzz
     eyr:2038 hcl:74454a iyr:2023
     pid:3556412378 byr:2007`);
+
     const result = day.part2();
     expect(result).toBe('0');
   });
@@ -86,6 +91,7 @@ describe('202004', () => {
     eyr:2022
 
     iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719`);
+
     const result = day.part2();
     expect(result).toBe('4');
   });

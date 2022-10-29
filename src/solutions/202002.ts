@@ -12,7 +12,8 @@ interface ParsedInput {
 
 export const parseInput = (input: string): ParsedInput[] => {
   const lines = splitLines(input);
-  const values = lines.map((line) => {
+
+  const values = lines.map(line => {
     const [, min, max, char, pass] = line.match(inputRegex) ?? [];
     return {
       val1: parseInt(min, 10),
@@ -21,6 +22,7 @@ export const parseInput = (input: string): ParsedInput[] => {
       pass,
     };
   });
+
   return values;
 };
 
@@ -29,9 +31,9 @@ export const testPasswordPart1 = (password: ParsedInput): boolean => {
   return count >= password.val1 && count <= password.val2;
 };
 
-export const testPasswordPart2 = ({ val1, val2, char, pass }: ParsedInput): boolean => {
-  return (((pass.charAt(val1 - 1) === char) && (pass.charAt(val2 - 1) !== char)) || ((pass.charAt(val1 - 1) !== char) && (pass.charAt(val2 - 1) === char)));
-};
+export const testPasswordPart2 = ({ val1, val2, char, pass }: ParsedInput): boolean =>
+  (pass.charAt(val1 - 1) === char && pass.charAt(val2 - 1) !== char) ||
+  (pass.charAt(val1 - 1) !== char && pass.charAt(val2 - 1) === char);
 
 export class Puzzle202002 extends PuzzleDay {
   part1() {

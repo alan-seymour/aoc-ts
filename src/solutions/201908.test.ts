@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import {
   Puzzle201908,
   pixelsToLayers,
@@ -18,6 +19,7 @@ describe('201908', () => {
   test('pixelsToLayers example 1', () => {
     const inputPixels = parseInput('123456789012');
     const result = pixelsToLayers(inputPixels, 3, 2);
+
     expect(result).toEqual([
       [1, 2, 3, 4, 5, 6],
       [7, 8, 9, 0, 1, 2],
@@ -37,6 +39,7 @@ describe('201908', () => {
       [1, 1, 1, 3],
       [1, 1, 0, 3],
     ];
+
     const result = findLayerBySmallestDigitCount(1, layers);
     expect(result).toEqual([1, 1, 0, 3]);
   });
