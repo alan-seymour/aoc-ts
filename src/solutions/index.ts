@@ -1,4 +1,5 @@
 import { PuzzleDay } from '../puzzleDay';
+import { Puzzle201501 } from './201501';
 import { Puzzle201801 } from './201801';
 import { Puzzle201802 } from './201802';
 import { Puzzle201803 } from './201803';
@@ -124,5 +125,6 @@ export const dateToSolution: {
   202113: input => new Puzzle202113(input),
   202114: input => new Puzzle202114(input),
   202115: input => new Puzzle202115(input),
+  201501: input => new Puzzle201501(input),
   /** (Maps Here) */
 };
