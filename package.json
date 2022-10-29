@@ -43,7 +43,8 @@
     "plop": "plop",
     "test": "vitest",
     "test-coverage": "vitest run --coverage",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts",
+    "fix": "eslint src --ext .ts --fix"
   },
   "author": "Alan Seymour <alan@alanseymour.net>",
   "license": "ISC"
