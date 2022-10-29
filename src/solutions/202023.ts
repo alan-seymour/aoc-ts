@@ -1,7 +1,7 @@
 import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string): number[] => {
-  const labels = input.split('').map((v) => parseInt(v, 10));
+  const labels = input.split('').map(v => parseInt(v, 10));
   return labels;
 };
 
@@ -11,13 +11,16 @@ class Cup {
 
 const loopLinkedMoves = (cups: Cup[], loopCount: number): Map<number, Cup> => {
   let current: Cup | undefined = cups[0];
-  const map = new Map(cups.map((c) => [c.id, c]));
+  const map = new Map(cups.map(c => [c.id, c]));
+
   for (let i = 0; i < loopCount; i++) {
     current = doLinkedMove(map, current);
+
     if (!current) {
       throw new Error(`loop linked moves # ${i}`);
     }
   }
+
   return map;
 };
 
@@ -39,6 +42,7 @@ const doLinkedMove = (map: Map<number, Cup>, current: Cup): Cup | undefined => {
     const next = destinationCup?.next;
     destinationCup.next = remove;
     const newNextLocation = remove?.next?.next;
+
     if (newNextLocation) {
       newNextLocation.next = next;
     }
@@ -48,10 +52,12 @@ const doLinkedMove = (map: Map<number, Cup>, current: Cup): Cup | undefined => {
 };
 
 const labelsToLL = (labels: number[]): Cup[] => {
-  const cups = labels.map((l) => new Cup(l));
+  const cups = labels.map(l => new Cup(l));
+
   cups.forEach((c, i) => {
     c.next = cups[i + 1];
   });
+
   cups[cups.length - 1].next = cups[0];
   return cups;
 };
@@ -64,18 +70,22 @@ export class Puzzle202023 extends PuzzleDay {
     const one = finalArangement.get(1);
     let temp = one?.next;
     let output = '';
+
     while (temp && temp.id !== 1) {
       output = `${output}${temp.id}`;
       temp = temp.next;
     }
+
     return output;
   }
 
   part2() {
     const labels = parseInput(this.input);
+
     for (let i = 9; i < 1000000; i++) {
       labels[i] = i + 1;
     }
+
     const cups = labelsToLL(labels);
     const finalArangement = loopLinkedMoves(cups, 10000000);
     const one = finalArangement.get(1);

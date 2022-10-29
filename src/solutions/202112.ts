@@ -61,8 +61,9 @@ const findPaths = (links: Links, maxRevisits: number): Path[] => {
     }
 
     const nextLocations = (links.get(currentLocation) ?? []).filter(
-      (l) => state.revisits < maxRevisits || !state.visitedSmall.has(l)
+      l => state.revisits < maxRevisits || !state.visitedSmall.has(l),
     );
+
     const visitedSmall = new Set(state.visitedSmall);
 
     if (currentLocation !== currentLocation.toUpperCase()) {
@@ -70,11 +71,11 @@ const findPaths = (links: Links, maxRevisits: number): Path[] => {
     }
 
     queue.push(
-      ...nextLocations.map((l) => ({
+      ...nextLocations.map(l => ({
         path: [...state.path, l],
         visitedSmall,
         revisits: visitedSmall.has(l) ? state.revisits + 1 : state.revisits,
-      }))
+      })),
     );
   }
 

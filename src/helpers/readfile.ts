@@ -6,6 +6,7 @@ const asyncReadFile = (fileName: string): Promise<Buffer> =>
       if (error) {
         reject(error);
       }
+
       resolve(result);
     });
   });
@@ -15,7 +16,10 @@ export const getData = async (filename: string) => {
     const data = await asyncReadFile(filename);
     return data.toString();
   } catch (e) {
-    console.error(`Error reading file: ${e.message}`);
+    if (e instanceof Error) {
+      console.error(`Error reading file: ${e.message}`);
+    }
+
     return '';
   }
 };

@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { parseInput } from './201914';
 
 describe('201902', () => {
@@ -8,6 +9,7 @@ describe('201902', () => {
     7 A, 1 C => 1 D
     7 A, 1 D => 1 E
     7 A, 1 E => 1 FUEL`;
+
     const result = parseInput(input);
     expect(result.size).toEqual(6);
   });

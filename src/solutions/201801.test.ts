@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle201801, parseInput } from './201801';
 
 let day: Puzzle201801;
@@ -13,6 +14,7 @@ describe('201801', () => {
     -2
     -7
     -4`;
+
     const result = parseInput(input);
     expect(result).toEqual([7, 7, -2, -7, -4]);
   });
@@ -22,6 +24,7 @@ describe('201801', () => {
     -2
     +3
     +1`);
+
     const result = day.part1();
     expect(result).toBe('3');
   });
@@ -30,6 +33,7 @@ describe('201801', () => {
     day.loadData(`+1
     +1
     +1`);
+
     const result = day.part1();
     expect(result).toBe('3');
   });
@@ -38,6 +42,7 @@ describe('201801', () => {
     day.loadData(`+1
     +1
     -2`);
+
     const result = day.part1();
     expect(result).toBe('0');
   });
@@ -46,6 +51,7 @@ describe('201801', () => {
     day.loadData(`-1
     -2
     -3`);
+
     const result = day.part1();
     expect(result).toBe('-6');
   });
@@ -55,6 +61,7 @@ describe('201801', () => {
     -2
     +3
     +1`);
+
     const result = day.part2();
     expect(result).toBe('2');
   });
@@ -62,6 +69,7 @@ describe('201801', () => {
   test('part 2 example 2', () => {
     day.loadData(`+1
     -1`);
+
     const result = day.part2();
     expect(result).toBe('0');
   });
@@ -72,6 +80,7 @@ describe('201801', () => {
     +4
     -2
     -4`);
+
     const result = day.part2();
     expect(result).toBe('10');
   });
@@ -82,6 +91,7 @@ describe('201801', () => {
     +8
     +5
     -6`);
+
     const result = day.part2();
     expect(result).toBe('5');
   });
@@ -92,6 +102,7 @@ describe('201801', () => {
     -2
     -7
     -4`);
+
     const result = day.part2();
     expect(result).toBe('14');
   });

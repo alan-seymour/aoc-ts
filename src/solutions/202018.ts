@@ -8,60 +8,91 @@ export const parseInput = (input: string): string[][] => {
 };
 
 const solveBracketsPart1 = (equation: string[]): number => {
-  const { total } = equation.reduce(({ operation, total }, curr) => {
-    if (parseInt(curr, 10)) {
-      if (operation === '*') {
-        return { operation, total: parseInt(curr, 10) * total };
-      } else if (operation === '+') {
-        return { operation, total: parseInt(curr) + total };
+  const { total } = equation.reduce(
+    ({ operation, total }, curr) => {
+      if (parseInt(curr, 10)) {
+        if (operation === '*') {
+          return { operation, total: parseInt(curr, 10) * total };
+        } else if (operation === '+') {
+          return { operation, total: parseInt(curr) + total };
+        }
+
+        return { operation, total: parseInt(curr, 10) };
+      } else {
+        return { operation: curr, total };
       }
-      return { operation, total: parseInt(curr, 10) };
-    } else {
-      return { operation: curr, total };
-    }
-  }, { operation: '', total: 0 });
+    },
+    { operation: '', total: 0 },
+  );
+
   return total;
 };
 
 const solveBracketsPart2 = (equation: string[]): number => {
-  let plusIndex = equation.findIndex(e => e === '+');
+  let newEquation = equation;
+  let plusIndex = newEquation.findIndex(e => e === '+');
+
   while (plusIndex !== -1) {
-    const lhs = equation[plusIndex - 1];
-    const rhs = equation[plusIndex + 1];
+    const lhs = newEquation[plusIndex - 1];
+    const rhs = newEquation[plusIndex + 1];
     const result = parseInt(lhs, 10) + parseInt(rhs, 10);
-    equation = [...equation.slice(0, plusIndex - 1), result.toString(), ...equation.slice(plusIndex + 2)];
-    plusIndex = equation.findIndex(e => e === '+');
+
+    newEquation = [
+      ...newEquation.slice(0, plusIndex - 1),
+      result.toString(),
+      ...newEquation.slice(plusIndex + 2),
+    ];
+
+    plusIndex = newEquation.findIndex(e => e === '+');
   }
 
-  let multIndex = equation.findIndex(e => e === '*');
+  let multIndex = newEquation.findIndex(e => e === '*');
+
   while (multIndex !== -1) {
-    const lhs = equation[multIndex - 1];
-    const rhs = equation[multIndex + 1];
+    const lhs = newEquation[multIndex - 1];
+    const rhs = newEquation[multIndex + 1];
     const result = parseInt(lhs, 10) * parseInt(rhs, 10);
-    equation = [...equation.slice(0, multIndex - 1), result.toString(), ...equation.slice(multIndex + 2)];
-    multIndex = equation.findIndex(e => e === '*');
+
+    newEquation = [
+      ...newEquation.slice(0, multIndex - 1),
+      result.toString(),
+      ...newEquation.slice(multIndex + 2),
+    ];
+
+    multIndex = newEquation.findIndex(e => e === '*');
   }
 
-  return parseInt(equation[0], 10);
+  return parseInt(newEquation[0], 10);
 };
 
 type BracketSolver = (input: string[]) => number;
 
 const solveEquation = (equation: string[], bracketSolver: BracketSolver): number => {
-  while (equation.some(c => c === '(')) {
+  let newEquation = equation;
+
+  while (newEquation.some(c => c === '(')) {
     let openingIndex = 0;
-    for (let i = 0; i < equation.length; i++) {
-      if (equation[i] === '(') {
+
+    for (let i = 0; i < newEquation.length; i++) {
+      if (newEquation[i] === '(') {
         openingIndex = i;
       }
-      if (equation[i] === ')') {
-        const subValue = bracketSolver(equation.slice(openingIndex + 1, i));
-        equation = [...equation.slice(0, openingIndex), subValue.toString(), ...equation.slice(i + 1)];
+
+      if (newEquation[i] === ')') {
+        const subValue = bracketSolver(newEquation.slice(openingIndex + 1, i));
+
+        newEquation = [
+          ...newEquation.slice(0, openingIndex),
+          subValue.toString(),
+          ...newEquation.slice(i + 1),
+        ];
+
         break;
       }
     }
   }
-  return bracketSolver(equation);
+
+  return bracketSolver(newEquation);
 };
 
 export class Puzzle202018 extends PuzzleDay {

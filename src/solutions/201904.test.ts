@@ -1,9 +1,5 @@
-import {
-  parseInput,
-  hasDouble,
-  hasMinDouble,
-  numberIncrements,
-} from './201904';
+import { describe, test, expect, beforeEach } from 'vitest';
+import { parseInput, hasDouble, hasMinDouble, numberIncrements } from './201904';
 
 describe('201904', () => {
   test('parseInput', () => {

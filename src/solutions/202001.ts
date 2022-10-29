@@ -3,7 +3,7 @@ import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string) => {
   const lines = splitLines(input);
-  const numbers = lines.map((line) => parseInt(line, 10));
+  const numbers = lines.map(line => parseInt(line, 10));
   return numbers;
 };
 
@@ -14,6 +14,7 @@ const findSum2val = (input: number[], target: number): number[] => {
 
   while (leftIndex < rightIndex) {
     const sum = input[leftIndex] + input[rightIndex];
+
     if (sum < target) {
       leftIndex++;
     } else if (sum > target) {
@@ -22,6 +23,7 @@ const findSum2val = (input: number[], target: number): number[] => {
       return [input[leftIndex], input[rightIndex]];
     }
   }
+
   return [];
 };
 
@@ -34,8 +36,10 @@ const findSum3val = (input: number[], target: number): number[] => {
   for (leftIndex = 0; leftIndex < input.length - 2; leftIndex++) {
     middleIndex = leftIndex + 1;
     rightIndex = input.length - 1;
+
     while (middleIndex < rightIndex) {
       const sum = input[leftIndex] + input[middleIndex] + input[rightIndex];
+
       if (sum < target) {
         middleIndex++;
       } else if (sum > target) {

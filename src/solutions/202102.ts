@@ -13,7 +13,7 @@ type Location = {
 };
 
 export const parseInput = (input: string): Command[] =>
-  splitLines(input).map((l) => {
+  splitLines(input).map(l => {
     const [direction, dStr] = l.split(' ');
     return { direction, distance: parseInt(dStr, 10) };
   });
@@ -32,7 +32,7 @@ const parseCommandsPart1 = (commands: Command[]): Location =>
           return { depth, forward, aim };
       }
     },
-    { depth: 0, forward: 0, aim: 0 }
+    { depth: 0, forward: 0, aim: 0 },
   );
 
 const parseCommandsPart2 = (commands: Command[]): Location =>
@@ -53,7 +53,7 @@ const parseCommandsPart2 = (commands: Command[]): Location =>
           return { depth, forward, aim };
       }
     },
-    { depth: 0, forward: 0, aim: 0 }
+    { depth: 0, forward: 0, aim: 0 },
   );
 
 export class Puzzle202102 extends PuzzleDay {

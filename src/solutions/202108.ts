@@ -8,12 +8,12 @@ type Display = {
 };
 
 export const parseInput = (input: string): Display[] => {
-  const lines = splitLines(input).map((line) => {
-    const [patterns, output] = line
-      .split('|')
-      .map((part) => part.split(' ').filter(Boolean));
+  const lines = splitLines(input).map(line => {
+    const [patterns, output] = line.split('|').map(part => part.split(' ').filter(Boolean));
+
     return { patterns, output };
   });
+
   return lines;
 };
 
@@ -21,15 +21,13 @@ const countSimple = (displays: Display[]): number =>
   displays.reduce<number>(
     (s, c) =>
       s +
-      c.output.filter(
-        (o) =>
-          o.length === 2 || o.length === 3 || o.length === 4 || o.length === 7
-      ).length,
-    0
+      c.output.filter(o => o.length === 2 || o.length === 3 || o.length === 4 || o.length === 7)
+        .length,
+    0,
   );
 
-const countSegmentFrequency = (patterns: string[]) => {
-  return patterns.reduce(
+const countSegmentFrequency = (patterns: string[]) =>
+  patterns.reduce(
     (t, p) => {
       const chars = p.split('');
       return {
@@ -42,17 +40,17 @@ const countSegmentFrequency = (patterns: string[]) => {
         g: chars.includes('g') ? t.g + 1 : t.g,
       };
     },
-    { a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0 }
+    { a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0 },
   );
-};
 
 const decodeDisplay = (display: Display): Map<string, string> => {
   const decoded = new Map<string, string>();
   const freqs = countSegmentFrequency(display.patterns);
-  const one = display.patterns.find((p) => p.length === 2)?.split('');
-  const seven = display.patterns.find((p) => p.length === 3)?.split('');
-  const four = display.patterns.find((p) => p.length === 4)?.split('');
+  const one = display.patterns.find(p => p.length === 2)?.split('');
+  const seven = display.patterns.find(p => p.length === 3)?.split('');
+  const four = display.patterns.find(p => p.length === 4)?.split('');
   decoded.set('a', xor(one, seven)[0]);
+
   Object.entries(freqs).forEach(([k, v]) => {
     if (v === 6) {
       decoded.set('b', k);
@@ -68,8 +66,9 @@ const decodeDisplay = (display: Display): Map<string, string> => {
   const candidatesDG = Object.entries(freqs)
     .filter(([, v]) => v === 7)
     .map(([k]) => k);
+
   decoded.set('d', intersection(four, candidatesDG)[0]);
-  decoded.set('g', candidatesDG.find((c) => c !== decoded.get('d')) ?? '');
+  decoded.set('g', candidatesDG.find(c => c !== decoded.get('d')) ?? '');
   return decoded;
 };
 
@@ -77,89 +76,98 @@ const decodedToNumbers = (decoded: Map<string, string>, patterns: string[]) => {
   const zero =
     patterns
       .find(
-        (p) =>
+        p =>
           p.length === 6 &&
           p.includes(decoded.get('c') ?? '') &&
-          p.includes(decoded.get('e') ?? '')
+          p.includes(decoded.get('e') ?? ''),
       )
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const one =
     patterns
-      .find((p) => p.length === 2)
+      .find(p => p.length === 2)
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const two =
     patterns
       .find(
-        (p) =>
+        p =>
           p.length === 5 &&
           p.includes(decoded.get('c') ?? '') &&
-          p.includes(decoded.get('e') ?? '')
+          p.includes(decoded.get('e') ?? ''),
       )
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const three =
     patterns
       .find(
-        (p) =>
+        p =>
           p.length === 5 &&
           p.includes(decoded.get('c') ?? '') &&
-          p.includes(decoded.get('f') ?? '')
+          p.includes(decoded.get('f') ?? ''),
       )
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const four =
     patterns
-      .find((p) => p.length === 4)
+      .find(p => p.length === 4)
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const five =
     patterns
       .find(
-        (p) =>
+        p =>
           p.length === 5 &&
           p.includes(decoded.get('b') ?? '') &&
-          p.includes(decoded.get('f') ?? '')
+          p.includes(decoded.get('f') ?? ''),
       )
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const six =
     patterns
       .find(
-        (p) =>
+        p =>
           p.length === 6 &&
           p.includes(decoded.get('e') ?? '') &&
-          p.includes(decoded.get('d') ?? '')
+          p.includes(decoded.get('d') ?? ''),
       )
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const seven =
     patterns
-      .find((p) => p.length === 3)
+      .find(p => p.length === 3)
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const eight =
     patterns
-      .find((p) => p.length === 7)
+      .find(p => p.length === 7)
       ?.split('')
       .sort()
       .join('') ?? '';
+
   const nine =
     patterns
       .find(
-        (p) =>
+        p =>
           p.length === 6 &&
           p.includes(decoded.get('c') ?? '') &&
-          p.includes(decoded.get('d') ?? '')
+          p.includes(decoded.get('d') ?? ''),
       )
       ?.split('')
       .sort()
@@ -169,8 +177,8 @@ const decodedToNumbers = (decoded: Map<string, string>, patterns: string[]) => {
 };
 
 const calculateOutput = (outputs: string[], codes: string[]): number => {
-  const sorted = outputs.map((o) => o.split('').sort().join(''));
-  const numerical = sorted.map((o) => codes.indexOf(o));
+  const sorted = outputs.map(o => o.split('').sort().join(''));
+  const numerical = sorted.map(o => codes.indexOf(o));
   return parseInt(numerical.join(''), 10);
 };
 

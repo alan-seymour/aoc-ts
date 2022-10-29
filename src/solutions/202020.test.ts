@@ -1,4 +1,14 @@
-import { Puzzle202020, parseInput, Tile, transposeTile, flipTileHorizontally, flipTileVertically, rotateTileRight, rotateTileLeft } from './202020';
+import { describe, test, expect, beforeEach } from 'vitest';
+import {
+  Puzzle202020,
+  parseInput,
+  Tile,
+  transposeTile,
+  flipTileHorizontally,
+  flipTileVertically,
+  rotateTileRight,
+  rotateTileLeft,
+} from './202020';
 
 let day: Puzzle202020;
 
@@ -17,7 +27,9 @@ describe('202020', () => {
     ###
     ##.
     #..`;
+
     const result = parseInput(input);
+
     expect(result).toMatchObject([
       {
         id: 1234,
@@ -31,7 +43,7 @@ describe('202020', () => {
           left: ['.', '.', '#'],
           right: ['.', '.', '#'],
           bottom: ['#', '#', '#'],
-        }
+        },
       },
       {
         id: 2345,
@@ -45,8 +57,8 @@ describe('202020', () => {
           left: ['#', '#', '#'],
           right: ['#', '.', '.'],
           bottom: ['#', '.', '.'],
-        }
-      }
+        },
+      },
     ]);
   });
 
@@ -64,9 +76,11 @@ describe('202020', () => {
         bottom: ['m', 'n', 'o', 'p'],
         left: ['a', 'e', 'i', 'm'],
         right: ['d', 'h', 'l', 'p'],
-      }
+      },
     };
+
     const result = transposeTile(input);
+
     expect(result).toMatchObject({
       id: 1234,
       cells: [
@@ -79,8 +93,8 @@ describe('202020', () => {
         top: ['a', 'e', 'i', 'm'],
         bottom: ['d', 'h', 'l', 'p'],
         left: ['a', 'b', 'c', 'd'],
-        right: ['m', 'n', 'o', 'p']
-      }
+        right: ['m', 'n', 'o', 'p'],
+      },
     });
   });
 
@@ -98,9 +112,11 @@ describe('202020', () => {
         bottom: ['m', 'n', 'o', 'p'],
         left: ['a', 'e', 'i', 'm'],
         right: ['d', 'h', 'l', 'p'],
-      }
+      },
     };
+
     const result = flipTileHorizontally(input);
+
     expect(result).toMatchObject({
       id: 1234,
       cells: [
@@ -113,8 +129,8 @@ describe('202020', () => {
         top: ['d', 'c', 'b', 'a'],
         bottom: ['p', 'o', 'n', 'm'],
         left: ['d', 'h', 'l', 'p'],
-        right: ['a', 'e', 'i', 'm']
-      }
+        right: ['a', 'e', 'i', 'm'],
+      },
     });
   });
 
@@ -132,9 +148,11 @@ describe('202020', () => {
         bottom: ['m', 'n', 'o', 'p'],
         left: ['a', 'e', 'i', 'm'],
         right: ['d', 'h', 'l', 'p'],
-      }
+      },
     };
+
     const result = flipTileVertically(input);
+
     expect(result).toMatchObject({
       id: 1234,
       cells: [
@@ -147,8 +165,8 @@ describe('202020', () => {
         top: ['m', 'n', 'o', 'p'],
         bottom: ['a', 'b', 'c', 'd'],
         left: ['m', 'i', 'e', 'a'],
-        right: ['p', 'l', 'h', 'd']
-      }
+        right: ['p', 'l', 'h', 'd'],
+      },
     });
   });
 
@@ -166,9 +184,11 @@ describe('202020', () => {
         bottom: ['m', 'n', 'o', 'p'],
         left: ['a', 'e', 'i', 'm'],
         right: ['d', 'h', 'l', 'p'],
-      }
+      },
     };
+
     const result = rotateTileRight(input);
+
     expect(result).toMatchObject({
       id: 1234,
       cells: [
@@ -181,8 +201,8 @@ describe('202020', () => {
         top: ['m', 'i', 'e', 'a'],
         bottom: ['p', 'l', 'h', 'd'],
         left: ['m', 'n', 'o', 'p'],
-        right: ['a', 'b', 'c', 'd']
-      }
+        right: ['a', 'b', 'c', 'd'],
+      },
     });
   });
 
@@ -200,10 +220,11 @@ describe('202020', () => {
         bottom: ['m', 'n', 'o', 'p'],
         left: ['a', 'e', 'i', 'm'],
         right: ['d', 'h', 'l', 'p'],
-      }
+      },
     };
+
     const result = rotateTileLeft(input);
-    console.log(result.cells.map(v => v.join('')).join('\n'));
+
     expect(result).toMatchObject({
       id: 1234,
       cells: [
@@ -216,8 +237,8 @@ describe('202020', () => {
         top: ['d', 'h', 'l', 'p'],
         bottom: ['a', 'e', 'i', 'm'],
         left: ['d', 'c', 'b', 'a'],
-        right: ['p', 'o', 'n', 'm']
-      }
+        right: ['p', 'o', 'n', 'm'],
+      },
     });
   });
 
@@ -329,6 +350,7 @@ describe('202020', () => {
     ..#.###...
     ..#.......
     ..#.###...`);
+
     const result = day.part1();
     expect(result).toBe('20899048083289');
   });
@@ -441,6 +463,7 @@ describe('202020', () => {
     ..#.###...
     ..#.......
     ..#.###...`);
+
     const result = day.part2();
     expect(result).toBe('273');
   });

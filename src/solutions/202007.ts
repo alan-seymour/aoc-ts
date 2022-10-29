@@ -3,29 +3,36 @@ import { PuzzleDay } from '../puzzleDay';
 
 export type BagRules = {
   [key: string]: {
-    colour: string,
-    quantity: number,
-  }[]
+    colour: string;
+    quantity: number;
+  }[];
 };
 
 const inputRegex = /^(.*) bags contain (.*)\./;
 
 export const parseInput = (input: string): BagRules => {
   const lines = splitLines(input);
+
   const rules = lines.reduce((allRules, line) => {
     const [, outerBag, strRules] = line.match(/^(.*) bags contain (.*)\./) ?? [];
-    const subRules = strRules.split(',').map(subrule => {
-      const [, count, colour] = subrule.match(/(\d+) (.*) bags?/) ?? [];
-      return ({
-        colour,
-        quantity: parseInt(count, 10)
-      });
-    }).filter(r => r.colour && r.quantity);
-    return ({
+
+    const subRules = strRules
+      .split(',')
+      .map(subrule => {
+        const [, count, colour] = subrule.match(/(\d+) (.*) bags?/) ?? [];
+        return {
+          colour,
+          quantity: parseInt(count, 10),
+        };
+      })
+      .filter(r => r.colour && r.quantity);
+
+    return {
       ...allRules,
       [outerBag]: subRules,
-    });
+    };
   }, {});
+
   return rules;
 };
 
@@ -35,11 +42,13 @@ export const parseInput = (input: string): BagRules => {
 
 export const invertRules = (rules: BagRules): BagRules => {
   const output: BagRules = {};
+
   Object.keys(rules).forEach(ruleKey => {
     rules[ruleKey].forEach(childRule => {
       if (!output[childRule.colour]) {
         output[childRule.colour] = [];
       }
+
       output[childRule.colour].push({ colour: ruleKey, quantity: childRule.quantity });
     });
   });
@@ -61,11 +70,12 @@ export const findChildren = (rules: BagRules, root: string): string[] => {
         }
       });
     }
+
     colour = queue.shift();
   }
+
   return Array.from(children);
 };
-
 
 const cache = new Map<string, number>();
 

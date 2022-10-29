@@ -20,20 +20,21 @@ export const parseInput = (input: string): [Coord[], Fold[]] => {
       } else if (l === '') {
         return [c, f];
       } else {
-        const [x, y] = l.split(',').map((d) => parseInt(d, 10));
+        const [x, y] = l.split(',').map(d => parseInt(d, 10));
         return [[...c, { x, y }], f];
       }
     },
-    [[], []]
+    [[], []],
   );
+
   return lines;
 };
 
 const maxXY = (coords: Coord[]): Coord =>
-  coords.reduce<Coord>(
-    ({ x, y }, c) => ({ x: c.x > x ? c.x : x, y: c.y > y ? c.y : y }),
-    { x: 0, y: 0 }
-  );
+  coords.reduce<Coord>(({ x, y }, c) => ({ x: c.x > x ? c.x : x, y: c.y > y ? c.y : y }), {
+    x: 0,
+    y: 0,
+  });
 
 const fold = (coords: Coord[], dir: string, pos: number): Coord[] =>
   coords.map(({ x, y }) => {
@@ -42,6 +43,7 @@ const fold = (coords: Coord[], dir: string, pos: number): Coord[] =>
     } else if (dir === 'y') {
       return { x, y: y > pos ? pos - (y - pos) : y };
     }
+
     return { x, y };
   });
 
@@ -51,6 +53,7 @@ const dedupeCoords = (coords: Coord[]): Coord[] => {
 
   coords.forEach(({ x, y }) => {
     const key = `${x},${y}`;
+
     if (!seen.has(key)) {
       unique.push({ x, y });
       seen.add(key);
@@ -63,14 +66,17 @@ const dedupeCoords = (coords: Coord[]): Coord[] => {
 const printGrid = (coords: Coord[]): string => {
   const max = maxXY(coords);
   const output: string[][] = [];
+
   for (let i = 0; i <= max.y; i++) {
     output[i] = [];
+
     for (let j = 0; j <= max.x; j++) {
       output[i][j] = '.';
     }
   }
+
   coords.forEach(({ x, y }) => (output[y][x] = '#'));
-  return output.map((l) => l.join('')).join('\n');
+  return output.map(l => l.join('')).join('\n');
 };
 
 export class Puzzle202113 extends PuzzleDay {
@@ -83,10 +89,9 @@ export class Puzzle202113 extends PuzzleDay {
 
   part2() {
     const [coords, folds] = parseInput(this.input);
-    const output = folds.reduce<Coord[]>(
-      (c, f) => fold(c, f.dir, f.pos),
-      coords
-    );
+
+    const output = folds.reduce<Coord[]>((c, f) => fold(c, f.dir, f.pos), coords);
+
     const unique = dedupeCoords(output);
     const display = printGrid(unique);
     return `${display}`;

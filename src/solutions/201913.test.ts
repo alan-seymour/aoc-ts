@@ -1,10 +1,5 @@
-import {
-  parseInput,
-  countBlocks,
-  findSingleInstance,
-  getNewGameState,
-  GameState,
-} from './201913';
+import { describe, test, expect, beforeEach } from 'vitest';
+import { parseInput, countBlocks, findSingleInstance, getNewGameState, GameState } from './201913';
 
 describe('201913', () => {
   test('parseInput', () => {

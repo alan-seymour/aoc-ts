@@ -1,39 +1,33 @@
+import chunk from 'lodash/chunk';
 import { permutator } from '../helpers';
 import { PuzzleDay } from '../puzzleDay';
-import chunk from 'lodash/chunk';
 
 export const parseInput = (input: string) => {
   const numbers = input.split('').map(num => parseInt(num, 10));
   return numbers;
 };
 
-export const pixelsToLayers = (
-  pixels: number[],
-  width: number,
-  height: number,
-): number[][] => {
+export const pixelsToLayers = (pixels: number[], width: number, height: number): number[][] => {
   const layerSize = width * height;
   const layers = chunk(pixels, layerSize);
   return layers;
 };
 
-export const countDigitInLayer = (digit: number, layer: number[]): number => {
-  return layer.filter(pixel => pixel === digit).length;
-};
+export const countDigitInLayer = (digit: number, layer: number[]): number =>
+  layer.filter(pixel => pixel === digit).length;
 
-export const findLayerBySmallestDigitCount = (
-  digit: number,
-  layers: number[][],
-): number[] => {
+export const findLayerBySmallestDigitCount = (digit: number, layers: number[][]): number[] => {
   const smallest = layers.reduce(
     ({ smallest, count }: { smallest: number[]; count: number }, layer) => {
       const zeros = countDigitInLayer(digit, layer);
+
       if (zeros < count) {
         return {
           smallest: layer,
           count: zeros,
         };
       }
+
       return {
         smallest,
         count,
@@ -41,11 +35,13 @@ export const findLayerBySmallestDigitCount = (
     },
     { smallest: [], count: Number.MAX_SAFE_INTEGER },
   ).smallest;
+
   return smallest;
 };
 
 export const addLayerToImage = (image: number[], layer: number[]): number[] => {
-  const output = new Array();
+  const output = [];
+
   for (let i = 0; i < image.length; i++) {
     if (layer[i] === 2) {
       output[i] = image[i];
@@ -53,6 +49,7 @@ export const addLayerToImage = (image: number[], layer: number[]): number[] => {
       output[i] = layer[i];
     }
   }
+
   return output;
 };
 
@@ -77,9 +74,8 @@ export class Puzzle201908 extends PuzzleDay {
     const pixels = parseInput(this.input);
     const layers = pixelsToLayers(pixels, 25, 6);
     let finalImage: number[] = new Array<number>(25 * 6);
-    layers
-      .reverse()
-      .forEach(layer => (finalImage = addLayerToImage(finalImage, layer)));
+
+    layers.reverse().forEach(layer => (finalImage = addLayerToImage(finalImage, layer)));
 
     const image = imageToString(finalImage, 25);
     return image;

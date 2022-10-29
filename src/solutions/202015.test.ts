@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202015, parseInput } from './202015';
 
 let day: Puzzle202015;

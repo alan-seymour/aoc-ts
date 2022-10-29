@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Puzzle202021, parseInput } from './202021';
 
 let day: Puzzle202021;
@@ -10,7 +11,9 @@ describe('202021', () => {
   test('parseInput', () => {
     const input = `mxmxvkd kfcds sqjhc nhms (contains dairy, fish)
     trh fvjkl sbzzf mxmxvkd (contains dairy)`;
+
     const result = parseInput(input);
+
     expect(result).toEqual([
       {
         ingredients: ['mxmxvkd', 'kfcds', 'sqjhc', 'nhms'],
@@ -28,6 +31,7 @@ describe('202021', () => {
     trh fvjkl sbzzf mxmxvkd (contains dairy)
     sqjhc fvjkl (contains soy)
     sqjhc mxmxvkd sbzzf (contains fish)`);
+
     const result = day.part1();
     expect(result).toBe('5');
   });
@@ -37,6 +41,7 @@ describe('202021', () => {
     trh fvjkl sbzzf mxmxvkd (contains dairy)
     sqjhc fvjkl (contains soy)
     sqjhc mxmxvkd sbzzf (contains fish)`);
+
     const result = day.part2();
     expect(result).toBe('mxmxvkd,sqjhc,fvjkl');
   });

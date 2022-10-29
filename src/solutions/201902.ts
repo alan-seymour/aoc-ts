@@ -1,16 +1,12 @@
-import { PuzzleDay } from '../puzzleDay';
 import { IntCodeComputer } from '../helpers';
+import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string) => {
   const numbers = input.split(',').map(num => parseInt(num, 10));
   return numbers;
 };
 
-export const runWithNounVerb = (
-  state: number[],
-  noun: number,
-  verb: number,
-): IntCodeComputer => {
+export const runWithNounVerb = (state: number[], noun: number, verb: number): IntCodeComputer => {
   const runState = [...state];
   runState[1] = noun;
   runState[2] = verb;
@@ -28,14 +24,17 @@ export class Puzzle201902 extends PuzzleDay {
 
   part2() {
     const initialState = parseInput(this.input);
+
     for (let noun = 0; noun < 100; noun++) {
       for (let verb = 0; verb < 100; verb++) {
         const result = runWithNounVerb(initialState, noun, verb);
+
         if (result.state[0] === 19690720) {
           return `${100 * noun + verb}`;
         }
       }
     }
+
     return 'ERROR, No Solution Found';
   }
 }

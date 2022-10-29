@@ -14,6 +14,7 @@ const findSum2val = (input: number[], target: number): number[] => {
 
   while (leftIndex < rightIndex) {
     const sum = input[leftIndex] + input[rightIndex];
+
     if (sum < target) {
       leftIndex++;
     } else if (sum > target) {
@@ -22,18 +23,23 @@ const findSum2val = (input: number[], target: number): number[] => {
       return [input[leftIndex], input[rightIndex]];
     }
   }
+
   return [];
 };
 
 export const findFirstNonSum = (input: number[], lookback: number): number => {
   let index = lookback;
+
   while (index < input.length) {
     const result = findSum2val(input.slice(index - lookback, index), input[index]);
+
     if (result.length === 0) {
       return input[index];
     }
+
     index++;
   }
+
   throw new Error('not found');
 };
 
@@ -43,14 +49,17 @@ export const findContiguousRangeWithSum = (input: number[], goalSum: number): nu
   let leftIndex = 0;
   let rightIndex = 1;
   let sum = sumArray(input.slice(leftIndex, rightIndex));
+
   while (sum !== goalSum && rightIndex < input.length) {
     if (sum < goalSum) {
       rightIndex++;
     } else {
       leftIndex++;
     }
+
     sum = sumArray(input.slice(leftIndex, rightIndex));
   }
+
   return input.slice(leftIndex, rightIndex);
 };
 

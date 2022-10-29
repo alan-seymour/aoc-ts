@@ -1,8 +1,7 @@
 import { splitLines } from '../helpers';
 import { PuzzleDay } from '../puzzleDay';
 
-export const parseInput = (input: string): number[] =>
-  splitLines(input).map((b) => parseInt(b, 10));
+export const parseInput = (input: string): number[] => splitLines(input).map(b => parseInt(b, 10));
 
 const countIncreasing = (ints: number[]): number =>
   ints.reduce<{ prev: number | null; count: number }>(
@@ -11,7 +10,7 @@ const countIncreasing = (ints: number[]): number =>
       if (prev < current) return { prev: current, count: count + 1 };
       return { prev: current, count };
     },
-    { prev: null, count: 0 }
+    { prev: null, count: 0 },
   ).count;
 
 const slidingWindowSumWidth3 = (ints: number[]) =>

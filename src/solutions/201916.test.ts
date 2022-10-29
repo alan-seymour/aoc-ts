@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach } from 'vitest';
 import { parseInput } from './201916';
 
 describe('201916', () => {
