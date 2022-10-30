@@ -48,7 +48,8 @@ $ yarn test
 | Year | Day | Part 1             | Run Time | Part 2             | Run Time |
 | ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2015 | 1   | :heavy_check_mark: | 395μs    | :heavy_check_mark: | 241μs    |
-| 2015 | 1   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 3ms      |
+| 2015 | 2   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 3ms      |
+| 2015 | 3   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 11ms     |
 | 2018 | 1   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 19ms     |
 | 2018 | 2   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 16ms     |
 | 2018 | 3   | :heavy_check_mark: | 200ms    | :heavy_check_mark: | 215ms    |
