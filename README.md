@@ -51,6 +51,7 @@ $ yarn test
 | 2015 | 2   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 3ms      |
 | 2015 | 3   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 11ms     |
 | 2015 | 4   | :heavy_check_mark: | 807ms    | :heavy_check_mark: | 23s      |
+| 2015 | 5   | :heavy_check_mark: | 5ms      | :heavy_check_mark: | 11ms     |
 | 2018 | 1   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 19ms     |
 | 2018 | 2   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 16ms     |
 | 2018 | 3   | :heavy_check_mark: | 200ms    | :heavy_check_mark: | 215ms    |
