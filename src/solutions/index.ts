@@ -65,6 +65,7 @@ import { Puzzle201503 } from './201503';
 import { Puzzle201504 } from './201504';
 import { Puzzle201505 } from './201505';
 import { Puzzle201506 } from './201506';
+import { Puzzle201507 } from './201507';
 /** (Imports Here) */
 
 export const dateToSolution: {
@@ -136,5 +137,6 @@ export const dateToSolution: {
   201504: (input) => new Puzzle201504(input),
   201505: (input) => new Puzzle201505(input),
   201506: (input) => new Puzzle201506(input),
+  201507: (input) => new Puzzle201507(input),
   /** (Maps Here) */
 };
