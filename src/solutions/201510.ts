@@ -1,4 +1,3 @@
-import { splitLines } from '../helpers';
 import { PuzzleDay } from '../puzzleDay';
 
 export const parseInput = (input: string): string => input.trim();
