@@ -115,3 +115,4 @@ $ yarn test
 | 2021 | 13  | :heavy_check_mark: | 13ms     | :heavy_check_mark: | 15ms     |
 | 2021 | 14  | :heavy_check_mark: | 15ms     | :heavy_check_mark: | 50ms     |
 | 2021 | 15  | :heavy_check_mark: | 51ms     | :heavy_check_mark: | 480ms    |
+| 2022 | 1   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 1ms      |
