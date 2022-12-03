@@ -45,6 +45,9 @@ $ yarn test
 
 ## Currently implemented solutions
 
+<details>
+  <summary>2015 22/50 :star:</summary>
+  
 | Year | Day | Part 1             | Run Time | Part 2             | Run Time |
 | ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2015 | 1   | :heavy_check_mark: | 395μs    | :heavy_check_mark: | 241μs    |
@@ -58,9 +61,23 @@ $ yarn test
 | 2015 | 9   | :heavy_check_mark: | 114ms    | :heavy_check_mark: | 119ms    |
 | 2015 | 10  | :heavy_check_mark: | 202ms    | :heavy_check_mark: | 4s       |
 | 2015 | 11  | :heavy_check_mark: | 106ms    | :heavy_check_mark: | 509ms    |
+
+</details>
+<details>
+  <summary>2018 6/50 :star:</summary>
+  
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2018 | 1   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 19ms     |
 | 2018 | 2   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 16ms     |
 | 2018 | 3   | :heavy_check_mark: | 200ms    | :heavy_check_mark: | 215ms    |
+
+</details>
+<details>
+  <summary>2019 26/50 :star: </summary>
+  
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2019 | 1   | :heavy_check_mark: | 200μs    | :heavy_check_mark: | 320μs    |
 | 2019 | 2   | :heavy_check_mark: | 700μs    | :heavy_check_mark: | 85ms     |
 | 2019 | 3   | :heavy_check_mark: | 150ms    | :heavy_check_mark: | 150ms    |
@@ -74,6 +91,13 @@ $ yarn test
 | 2019 | 11  | :heavy_check_mark: | 25ms     | :heavy_check_mark: | 32ms     |
 | 2019 | 12  | :heavy_check_mark: | 7ms      | :heavy_check_mark: | 900ms    |
 | 2019 | 13  | :heavy_check_mark: | 37ms     | :heavy_check_mark: | 423ms    |
+
+</details>
+<details>
+  <summary>2020 50/50 :star2: </summary>
+  
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2020 | 1   | :heavy_check_mark: | 280μs    | :heavy_check_mark: | 340μs    |
 | 2020 | 2   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 2ms      |
 | 2020 | 3   | :heavy_check_mark: | 550μs    | :heavy_check_mark: | 650μs    |
@@ -100,6 +124,13 @@ $ yarn test
 | 2020 | 23  | :heavy_check_mark: | 262μs    | :heavy_check_mark: | 4s       |
 | 2020 | 24  | :heavy_check_mark: | 14ms     | :heavy_check_mark: | 1m       |
 | 2020 | 25  | :heavy_check_mark: | 141ms    | :santa:            | N/A      |
+
+</details>
+<details>
+  <summary>2021 30/50 :star: </summary>
+  
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2021 | 1   | :heavy_check_mark: | 900μs    | :heavy_check_mark: | 1ms      |
 | 2021 | 2   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 3ms      |
 | 2021 | 3   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 1ms      |
@@ -115,5 +146,15 @@ $ yarn test
 | 2021 | 13  | :heavy_check_mark: | 13ms     | :heavy_check_mark: | 15ms     |
 | 2021 | 14  | :heavy_check_mark: | 15ms     | :heavy_check_mark: | 50ms     |
 | 2021 | 15  | :heavy_check_mark: | 51ms     | :heavy_check_mark: | 480ms    |
+
+</details>
+<details>
+  <summary>2022 6/50 :star: </summary>
+  
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2022 | 1   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 1ms      |
 | 2022 | 2   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 5ms      |
+| 2022 | 3   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 6ms      |
+
+</details>
