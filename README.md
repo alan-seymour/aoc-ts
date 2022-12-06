@@ -158,5 +158,6 @@ $ yarn test
 | 2022 | 3   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 6ms      |
 | 2022 | 4   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 1ms      |
 | 2022 | 5   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 2ms      |
+| 2022 | 6   | :heavy_check_mark: | 379μs    | :heavy_check_mark: | 3ms      |
 
 </details>
