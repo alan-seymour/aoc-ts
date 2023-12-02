@@ -160,3 +160,12 @@ $ yarn test
 | 2022 | 5   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 2ms      |
 
 </details>
+
+<details>
+  <summary>2023 2/50 :star: </summary>
+  
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
+| 2023 | 1   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 6ms      |
+
+</details>
