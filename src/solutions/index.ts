@@ -1,5 +1,15 @@
 import { PuzzleDay } from '../puzzleDay';
 import { Puzzle201501 } from './201501';
+import { Puzzle201502 } from './201502';
+import { Puzzle201503 } from './201503';
+import { Puzzle201504 } from './201504';
+import { Puzzle201505 } from './201505';
+import { Puzzle201506 } from './201506';
+import { Puzzle201507 } from './201507';
+import { Puzzle201508 } from './201508';
+import { Puzzle201509 } from './201509';
+import { Puzzle201510 } from './201510';
+import { Puzzle201511 } from './201511';
 import { Puzzle201801 } from './201801';
 import { Puzzle201802 } from './201802';
 import { Puzzle201803 } from './201803';
@@ -60,28 +70,29 @@ import { Puzzle202112 } from './202112';
 import { Puzzle202113 } from './202113';
 import { Puzzle202114 } from './202114';
 import { Puzzle202115 } from './202115';
-import { Puzzle201502 } from './201502';
-import { Puzzle201503 } from './201503';
-import { Puzzle201504 } from './201504';
-import { Puzzle201505 } from './201505';
-import { Puzzle201506 } from './201506';
-import { Puzzle201507 } from './201507';
-import { Puzzle201508 } from './201508';
-import { Puzzle201509 } from './201509';
-import { Puzzle201510 } from './201510';
-import { Puzzle201511 } from './201511';
 import { Puzzle202201 } from './202201';
 import { Puzzle202202 } from './202202';
 import { Puzzle202203 } from './202203';
 import { Puzzle202204 } from './202204';
 import { Puzzle202205 } from './202205';
-import { Puzzle202301 } from './202301';
 import { Puzzle202206 } from './202206';
+import { Puzzle202301 } from './202301';
 /** (Imports Here) */
 
 export const dateToSolution: {
   [key: string]: (inputFile: string) => PuzzleDay;
 } = {
+  201501: input => new Puzzle201501(input),
+  201502: input => new Puzzle201502(input),
+  201503: input => new Puzzle201503(input),
+  201504: input => new Puzzle201504(input),
+  201505: input => new Puzzle201505(input),
+  201506: input => new Puzzle201506(input),
+  201507: input => new Puzzle201507(input),
+  201508: input => new Puzzle201508(input),
+  201509: input => new Puzzle201509(input),
+  201510: input => new Puzzle201510(input),
+  201511: input => new Puzzle201511(input),
   201801: input => new Puzzle201801(input),
   201802: input => new Puzzle201802(input),
   201803: input => new Puzzle201803(input),
@@ -142,23 +153,12 @@ export const dateToSolution: {
   202113: input => new Puzzle202113(input),
   202114: input => new Puzzle202114(input),
   202115: input => new Puzzle202115(input),
-  201501: input => new Puzzle201501(input),
-  201502: (input) => new Puzzle201502(input),
-  201503: (input) => new Puzzle201503(input),
-  201504: (input) => new Puzzle201504(input),
-  201505: (input) => new Puzzle201505(input),
-  201506: (input) => new Puzzle201506(input),
-  201507: (input) => new Puzzle201507(input),
-  201508: (input) => new Puzzle201508(input),
-  201509: (input) => new Puzzle201509(input),
-  201510: (input) => new Puzzle201510(input),
-  201511: (input) => new Puzzle201511(input),
-  202201: (input) => new Puzzle202201(input),
-  202202: (input) => new Puzzle202202(input),
-  202203: (input) => new Puzzle202203(input),
-  202204: (input) => new Puzzle202204(input),
-  202205: (input) => new Puzzle202205(input),
-  202301: (input) => new Puzzle202301(input),
-  202206: (input) => new Puzzle202206(input),
+  202201: input => new Puzzle202201(input),
+  202202: input => new Puzzle202202(input),
+  202203: input => new Puzzle202203(input),
+  202204: input => new Puzzle202204(input),
+  202205: input => new Puzzle202205(input),
+  202301: input => new Puzzle202301(input),
+  202206: input => new Puzzle202206(input),
   /** (Maps Here) */
 };
