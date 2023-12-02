@@ -29,7 +29,7 @@ module.exports = plop => {
         type: 'modify',
         path: 'src/solutions/index.ts',
         pattern: /(.*Maps Here.*)/gi,
-        template: '  {{puzzleDate}}: (input) => new Puzzle{{puzzleDate}}(input),\n$1',
+        template: '  {{puzzleDate}}: input => new Puzzle{{puzzleDate}}(input),\n$1',
       },
       {
         type: 'add',
