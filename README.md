@@ -170,5 +170,6 @@ $ yarn test
 | 2023 | 1   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 6ms      |
 | 2023 | 2   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 2ms      |
 | 2023 | 3   | :heavy_check_mark: | 16ms     | :heavy_check_mark: | 17ms     |
+| 2023 | 4   | :heavy_check_mark: | 4ms      | :heavy_check_mark: | 5ms      |
 
 </details>
