@@ -163,7 +163,7 @@ $ yarn test
 </details>
 
 <details>
-  <summary>2023 30/50 :star: </summary>
+  <summary>2023 32/50 :star: </summary>
   
 | Year | Day | Part 1             | Run Time | Part 2             | Run Time |
 | ---- | --- | ------------------ | -------- | ------------------ | -------- |
@@ -182,5 +182,6 @@ $ yarn test
 | 2023 | 13  | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 44ms     |
 | 2023 | 14  | :heavy_check_mark: | 12ms     | :heavy_check_mark: | 2s       |
 | 2023 | 15  | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 6ms      |
+| 2023 | 15  | :heavy_check_mark: | 16ms     | :heavy_check_mark: | 1s       |
 
 </details>
