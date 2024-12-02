@@ -185,3 +185,12 @@ $ yarn test
 | 2023 | 15  | :heavy_check_mark: | 16ms     | :heavy_check_mark: | 1s       |
 
 </details>
+
+<details>
+  <summary>2024 2/50 :star: </summary>
+  
+| Year | Day | Part 1             | Run Time | Part 2             | Run Time |
+| ---- | --- | ------------------ | -------- | ------------------ | -------- |
+| 2024 | 1   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 2ms      |
+
+</details>
