@@ -633,13 +633,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.165":
-  version: 4.14.186
-  resolution: "@types/lodash@npm:4.14.186"
-  checksum: 10c0/6e0c73ead3eb5073e37c9b8141004369776fba31a3876d2b647d590b78256e414b770753f767a548a70ad23408ac5cc83b174adfd5dba2bb88b833f2763c632b
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*, @types/node@npm:^18.11.7":
   version: 18.11.7
   resolution: "@types/node@npm:18.11.7"
@@ -1002,7 +995,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aoc-ts@workspace:."
   dependencies:
-    "@types/lodash": "npm:^4.14.165"
     "@types/node": "npm:^18.11.7"
     "@types/pretty-time": "npm:^1.1.0"
     "@types/yargs": "npm:^17.0.13"
@@ -1020,7 +1012,6 @@ __metadata:
     eslint-plugin-no-unsanitized: "npm:4.0.1"
     eslint-plugin-prefer-arrow-functions: "npm:3.1.4"
     eslint-plugin-prettier: "npm:4.2.1"
-    lodash: "npm:^4.17.21"
     plop: "npm:^3.1.1"
     prettier: "npm:^2.7.1"
     pretty-time: "npm:^1.1.0"
