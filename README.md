@@ -192,5 +192,6 @@ $ yarn test
 | Year | Day | Part 1             | Run Time | Part 2             | Run Time |
 | ---- | --- | ------------------ | -------- | ------------------ | -------- |
 | 2024 | 1   | :heavy_check_mark: | 3ms      | :heavy_check_mark: | 2ms      |
+| 2024 | 2   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 4ms      |
 
 </details>
