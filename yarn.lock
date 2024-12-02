@@ -5615,8 +5615,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^3.0.0":
-  version: 3.2.1
-  resolution: "vite@npm:3.2.1"
+  version: 3.2.11
+  resolution: "vite@npm:3.2.11"
   dependencies:
     esbuild: "npm:^0.15.9"
     fsevents: "npm:~2.3.2"
@@ -5624,6 +5624,7 @@ __metadata:
     resolve: "npm:^1.22.1"
     rollup: "npm:^2.79.1"
   peerDependencies:
+    "@types/node": ">= 14"
     less: "*"
     sass: "*"
     stylus: "*"
@@ -5633,6 +5634,8 @@ __metadata:
     fsevents:
       optional: true
   peerDependenciesMeta:
+    "@types/node":
+      optional: true
     less:
       optional: true
     sass:
@@ -5645,7 +5648,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/727e1fa5325aafbf2f83bf15b354345dfd6d5736a3562294a0f042fee0ed0ca3eb9af48db87ee71506cf77bc1933384a65d348baa021f45a8e5cedd4b55ea416
+  checksum: 10c0/c58eb2bd126b85e1a79e4d29069d22d063a7aee767ead833981b24c9206d0ae220b18139b06f1f9b17823ee23ab1e956e043a863a3d19882bd48b67c78a28921
   languageName: node
   linkType: hard
 
