@@ -47,5 +47,6 @@
     "fix": "eslint src --ext .ts --fix"
   },
   "author": "Alan Seymour <alan@alanseymour.net>",
-  "license": "ISC"
+  "license": "ISC",
+  "packageManager": "yarn@4.5.3"
 }
