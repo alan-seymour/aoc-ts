@@ -195,5 +195,6 @@ $ yarn test
 | 2024 | 2   | :heavy_check_mark: | 2ms      | :heavy_check_mark: | 4ms      |
 | 2024 | 3   | :heavy_check_mark: | 1ms      | :heavy_check_mark: | 1ms      |
 | 2024 | 4   | :heavy_check_mark: | 21ms     | :heavy_check_mark: | 5ms      |
+| 2024 | 5   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 10ms     |
 
 </details>
