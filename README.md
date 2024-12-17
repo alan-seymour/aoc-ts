@@ -187,7 +187,7 @@ $ yarn test
 </details>
 
 <details>
-  <summary>2024 12/50 :star: </summary>
+  <summary>2024 14/50 :star: </summary>
   
 | Year | Day | Part 1             | Run Time | Part 2             | Run Time |
 | ---- | --- | ------------------ | -------- | ------------------ | -------- |
@@ -197,6 +197,7 @@ $ yarn test
 | 2024 | 4   | :heavy_check_mark: | 21ms     | :heavy_check_mark: | 5ms      |
 | 2024 | 5   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 10ms     |
 | 2024 | 6   | :heavy_check_mark: | 4ms      | :heavy_check_mark: | 2s       |
+| 2024 | 7   | :heavy_check_mark: | 43ms     | :heavy_check_mark: | 4m       |
 
 
 </details>
