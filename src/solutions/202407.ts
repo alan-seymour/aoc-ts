@@ -4,7 +4,7 @@ import { PuzzleDay } from '../puzzleDay';
 type Equation = {
   testValue: number;
   values: number[];
-}
+};
 
 type Operators = '*' | '+' | '||';
 
@@ -13,9 +13,10 @@ export const parseInput = (input: string): Equation[] => {
     const [testValue, values] = line.split(': ');
     return {
       testValue: parseInt(testValue, 10),
-      values: values.split(' ').map(v => parseInt(v, 10))
+      values: values.split(' ').map(v => parseInt(v, 10)),
     };
   });
+
   return equations;
 };
 
@@ -30,6 +31,7 @@ const evaluateEquation = (equation: Equation, operators: Operators[]): boolean =
       if (state[0] === equation.testValue) {
         found = true;
       }
+
       continue;
     }
 
@@ -42,20 +44,20 @@ const evaluateEquation = (equation: Equation, operators: Operators[]): boolean =
 
       if (op === '+') {
         result = result + nextValue;
-      } else if (op === '*'){
+      } else if (op === '*') {
         result = result * nextValue;
       } else if (op === '||') {
-        result = parseInt(""+total+nextValue, 10);
+        result = parseInt('' + total + nextValue, 10);
       }
 
       if (result <= equation.testValue) {
-        queue.push([result, ...(state.slice(2))]);
+        queue.push([result, ...state.slice(2)]);
       }
     });
   }
 
   return found;
-}
+};
 
 export class Puzzle202407 extends PuzzleDay {
   part1() {

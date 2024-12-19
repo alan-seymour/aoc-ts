@@ -21,6 +21,7 @@ describe('202406', () => {
 ......#...`;
 
     const result = parseInput(input);
+
     expect(result).toEqual([
       ['.', '.', '.', '.', '#', '.', '.', '.', '.', '.'],
       ['.', '.', '.', '.', '.', '.', '.', '.', '.', '#'],
@@ -46,6 +47,7 @@ describe('202406', () => {
 ........#.
 #.........
 ......#...`);
+
     const result = day.part1();
     expect(result).toBe('41');
   });
@@ -61,6 +63,7 @@ describe('202406', () => {
 ........#.
 #.........
 ......#...`);
+
     const result = day.part2();
     expect(result).toBe('6');
   });

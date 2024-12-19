@@ -13,15 +13,16 @@ describe('202407', () => {
 3267: 81 40 27`;
 
     const result = parseInput(input);
+
     expect(result).toEqual([
       {
         testValue: 190,
-        values: [10, 19]
+        values: [10, 19],
       },
       {
         testValue: 3267,
-        values: [81, 40, 27]
-      }
+        values: [81, 40, 27],
+      },
     ]);
   });
 
