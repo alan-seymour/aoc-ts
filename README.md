@@ -8,13 +8,7 @@ Advent of Code Solutions in Typescript
 
 ```bash
 # run using ts-node
-$ yarn solve-ts
-
-# run using node
-# build project before running
-$ yarn build-ts
-# run file
-$ yarn solve
+$ bun solve
 ```
 
 ### Options
@@ -30,17 +24,17 @@ $ yarn solve
 
 ```bash
 # Run 201801 part 1
-$ yarn solve-ts -- -d 201801
+$ bun solve -d 201801
 
 # Run part 2 of 201901 with test.txt and output time taken
-$ yarn solve-ts -- -d 201901 -p 2 -t --input="./inputs/test.txt"
+$ bun solve -d 201901 -p 2 -t --input="./inputs/test.txt"
 ```
 
 ## Running Tests
 
 ```bash
 # execute the tests
-$ yarn test
+$ bun test
 ```
 
 ## Currently implemented solutions
@@ -198,6 +192,5 @@ $ yarn test
 | 2024 | 5   | :heavy_check_mark: | 6ms      | :heavy_check_mark: | 10ms     |
 | 2024 | 6   | :heavy_check_mark: | 4ms      | :heavy_check_mark: | 2s       |
 | 2024 | 7   | :heavy_check_mark: | 43ms     | :heavy_check_mark: | 4m       |
-
 
 </details>
