@@ -9,15 +9,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Enable Corepack
-      run: corepack enable
-    - name: Use Node.js 20
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-    - name: npm install, build, and test
+    - uses: oven-sh/setup-bun@v2
+
+    - name: bun install and test
       run: |
-        yarn install --frozen-lockfile
-        yarn test
+        bun install
+        bun test
       env:
         CI: true
