@@ -100,6 +100,12 @@ import { Puzzle202405 } from './202405';
 import { Puzzle202406 } from './202406';
 import { Puzzle202407 } from './202407';
 import { Puzzle202501 } from './202501';
+import { Puzzle202502 } from './202502';
+import { Puzzle202503 } from './202503';
+import { Puzzle202504 } from './202504';
+import { Puzzle202505 } from './202505';
+import { Puzzle202506 } from './202506';
+import { Puzzle202507 } from './202507';
 /** (Imports Here) */
 
 export const dateToSolution: {
@@ -206,5 +212,11 @@ export const dateToSolution: {
   202406: input => new Puzzle202406(input),
   202407: input => new Puzzle202407(input),
   202501: input => new Puzzle202501(input),
+  202502: input => new Puzzle202502(input),
+  202503: input => new Puzzle202503(input),
+  202504: input => new Puzzle202504(input),
+  202505: input => new Puzzle202505(input),
+  202506: input => new Puzzle202506(input),
+  202507: input => new Puzzle202507(input),
   /** (Maps Here) */
 };
